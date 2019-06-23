@@ -1,3 +1,3 @@
 # SBSwifterSwift
 
-A description of this package.
+This package contains a variety of handy extensions for a wide range of primitive data types.
