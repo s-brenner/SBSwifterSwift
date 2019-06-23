@@ -40,7 +40,7 @@ extension Array where Element: Equatable {
     /// [1, 1, 2, 2, 3, 3, 3, 4, 5].withoutDuplicates() -> [1, 2, 3, 4, 5])
     /// ````
     /// - Returns: Array of unique elements.
-    func withoutDuplicates() -> [Element] {
+    public func withoutDuplicates() -> [Element] {
         return reduce(into: [Element]()) {
             if !$0.contains($1) {
                 $0.append($1)
