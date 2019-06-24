@@ -4,19 +4,19 @@ import XCTest
 final class ArrayExtensionsTests: XCTestCase {
     
     func testOverlappingPairs() {
-        XCTAssert([1, 2, 3, 4].overlappingPairs == [[1, 2], [2, 3], [3, 4]])
-        XCTAssert([1].overlappingPairs == [])
-        XCTAssert([Int]().overlappingPairs == [])
+        XCTAssertEqual([1, 2, 3, 4].overlappingPairs, [[1, 2], [2, 3], [3, 4]])
+        XCTAssertEqual([1].overlappingPairs, [])
+        XCTAssertEqual([Int]().overlappingPairs, [])
     }
     
     func testRemoveDuplicates() {
         var array = [1, 2, 2, 3, 3, 3, 4]
         array.removeDuplicates()
-        XCTAssert(array == [1, 2, 3, 4])
+        XCTAssertEqual(array, [1, 2, 3, 4])
     }
     
     func testWithoutDuplicates() {
         let array = [1, 2, 2, 3, 3, 3, 4]
-        XCTAssert(array.withoutDuplicates() == [1, 2, 3, 4])
+        XCTAssertEqual(array.withoutDuplicates(), [1, 2, 3, 4])
     }
 }
