@@ -25,7 +25,7 @@ extension Int {
     public var cgFloat: CGFloat { CGFloat(self) }
     
     /// Rounds to the closest multiple of n.
-    func roundToNearest(_ number: Int) -> Int {
-        return number == 0 ? self : round(self.double / number.double).int * number
+    public func roundToNearest(_ number: Int) -> Int {
+        return number == 0 ? self : Int(round(self.double / number.double)) * number
     }
 }
