@@ -52,7 +52,7 @@ extension MKCoordinateRegion {
     /// Transforms longitude from -180...180 to 0...360.
     /// - Parameter coordinate: Coordinate to transform
     private static func transform(_ coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
-        if coordinate.longitude < 0 {
+        if coordinate.longitude.isNegative {
             return CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: 360 + coordinate.longitude)
         }
         return coordinate

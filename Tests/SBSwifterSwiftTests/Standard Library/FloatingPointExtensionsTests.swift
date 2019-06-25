@@ -34,8 +34,8 @@ final class FloatingPointExtensionsTests: XCTestCase {
     }
     
     func testDegreesToRadians() {
-        XCTAssertEqual(Float(180).degreesToRadians, Float.pi)
-        XCTAssertEqual(Double(180).degreesToRadians, Double.pi)
+        XCTAssertEqual(Float(180).degreesToRadians, .pi)
+        XCTAssertEqual(Double(180).degreesToRadians, .pi)
     }
     
     func testFloor() {
