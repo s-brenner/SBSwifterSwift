@@ -28,4 +28,9 @@ extension Int {
     public func roundToNearest(_ number: Int) -> Int {
         return number == 0 ? self : Int(round(self.double / number.double)) * number
     }
+    
+    
+//    public func modulo(_ n: Int) -> Int {
+//        return (self % n + n) % n
+//    }
 }

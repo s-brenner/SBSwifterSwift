@@ -24,6 +24,7 @@ extension Array where Element: Equatable {
     /// [1, 2, 2, 3, 3, 4].removeDuplicates() -> [1, 2, 3, 4]
     /// ````
     /// - Returns: Array with all duplicate elements removed.
+    /// - Complexity: O(n), where n is the length of the sequence.
     @discardableResult
     public mutating func removeDuplicates() -> [Element] {
         
