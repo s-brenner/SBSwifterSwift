@@ -7,3 +7,9 @@ extension CLLocationCoordinate2D: Equatable {
         lhs.longitude == rhs.longitude
     }
 }
+
+
+extension CLLocationCoordinate2D {
+    
+    public var location: CLLocation { CLLocation(coordinate: self) }
+}
