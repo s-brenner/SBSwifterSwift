@@ -2,8 +2,6 @@ import Foundation
 
 extension FloatingPoint {
     
-    // MARK: - Properties
-    
     /// The absolute value of a number.
     public var abs: Self { Swift.abs(self) }
     
@@ -24,13 +22,4 @@ extension FloatingPoint {
     
     /// The floor of number.
     public var floor: Self { Foundation.floor(self) }
-    
-    
-    // MARK: - Methods
-    
-    /// Moves the value to a range of allowed values.
-    /// - Parameter range: The range of allowed values.
-    public func clamped(to range: ClosedRange<Self>) -> Self {
-        return max(min(self, range.upperBound), range.lowerBound)
-    }
 }

@@ -94,9 +94,9 @@ extension CLLocation {
         guard coordinate != destination.coordinate else { return [] }
         
         // Calculate the number of points in the route
-        let pointsPerKilometer = 0.05
+        let kilometersPerPoint = 25.0
         let kilometers = destination.distance(from: self) / 1000
-        let count = max((kilometers * pointsPerKilometer).int, 3)
+        let count = max((kilometers / kilometersPerPoint).ceil.int, 3)
         
         // Calculate the route fractions
         let routeFractions = Array(0...count).map() { Double($0) / Double(count) }
