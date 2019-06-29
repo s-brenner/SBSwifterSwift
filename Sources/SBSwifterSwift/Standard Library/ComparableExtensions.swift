@@ -8,3 +8,16 @@ extension Comparable {
         return max(min(self, range.upperBound), range.lowerBound)
     }
 }
+
+
+extension Comparable where Self: SignedNumeric {
+    
+    /// Check if a number is negative.
+    public var isNegative: Bool { self < 0 }
+    
+    /// Check if a number is positive.
+    public var isPositive: Bool { self > 0 }
+    
+    /// The absolute value of a number.
+    public var abs: Self { return Swift.abs(self) }
+}

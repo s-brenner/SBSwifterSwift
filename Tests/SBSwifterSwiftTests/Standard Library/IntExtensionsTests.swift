@@ -38,4 +38,21 @@ final class IntExtensionsTests: XCTestCase {
         XCTAssert(63.roundToNearest(25) == 75)
         XCTAssert(42.roundToNearest(0) == 42)
     }
+    
+    func testMod() {
+        XCTAssertEqual(-1 % 2, -1)
+        XCTAssertEqual(-1.mod(2), -1)
+        
+        XCTAssertEqual(1 % -2, 1)
+        XCTAssertEqual(1.mod(-2), -1)
+        
+        // Test sign and magnitude of the result
+        for _ in 0...1_000 {
+            let dividend = Int.random(in: -1_000_000...1_000_000)
+            let divisor = Int.random(in: -1_000_000...1_000_000)
+            let mod = dividend.mod(divisor)
+            XCTAssertEqual(mod.isNegative, divisor.isNegative)
+            XCTAssertLessThan(mod.abs, divisor.abs)
+        }
+    }
 }

@@ -29,8 +29,12 @@ extension Int {
         return number == 0 ? self : Int(round(self.double / number.double)) * number
     }
     
-    
-//    public func modulo(_ n: Int) -> Int {
-//        return (self % n + n) % n
-//    }
+    /// Returns the modulus of dividing the by the divisor.
+    ///
+    /// The result has the same sign as the divisor and has a magnitude less than the divisor.
+    /// - Parameter divisor: The divisor. Must not be zero.
+    public func mod(_ divisor: Int) -> Int {
+        guard divisor != 0 else { fatalError("Division by zero in modulo operation.") }
+        return (self % divisor + divisor) % divisor
+    }
 }

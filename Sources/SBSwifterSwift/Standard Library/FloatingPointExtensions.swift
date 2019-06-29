@@ -2,15 +2,6 @@ import Foundation
 
 extension FloatingPoint {
     
-    /// The absolute value of a number.
-    public var abs: Self { Swift.abs(self) }
-    
-    /// Check if a number is positive.
-    public var isPositive: Bool { self > 0 }
-    
-    /// Check if a number is negative.
-    public var isNegative: Bool { self < 0 }
-    
     /// Radian value of degree input.
     public var degreesToRadians: Self { self * .pi / 180 }
     
