@@ -8,14 +8,8 @@ extension String {
     /// // "someVariableName"
     /// ````
     public var camelCased: String {
-        let source = lowercased()
-        let first = source[..<source.index(after: source.startIndex)]
-        if source.contains(" ") {
-            let connected = source.capitalized.replacingOccurrences(of: " ", with: "")
-            let camel = connected.replacingOccurrences(of: "\n", with: "")
-            let rest = String(camel.dropFirst())
-            return first + rest
-        }
+        let source = capitalized.removingAll([" ", "\n"])
+        let first = source[..<source.index(after: source.startIndex)].lowercased()
         let rest = String(source.dropFirst())
         return first + rest
     }
