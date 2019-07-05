@@ -22,7 +22,6 @@ public struct UserDefault<T: Codable> {
     /// The wrapped value.
     public var wrappedValue: T {
         get {
-//            defaults.object(forKey: key) as? T ?? defaultValue()
             guard let data = defaults.object(forKey: key) as? Data,
                 let array = try? PropertyListDecoder().decode([T].self, from: data),
                 let first = array.first
@@ -30,7 +29,6 @@ public struct UserDefault<T: Codable> {
             return first
         }
         set {
-//            defaults.set(newValue, forKey: key)
             let data = try! PropertyListEncoder().encode([newValue])
             defaults.set(data, forKey: key)
         }
