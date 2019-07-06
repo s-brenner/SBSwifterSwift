@@ -23,11 +23,8 @@ extension UIView {
     /// - degrees: degrees.
     /// - radians: radians.
     public enum AngleUnit {
-        
-        /// degrees.
+    
         case degrees
-        
-        /// radians.
         case radians
     }
     
@@ -236,7 +233,7 @@ extension UIView {
     /// Fade in view.
     /// - Parameter duration: Animation duration in seconds.
     /// - Parameter completion: Optional completion handler to run with animation finishes.
-    public func fadeIn(duration: TimeInterval = 1, completion: ((Bool) -> Void)? = nil) {
+    public func fadeIn(duration: TimeInterval = 0.25, completion: ((Bool) -> Void)? = nil) {
         if isHidden { isHidden = false }
         let animations: () -> Void = { [weak self] in self?.alpha = 1 }
         UIView.animate(withDuration: duration, animations: animations, completion: completion)
@@ -245,10 +242,36 @@ extension UIView {
     /// Fade out view.
     /// - Parameter duration: Animation duration in seconds.
     /// - Parameter completion: Optional completion handler to run with animation finishes.
-    public func fadeOut(duration: TimeInterval = 1, completion: ((Bool) -> Void)? = nil) {
+    public func fadeOut(duration: TimeInterval = 0.25, completion: ((Bool) -> Void)? = nil) {
         if isHidden { isHidden = false }
         let animations: () -> Void = { [weak self] in self?.alpha = 0 }
         UIView.animate(withDuration: duration, animations: animations, completion: completion)
+    }
+    
+    /// Animate changes to a view using the specified duration.
+    ///
+    /// This method performs the specified animations immediately using a `fade` animation type with a `easeInEaseOut` timing function.
+    /// - Parameter duration: The total duration of the animations, measured in seconds. Defaults to 0.25.
+    /// ````
+    /// var label = UILabel()
+    /// label.text = "day"
+    /// label.fadeTransition()
+    /// label.text = "days"
+    /// ````
+    public func fadeTransition(duration: TimeInterval = 0.25) {
+        let animation = CATransition()
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.type = .fade
+        animation.duration = duration
+        layer.add(animation, forKey: animation.type.rawValue)
+    }
+    
+    /// Set the `isHidden` parameter with an optional animation.
+    /// - Parameter hidden: A Boolean value that determines whether the view is hidden.
+    /// - Parameter animated: Whether or not to animate the transition.
+    @objc open func setHidden(_ hidden: Bool, animated: Bool = false, duration: TimeInterval = 0.25) {
+        fadeTransition(duration: animated ? duration : 0)
+        isHidden = hidden
     }
     
     /// Remove all subviews in view.
@@ -281,71 +304,93 @@ extension UIView {
         recognizers.forEach() { removeGestureRecognizer($0) }
     }
     
-    /// SwifterSwift: Rotate view by angle on relative axis.
-    ///
-    /// - Parameters:
-    ///   - angle: angle to rotate view by.
-    ///   - type: type of the rotation angle.
-    ///   - animated: set true to animate rotation (default is true).
-    ///   - duration: animation duration in seconds (default is 1 second).
-    ///   - completion: optional completion handler to run with animation finishes (default is nil).
-    func rotate(byAngle angle: CGFloat, ofType type: AngleUnit, animated: Bool = false, duration: TimeInterval = 1, completion: ((Bool) -> Void)? = nil) {
-        let angleWithType = (type == .degrees) ? .pi * angle / 180.0 : angle
-        let aDuration = animated ? duration : 0
-        UIView.animate(withDuration: aDuration, delay: 0, options: .curveLinear, animations: { () -> Void in
-            self.transform = self.transform.rotated(by: angleWithType)
-        }, completion: completion)
+    /// Rotate view by angle on relative axis.
+    /// - Parameter angle: Angle by which to rotate the view.
+    /// - Parameter type: Type of the rotation angle.
+    /// - Parameter animated: Set `true` to animate rotation.
+    /// - Parameter duration: Animation duration in seconds.
+    /// - Parameter completion: Optional completion handler to run after the animation finishes.
+    public func rotate(byAngle angle: CGFloat,
+                       ofType type: AngleUnit,
+                       animated: Bool = false,
+                       duration: TimeInterval = 1,
+                       completion: ((Bool) -> Void)? = nil) {
+        
+        let animations: () -> Void = { [weak self] in
+            guard let strongSelf = self else { return }
+            let angleWithType = (type == .degrees) ? angle.degreesToRadians : angle
+            strongSelf.transform = strongSelf.transform.rotated(by: angleWithType)
+        }
+        UIView.animate(withDuration: animated ? duration : 0,
+                       delay: 0,
+                       options: .curveLinear,
+                       animations: animations,
+                       completion: completion)
     }
     
-    /// SwifterSwift: Rotate view to angle on fixed axis.
-    ///
-    /// - Parameters:
-    ///   - angle: angle to rotate view to.
-    ///   - type: type of the rotation angle.
-    ///   - animated: set true to animate rotation (default is false).
-    ///   - duration: animation duration in seconds (default is 1 second).
-    ///   - completion: optional completion handler to run with animation finishes (default is nil).
-    func rotate(toAngle angle: CGFloat, ofType type: AngleUnit, animated: Bool = false, duration: TimeInterval = 1, completion: ((Bool) -> Void)? = nil) {
-        let angleWithType = (type == .degrees) ? .pi * angle / 180.0 : angle
-        let aDuration = animated ? duration : 0
-        UIView.animate(withDuration: aDuration, animations: {
-            self.transform = self.transform.concatenating(CGAffineTransform(rotationAngle: angleWithType))
-        }, completion: completion)
+    /// Rotate view to angle on fixed axis.
+    /// - Parameter angle: Angle by which to rotate the view.
+    /// - Parameter type: Type of the rotation angle.
+    /// - Parameter animated: Set `true` to animate rotation.
+    /// - Parameter duration: Animation duration in seconds.
+    /// - Parameter completion: Optional completion handler to run after the animation finishes.
+    public func rotate(toAngle angle: CGFloat,
+                       ofType type: AngleUnit,
+                       animated: Bool = false,
+                       duration: TimeInterval = 1,
+                       completion: ((Bool) -> Void)? = nil) {
+        
+        let animations: () -> Void = { [weak self] in
+            guard let strongSelf = self else { return }
+            let angleWithType = (type == .degrees) ? angle.degreesToRadians : angle
+            strongSelf.transform = strongSelf.transform.concatenating(CGAffineTransform(rotationAngle: angleWithType))
+        }
+        UIView.animate(withDuration: animated ? duration : 0,
+                       animations: animations,
+                       completion: completion)
     }
     
-    /// SwifterSwift: Scale view by offset.
-    ///
-    /// - Parameters:
-    ///   - offset: scale offset
-    ///   - animated: set true to animate scaling (default is false).
-    ///   - duration: animation duration in seconds (default is 1 second).
-    ///   - completion: optional completion handler to run with animation finishes (default is nil).
-    func scale(by offset: CGPoint, animated: Bool = false, duration: TimeInterval = 1, completion: ((Bool) -> Void)? = nil) {
+    /// Scale view by offset.
+    /// - Parameter offset: Scale offset.
+    /// - Parameter animated: Set `true` to animate scaling.
+    /// - Parameter duration: Animation duration in seconds.
+    /// - Parameter completion: Optional completion handler to run after the transition completes.
+    public func scale(by offset: CGPoint,
+                      animated: Bool = false,
+                      duration: TimeInterval = 1,
+                      completion: ((Bool) -> Void)? = nil) {
+        
+        let animations: () -> Void = { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.transform = strongSelf.transform.scaledBy(x: offset.x, y: offset.y)
+        }
         if animated {
-            UIView.animate(withDuration: duration, delay: 0, options: .curveLinear, animations: { () -> Void in
-                self.transform = self.transform.scaledBy(x: offset.x, y: offset.y)
-            }, completion: completion)
+            UIView.animate(withDuration: duration,
+                           delay: 0,
+                           options: .curveLinear,
+                           animations: animations,
+                           completion: completion)
         } else {
-            transform = transform.scaledBy(x: offset.x, y: offset.y)
+            animations()
             completion?(true)
         }
     }
     
-    /// SwifterSwift: Shake view.
-    ///
-    /// - Parameters:
-    ///   - direction: shake direction (horizontal or vertical), (default is .horizontal)
-    ///   - duration: animation duration in seconds (default is 1 second).
-    ///   - animationType: shake animation type (default is .easeOut).
-    ///   - completion: optional completion handler to run with animation finishes (default is nil).
-    func shake(direction: ShakeDirection = .horizontal, duration: TimeInterval = 1, animationType: ShakeAnimationType = .easeOut, completion:(() -> Void)? = nil) {
+    /// Shake view.
+    /// - Parameter direction: Shake direction (horizontal or vertical).
+    /// - Parameter duration: Animation duration in seconds.
+    /// - Parameter animationType: Shake animation type.
+    /// - Parameter completion: Optional completion handler to run after animation finishes.
+    public func shake(direction: ShakeDirection = .horizontal,
+                      duration: TimeInterval = 1,
+                      animationType: ShakeAnimationType = .easeOut,
+                      completion:(() -> Void)? = nil) {
+        
         CATransaction.begin()
         let animation: CAKeyframeAnimation
         switch direction {
-        case .horizontal:
-            animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        case .vertical:
-            animation = CAKeyframeAnimation(keyPath: "transform.translation.y")
+        case .horizontal: animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        case .vertical: animation = CAKeyframeAnimation(keyPath: "transform.translation.y")
         }
         switch animationType {
         case .linear:
@@ -364,64 +409,48 @@ extension UIView {
         CATransaction.commit()
     }
     
-    /// SwifterSwift: Add Visual Format constraints.
-    ///
-    /// - Parameters:
-    ///   - withFormat: visual Format language
-    ///   - views: array of views which will be accessed starting with index 0 (example: [v0], [v1], [v2]..)
-    @available(iOS 9, *) func addConstraints(withFormat: String, views: UIView...) {
-        // https://videos.letsbuildthatapp.com/
-        var viewsDictionary: [String: UIView] = [:]
-        for (index, view) in views.enumerated() {
-            let key = "v\(index)"
-            view.translatesAutoresizingMaskIntoConstraints = false
-            viewsDictionary[key] = view
-        }
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: withFormat, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
-    }
-    
-    /// SwifterSwift: Anchor all sides of the view into it's superview.
+    /// Anchor all sides of the view into it's superview.
     @available(iOS 9, *)
-    func fillToSuperview() {
+    public func fillToSuperview() {
         // https://videos.letsbuildthatapp.com/
         translatesAutoresizingMaskIntoConstraints = false
         if let superview = superview {
-            let left = leftAnchor.constraint(equalTo: superview.leftAnchor)
-            let right = rightAnchor.constraint(equalTo: superview.rightAnchor)
+            let leading = leadingAnchor.constraint(equalTo: superview.leadingAnchor)
+            let trailing = trailingAnchor.constraint(equalTo: superview.trailingAnchor)
             let top = topAnchor.constraint(equalTo: superview.topAnchor)
             let bottom = bottomAnchor.constraint(equalTo: superview.bottomAnchor)
-            NSLayoutConstraint.activate([left, right, top, bottom])
+            NSLayoutConstraint.activate([leading, trailing, top, bottom])
         }
     }
     
-    /// SwifterSwift: Add anchors from any side of the current view into the specified anchors and returns the newly added constraints.
-    ///
-    /// - Parameters:
-    ///   - top: current view's top anchor will be anchored into the specified anchor
-    ///   - left: current view's left anchor will be anchored into the specified anchor
-    ///   - bottom: current view's bottom anchor will be anchored into the specified anchor
-    ///   - right: current view's right anchor will be anchored into the specified anchor
-    ///   - topConstant: current view's top anchor margin
-    ///   - leftConstant: current view's left anchor margin
-    ///   - bottomConstant: current view's bottom anchor margin
-    ///   - rightConstant: current view's right anchor margin
-    ///   - widthConstant: current view's width
-    ///   - heightConstant: current view's height
-    /// - Returns: array of newly added constraints (if applicable).
+    /// Add anchors from any side of the current view into the specified anchors and return the newly added constraints.
+    /// - Parameter top: Current view's top anchor will be anchored into the specified anchor.
+    /// - Parameter left: Current view's left anchor will be anchored into the specified anchor.
+    /// - Parameter bottom: Current view's bottom anchor will be anchored into the specified anchor.
+    /// - Parameter right: Current view's right anchor will be anchored into the specified anchor.
+    /// - Parameter topConstant: Current view's top anchor margin.
+    /// - Parameter leftConstant: Current view's left anchor margin.
+    /// - Parameter bottomConstant: Current view's bottom anchor margin.
+    /// - Parameter rightConstant: Current view's right anchor margin.
+    /// - Parameter widthConstant: Current view's width.
+    /// - Parameter heightConstant: Current view's height.
+    /// - Returns: Array of newly added constraints (if applicable).
     @available(iOS 9, *)
     @discardableResult
-    func anchor(
+    public func anchor(
         top: NSLayoutYAxisAnchor? = nil,
-        left: NSLayoutXAxisAnchor? = nil,
+        leading: NSLayoutXAxisAnchor? = nil,
         bottom: NSLayoutYAxisAnchor? = nil,
-        right: NSLayoutXAxisAnchor? = nil,
+        trailing: NSLayoutXAxisAnchor? = nil,
         topConstant: CGFloat = 0,
-        leftConstant: CGFloat = 0,
+        leadingConstant: CGFloat = 0,
         bottomConstant: CGFloat = 0,
-        rightConstant: CGFloat = 0,
+        trailingConstant: CGFloat = 0,
         widthConstant: CGFloat = 0,
         heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
+        
         // https://videos.letsbuildthatapp.com/
+        
         translatesAutoresizingMaskIntoConstraints = false
         
         var anchors = [NSLayoutConstraint]()
@@ -430,80 +459,80 @@ extension UIView {
             anchors.append(topAnchor.constraint(equalTo: top, constant: topConstant))
         }
         
-        if let left = left {
-            anchors.append(leftAnchor.constraint(equalTo: left, constant: leftConstant))
+        if let leading = leading {
+            anchors.append(leadingAnchor.constraint(equalTo: leading, constant: leadingConstant))
         }
         
         if let bottom = bottom {
             anchors.append(bottomAnchor.constraint(equalTo: bottom, constant: -bottomConstant))
         }
         
-        if let right = right {
-            anchors.append(rightAnchor.constraint(equalTo: right, constant: -rightConstant))
+        if let trailing = trailing {
+            anchors.append(rightAnchor.constraint(equalTo: trailing, constant: -trailingConstant))
         }
         
-        if widthConstant > 0 {
+        if widthConstant.isPositive {
             anchors.append(widthAnchor.constraint(equalToConstant: widthConstant))
         }
         
-        if heightConstant > 0 {
+        if heightConstant.isPositive {
             anchors.append(heightAnchor.constraint(equalToConstant: heightConstant))
         }
         
-        anchors.forEach({$0.isActive = true})
+        anchors.forEach() { $0.isActive = true }
         
         return anchors
     }
     
-    /// SwifterSwift: Anchor center X into current view's superview with a constant margin value.
-    ///
-    /// - Parameter constant: constant of the anchor constraint (default is 0).
+    /// Anchor center X into current view's superview with a constant margin value.
+    /// - Parameter constant: Constant of the anchor constraint.
     @available(iOS 9, *)
-    func anchorCenterXToSuperview(constant: CGFloat = 0) {
+    public func anchorCenterXToSuperview(constant: CGFloat = 0) {
+        
         // https://videos.letsbuildthatapp.com/
+        
         translatesAutoresizingMaskIntoConstraints = false
+        
         if let anchor = superview?.centerXAnchor {
             centerXAnchor.constraint(equalTo: anchor, constant: constant).isActive = true
         }
     }
     
-    /// SwifterSwift: Anchor center Y into current view's superview with a constant margin value.
-    ///
-    /// - Parameter withConstant: constant of the anchor constraint (default is 0).
+    /// Anchor center Y into current view's superview with a constant margin value.
+    /// - Parameter constant: Constant of the anchor constraint.
     @available(iOS 9, *)
-    func anchorCenterYToSuperview(constant: CGFloat = 0) {
+    public func anchorCenterYToSuperview(constant: CGFloat = 0) {
+        
         // https://videos.letsbuildthatapp.com/
         translatesAutoresizingMaskIntoConstraints = false
+        
         if let anchor = superview?.centerYAnchor {
             centerYAnchor.constraint(equalTo: anchor, constant: constant).isActive = true
         }
     }
     
-    /// SwifterSwift: Anchor center X and Y into current view's superview
+    /// Anchor center X and Y into current view's superview.
     @available(iOS 9, *)
-    func anchorCenterSuperview() {
+    public func anchorCenterSuperview() {
+        
         // https://videos.letsbuildthatapp.com/
+        
         anchorCenterXToSuperview()
         anchorCenterYToSuperview()
     }
     
-    /// SwifterSwift: Search all superviews until a view with the condition is found.
-    ///
-    /// - Parameter predicate: predicate to evaluate on superviews.
-    func ancestorView(where predicate: (UIView?) -> Bool) -> UIView? {
-        if predicate(superview) {
-            return superview
-        }
+    /// Search all superviews until a view with the condition is found.
+    /// - Parameter predicate: Predicate to evaluate on superviews.
+    public func ancestorView(where predicate: (UIView?) -> Bool) -> UIView? {
+        if predicate(superview) { return superview }
         return superview?.ancestorView(where: predicate)
     }
     
-    /// SwifterSwift: Search all superviews until a view with this class is found.
-    ///
-    /// - Parameter name: class of the view to search.
-    func ancestorView<T: UIView>(withClass name: T.Type) -> T? {
-        return ancestorView(where: { $0 is T }) as? T
+    /// Search all superviews until a view with this class is found.
+    /// - Parameter name: Class of the view to search.
+    public func ancestorView<T: UIView>(withClass name: T.Type) -> T? {
+        ancestorView(where: { $0 is T }) as? T
     }
-    
 }
 
 #endif
