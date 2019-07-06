@@ -2,13 +2,7 @@ import XCTest
 @testable import SBSwifterSwift
 
 final class DoubleExtensionsTests: XCTestCase {
-    
-    func testInt() {
-        XCTAssertEqual(Double(-1).int, -1)
-        XCTAssertEqual(Double(2).int, 2)
-        XCTAssertEqual(Double(4.3).int, 4)
-    }
-    
+        
     func testFloat() {
         XCTAssertEqual(Double(-1).float, Float(-1))
         XCTAssertEqual(Double(2).float, Float(2))

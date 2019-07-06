@@ -47,11 +47,17 @@ final class IntExtensionsTests: XCTestCase {
         XCTAssertEqual(1.mod(-2), -1)
         
         // Test sign and magnitude of the result
-        for _ in 0...1_000 {
+        for _ in 0...1_000_000 {
             let dividend = Int.random(in: -1_000_000...1_000_000)
             let divisor = Int.random(in: -1_000_000...1_000_000)
+            
+            guard divisor != 0 else { return }
             let mod = dividend.mod(divisor)
-            XCTAssertEqual(mod.isNegative, divisor.isNegative)
+            
+            let message = "{dividend: \(dividend), divisor: \(divisor), mod: \(mod)}"
+            
+            if divisor.isNegative { XCTAssertTrue(mod <= 0, message) }
+            if divisor.isPositive { XCTAssertTrue(mod >= 0, message) }
             XCTAssertLessThan(mod.abs, divisor.abs)
         }
     }

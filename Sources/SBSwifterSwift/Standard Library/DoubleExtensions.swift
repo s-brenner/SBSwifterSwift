@@ -3,9 +3,6 @@ import CoreGraphics
 
 extension Double {
     
-    /// Int.
-    public var int: Int { Int(self) }
-    
     /// Float.
     public var float: Float { Float(self) }
     
