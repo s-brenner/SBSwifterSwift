@@ -26,10 +26,23 @@ extension UITableView {
         return rowCount
     }
     
+    /// The index paths representing all of the rows.
+    ///
+    /// The value of this property is an array of `IndexPath` objects each identifying a row through its section and row index.
+    public var allIndexPaths: [IndexPath] {
+        var output = [IndexPath]()
+        for section in 0..<numberOfSections {
+            for row in 0..<numberOfRows(inSection: section) {
+                output.append(IndexPath(row: row, section: section))
+            }
+        }
+        return output
+    }
+    
 
     // MARK: - Methods
 
-    /// Return the `IndexPath` for the last row in a given section.
+    /// Returns the `IndexPath` for the last row in a given section.
     /// - Parameter section: The section in which to get the last row.
     /// - Returns: Optional `IndexPath` for the last row in the section (if applicable).
     public func indexPathForLastRow(inSection section: Int) -> IndexPath? {
@@ -38,6 +51,27 @@ extension UITableView {
             return IndexPath(row: 0, section: section)
         }
         return IndexPath(row: numberOfRows(inSection: section) - 1, section: section)
+    }
+    
+    /// Returns the `indexPath` representing the next row in the table view.
+    /// - Parameter indexPath: An `IndexPath` identifying a row in the table view.
+    /// - Returns: An `IndexPath` object representing the next row in the table view or `nil` if the given row is the final row in the final section.
+    public func indexPath(after indexPath: IndexPath) -> IndexPath? {
+        if indexPath.row < numberOfRows(inSection: indexPath.section) - 1 { return IndexPath(row: indexPath.row + 1, section: indexPath.section) }
+        if indexPath.section < numberOfSections - 1 { return IndexPath(row: 0, section: indexPath.section + 1) }
+        return nil
+    }
+    
+    /// Returns the `IndexPath` representing the previous row in the table view.
+    /// - Parameter indexPath: An `IndexPath` identifying a row in the table view.
+    /// - Returns: An `IndexPath` object representing the previous row in the table view or `nil` if the given row is the first row in the first section.
+    public func indexPath(before indexPath: IndexPath) -> IndexPath? {
+        if indexPath.row > 0 { return IndexPath(row: indexPath.row - 1, section: indexPath.section) }
+        if indexPath.section > 0 {
+            let previousSection = indexPath.section - 1
+            return IndexPath(row: numberOfRows(inSection: previousSection) - 1, section: previousSection)
+        }
+        return nil
     }
     
     /// Remove TableFooterView.

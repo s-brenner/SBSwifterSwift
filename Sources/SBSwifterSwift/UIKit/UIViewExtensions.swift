@@ -425,13 +425,13 @@ extension UIView {
     
     /// Add anchors from any side of the current view into the specified anchors and return the newly added constraints.
     /// - Parameter top: Current view's top anchor will be anchored into the specified anchor.
-    /// - Parameter left: Current view's left anchor will be anchored into the specified anchor.
+    /// - Parameter leading: Current view's left anchor will be anchored into the specified anchor.
     /// - Parameter bottom: Current view's bottom anchor will be anchored into the specified anchor.
-    /// - Parameter right: Current view's right anchor will be anchored into the specified anchor.
+    /// - Parameter trailing: Current view's right anchor will be anchored into the specified anchor.
     /// - Parameter topConstant: Current view's top anchor margin.
-    /// - Parameter leftConstant: Current view's left anchor margin.
+    /// - Parameter leadingConstant: Current view's left anchor margin.
     /// - Parameter bottomConstant: Current view's bottom anchor margin.
-    /// - Parameter rightConstant: Current view's right anchor margin.
+    /// - Parameter trailingConstant: Current view's right anchor margin.
     /// - Parameter widthConstant: Current view's width.
     /// - Parameter heightConstant: Current view's height.
     /// - Returns: Array of newly added constraints (if applicable).

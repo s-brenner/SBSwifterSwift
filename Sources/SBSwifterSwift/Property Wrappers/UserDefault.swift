@@ -17,7 +17,7 @@ public struct UserDefault<T: Codable> {
     public let defaults: UserDefaults
     
     /// The default value.
-    public let defaultValue: DefaultValue
+    var defaultValue: DefaultValue
     
     /// The wrapped value.
     public var wrappedValue: T {

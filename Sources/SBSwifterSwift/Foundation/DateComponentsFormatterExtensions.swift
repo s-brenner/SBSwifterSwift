@@ -40,7 +40,7 @@ extension DateComponentsFormatter {
     /// Returns the local thread shared date components formatter configured as needed.
     /// - Parameter configuration: An optional configuration for the formatter.
     public static func sharedFormatter(withConfiguration configuration: Configuration? = nil) -> DateComponentsFormatter {
-        let name = "SBDate.\(String(describing: DateComponentsFormatter.self))"
+        let name = "SBSwifterSwift.\(String(describing: DateComponentsFormatter.self))"
         let formatter: DateComponentsFormatter = threadSharedObject(key: name, create: { return DateComponentsFormatter() })
         configuration?.apply(to: formatter)
         return formatter
