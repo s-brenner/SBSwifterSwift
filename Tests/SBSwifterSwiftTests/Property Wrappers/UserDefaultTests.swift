@@ -11,13 +11,6 @@ final class UserDefaultTests: XCTestCase {
             
             private static let prefix = "\(UserDefaultsManager.self).\(Self.self)"
             
-            fileprivate static let strings = ["Hello", "World"]
-            
-            fileprivate static var stringIndex = 0
-            
-            @UserDefault(key: "\(prefix).mutableDefault", defaultValue: strings[stringIndex])
-            static var mutableDefault: String
-            
             @UserDefault(key: "\(prefix).isEnabled", defaultValue: false)
             static var isEnabled: Bool
             
@@ -42,14 +35,6 @@ final class UserDefaultTests: XCTestCase {
     }
     
     
-    fileprivate let strings = ["Hello", "World"]
-    
-    fileprivate var stringIndex = 0
-    
-    @UserDefault(key: "mutableDefault", defaultValue: strings[stringIndex])
-    var mutableDefault: String
-    
-    
     func testDefaultValue() {
         
         XCTAssertFalse(UserDefaultsManager.Settings.isEnabled)
@@ -68,12 +53,5 @@ final class UserDefaultTests: XCTestCase {
         XCTAssertEqual(UserDefaultsManager.Settings.duration, DateComponents(minute: 15))
         
         UserDefaultsManager.Settings.reset()
-    }
-    
-    func testMutableDefault() {
-        
-        XCTAssertEqual(UserDefaultsManager.Settings.mutableDefault, UserDefaultsManager.Settings.strings[0])
-        UserDefaultsManager.Settings.stringIndex = 1
-        UserDefaultsManager.Settings.$mutableDefault.reset()
     }
 }

@@ -556,8 +556,6 @@ public extension TimeZone {
     
     static let asiaQatar = TimeZone(identifier: "Asia/Qatar")!
     
-    static let asiaQostanay = TimeZone(identifier: "Asia/Qostanay")!
-    
     static let asiaQyzylorda = TimeZone(identifier: "Asia/Qyzylorda")!
     
     static let asiaRangoon = TimeZone(identifier: "Asia/Rangoon")!
