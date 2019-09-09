@@ -269,6 +269,7 @@ extension UIView {
     /// Set the `isHidden` parameter with an optional animation.
     /// - Parameter hidden: A Boolean value that determines whether the view is hidden.
     /// - Parameter animated: Whether or not to animate the transition.
+    /// - Parameter duration: The duration of the animation.
     @objc open func setHidden(_ hidden: Bool, animated: Bool = false, duration: TimeInterval = 0.25) {
         fadeTransition(duration: animated ? duration : 0)
         isHidden = hidden
