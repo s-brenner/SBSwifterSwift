@@ -27,9 +27,9 @@ final class UserDefaultTests: XCTestCase {
             // MARK: - Methods
             
             static func reset() {
-                $isEnabled.reset()
-                $username.reset()
-                $duration.reset()
+//                $isEnabled.reset()
+//                $username.reset()
+//                $duration.reset()
             }
         }
     }
