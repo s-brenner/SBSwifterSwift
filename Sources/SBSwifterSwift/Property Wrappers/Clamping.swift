@@ -17,8 +17,9 @@ public struct Clamping<Value: Comparable> {
     
     // MARK: - Initializers
     
-    public init(initialValue value: Value, _ range: ClosedRange<Value>) {
-        self.value = value.clamped(to: range)
+    public init(wrappedValue: Value, _ range: ClosedRange<Value>) {
+//        precondition(range.contains(value))
+        value = wrappedValue.clamped(to: range)
         self.range = range
     }
 }

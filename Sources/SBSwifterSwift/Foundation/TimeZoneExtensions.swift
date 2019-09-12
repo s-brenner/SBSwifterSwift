@@ -3,877 +3,879 @@ import Foundation
 public extension TimeZone {
     
     static let africaAbidjan = TimeZone(identifier: "Africa/Abidjan")!
-    
+
     static let africaAccra = TimeZone(identifier: "Africa/Accra")!
-    
+
     static let africaAddisAbaba = TimeZone(identifier: "Africa/Addis_Ababa")!
-    
+
     static let africaAlgiers = TimeZone(identifier: "Africa/Algiers")!
-    
+
     static let africaAsmara = TimeZone(identifier: "Africa/Asmara")!
-    
+
     static let africaBamako = TimeZone(identifier: "Africa/Bamako")!
-    
+
     static let africaBangui = TimeZone(identifier: "Africa/Bangui")!
-    
+
     static let africaBanjul = TimeZone(identifier: "Africa/Banjul")!
-    
+
     static let africaBissau = TimeZone(identifier: "Africa/Bissau")!
-    
+
     static let africaBlantyre = TimeZone(identifier: "Africa/Blantyre")!
-    
+
     static let africaBrazzaville = TimeZone(identifier: "Africa/Brazzaville")!
-    
+
     static let africaBujumbura = TimeZone(identifier: "Africa/Bujumbura")!
-    
+
     static let africaCairo = TimeZone(identifier: "Africa/Cairo")!
-    
+
     static let africaCasablanca = TimeZone(identifier: "Africa/Casablanca")!
-    
+
     static let africaCeuta = TimeZone(identifier: "Africa/Ceuta")!
-    
+
     static let africaConakry = TimeZone(identifier: "Africa/Conakry")!
-    
+
     static let africaDakar = TimeZone(identifier: "Africa/Dakar")!
-    
+
     static let africaDarEsSalaam = TimeZone(identifier: "Africa/Dar_es_Salaam")!
-    
+
     static let africaDjibouti = TimeZone(identifier: "Africa/Djibouti")!
-    
+
     static let africaDouala = TimeZone(identifier: "Africa/Douala")!
-    
+
     static let africaElAaiun = TimeZone(identifier: "Africa/El_Aaiun")!
-    
+
     static let africaFreetown = TimeZone(identifier: "Africa/Freetown")!
-    
+
     static let africaGaborone = TimeZone(identifier: "Africa/Gaborone")!
-    
+
     static let africaHarare = TimeZone(identifier: "Africa/Harare")!
-    
+
     static let africaJohannesburg = TimeZone(identifier: "Africa/Johannesburg")!
-    
+
     static let africaJuba = TimeZone(identifier: "Africa/Juba")!
-    
+
     static let africaKampala = TimeZone(identifier: "Africa/Kampala")!
-    
+
     static let africaKhartoum = TimeZone(identifier: "Africa/Khartoum")!
-    
+
     static let africaKigali = TimeZone(identifier: "Africa/Kigali")!
-    
+
     static let africaKinshasa = TimeZone(identifier: "Africa/Kinshasa")!
-    
+
     static let africaLagos = TimeZone(identifier: "Africa/Lagos")!
-    
+
     static let africaLibreville = TimeZone(identifier: "Africa/Libreville")!
-    
+
     static let africaLome = TimeZone(identifier: "Africa/Lome")!
-    
+
     static let africaLuanda = TimeZone(identifier: "Africa/Luanda")!
-    
+
     static let africaLubumbashi = TimeZone(identifier: "Africa/Lubumbashi")!
-    
+
     static let africaLusaka = TimeZone(identifier: "Africa/Lusaka")!
-    
+
     static let africaMalabo = TimeZone(identifier: "Africa/Malabo")!
-    
+
     static let africaMaputo = TimeZone(identifier: "Africa/Maputo")!
-    
+
     static let africaMaseru = TimeZone(identifier: "Africa/Maseru")!
-    
+
     static let africaMbabane = TimeZone(identifier: "Africa/Mbabane")!
-    
+
     static let africaMogadishu = TimeZone(identifier: "Africa/Mogadishu")!
-    
+
     static let africaMonrovia = TimeZone(identifier: "Africa/Monrovia")!
-    
+
     static let africaNairobi = TimeZone(identifier: "Africa/Nairobi")!
-    
+
     static let africaNdjamena = TimeZone(identifier: "Africa/Ndjamena")!
-    
+
     static let africaNiamey = TimeZone(identifier: "Africa/Niamey")!
-    
+
     static let africaNouakchott = TimeZone(identifier: "Africa/Nouakchott")!
-    
+
     static let africaOuagadougou = TimeZone(identifier: "Africa/Ouagadougou")!
-    
+
     static let africaPortoNovo = TimeZone(identifier: "Africa/Porto-Novo")!
-    
+
     static let africaSaoTome = TimeZone(identifier: "Africa/Sao_Tome")!
-    
+
     static let africaTripoli = TimeZone(identifier: "Africa/Tripoli")!
-    
+
     static let africaTunis = TimeZone(identifier: "Africa/Tunis")!
-    
+
     static let africaWindhoek = TimeZone(identifier: "Africa/Windhoek")!
-    
+
     static let americaAdak = TimeZone(identifier: "America/Adak")!
-    
+
     static let americaAnchorage = TimeZone(identifier: "America/Anchorage")!
-    
+
     static let americaAnguilla = TimeZone(identifier: "America/Anguilla")!
-    
+
     static let americaAntigua = TimeZone(identifier: "America/Antigua")!
-    
+
     static let americaAraguaina = TimeZone(identifier: "America/Araguaina")!
-    
+
     static let americaArgentinaBuenosAires = TimeZone(identifier: "America/Argentina/Buenos_Aires")!
-    
+
     static let americaArgentinaCatamarca = TimeZone(identifier: "America/Argentina/Catamarca")!
-    
+
     static let americaArgentinaCordoba = TimeZone(identifier: "America/Argentina/Cordoba")!
-    
+
     static let americaArgentinaJujuy = TimeZone(identifier: "America/Argentina/Jujuy")!
-    
+
     static let americaArgentinaLaRioja = TimeZone(identifier: "America/Argentina/La_Rioja")!
-    
+
     static let americaArgentinaMendoza = TimeZone(identifier: "America/Argentina/Mendoza")!
-    
+
     static let americaArgentinaRioGallegos = TimeZone(identifier: "America/Argentina/Rio_Gallegos")!
-    
+
     static let americaArgentinaSalta = TimeZone(identifier: "America/Argentina/Salta")!
-    
+
     static let americaArgentinaSanJuan = TimeZone(identifier: "America/Argentina/San_Juan")!
-    
+
     static let americaArgentinaSanLuis = TimeZone(identifier: "America/Argentina/San_Luis")!
-    
+
     static let americaArgentinaTucuman = TimeZone(identifier: "America/Argentina/Tucuman")!
-    
+
     static let americaArgentinaUshuaia = TimeZone(identifier: "America/Argentina/Ushuaia")!
-    
+
     static let americaAruba = TimeZone(identifier: "America/Aruba")!
-    
+
     static let americaAsuncion = TimeZone(identifier: "America/Asuncion")!
-    
+
     static let americaAtikokan = TimeZone(identifier: "America/Atikokan")!
-    
+
     static let americaBahia = TimeZone(identifier: "America/Bahia")!
-    
+
     static let americaBahiaBanderas = TimeZone(identifier: "America/Bahia_Banderas")!
-    
+
     static let americaBarbados = TimeZone(identifier: "America/Barbados")!
-    
+
     static let americaBelem = TimeZone(identifier: "America/Belem")!
-    
+
     static let americaBelize = TimeZone(identifier: "America/Belize")!
-    
+
     static let americaBlancSablon = TimeZone(identifier: "America/Blanc-Sablon")!
-    
+
     static let americaBoaVista = TimeZone(identifier: "America/Boa_Vista")!
-    
+
     static let americaBogota = TimeZone(identifier: "America/Bogota")!
-    
+
     static let americaBoise = TimeZone(identifier: "America/Boise")!
-    
+
     static let americaCambridgeBay = TimeZone(identifier: "America/Cambridge_Bay")!
-    
+
     static let americaCampoGrande = TimeZone(identifier: "America/Campo_Grande")!
-    
+
     static let americaCancun = TimeZone(identifier: "America/Cancun")!
-    
+
     static let americaCaracas = TimeZone(identifier: "America/Caracas")!
-    
+
     static let americaCayenne = TimeZone(identifier: "America/Cayenne")!
-    
+
     static let americaCayman = TimeZone(identifier: "America/Cayman")!
-    
+
     static let americaChicago = TimeZone(identifier: "America/Chicago")!
-    
+
     static let americaChihuahua = TimeZone(identifier: "America/Chihuahua")!
-    
+
     static let americaCostaRica = TimeZone(identifier: "America/Costa_Rica")!
-    
+
     static let americaCreston = TimeZone(identifier: "America/Creston")!
-    
+
     static let americaCuiaba = TimeZone(identifier: "America/Cuiaba")!
-    
+
     static let americaCuracao = TimeZone(identifier: "America/Curacao")!
-    
+
     static let americaDanmarkshavn = TimeZone(identifier: "America/Danmarkshavn")!
-    
+
     static let americaDawson = TimeZone(identifier: "America/Dawson")!
-    
+
     static let americaDawsonCreek = TimeZone(identifier: "America/Dawson_Creek")!
-    
+
     static let americaDenver = TimeZone(identifier: "America/Denver")!
-    
+
     static let americaDetroit = TimeZone(identifier: "America/Detroit")!
-    
+
     static let americaDominica = TimeZone(identifier: "America/Dominica")!
-    
+
     static let americaEdmonton = TimeZone(identifier: "America/Edmonton")!
-    
+
     static let americaEirunepe = TimeZone(identifier: "America/Eirunepe")!
-    
+
     static let americaElSalvador = TimeZone(identifier: "America/El_Salvador")!
-    
+
     static let americaFortNelson = TimeZone(identifier: "America/Fort_Nelson")!
-    
+
     static let americaFortaleza = TimeZone(identifier: "America/Fortaleza")!
-    
+
     static let americaGlaceBay = TimeZone(identifier: "America/Glace_Bay")!
-    
+
     static let americaGodthab = TimeZone(identifier: "America/Godthab")!
-    
+
     static let americaGooseBay = TimeZone(identifier: "America/Goose_Bay")!
-    
+
     static let americaGrandTurk = TimeZone(identifier: "America/Grand_Turk")!
-    
+
     static let americaGrenada = TimeZone(identifier: "America/Grenada")!
-    
+
     static let americaGuadeloupe = TimeZone(identifier: "America/Guadeloupe")!
-    
+
     static let americaGuatemala = TimeZone(identifier: "America/Guatemala")!
-    
+
     static let americaGuayaquil = TimeZone(identifier: "America/Guayaquil")!
-    
+
     static let americaGuyana = TimeZone(identifier: "America/Guyana")!
-    
+
     static let americaHalifax = TimeZone(identifier: "America/Halifax")!
-    
+
     static let americaHavana = TimeZone(identifier: "America/Havana")!
-    
+
     static let americaHermosillo = TimeZone(identifier: "America/Hermosillo")!
-    
+
     static let americaIndianaIndianapolis = TimeZone(identifier: "America/Indiana/Indianapolis")!
-    
+
     static let americaIndianaKnox = TimeZone(identifier: "America/Indiana/Knox")!
-    
+
     static let americaIndianaMarengo = TimeZone(identifier: "America/Indiana/Marengo")!
-    
+
     static let americaIndianaPetersburg = TimeZone(identifier: "America/Indiana/Petersburg")!
-    
+
     static let americaIndianaTellCity = TimeZone(identifier: "America/Indiana/Tell_City")!
-    
+
     static let americaIndianaVevay = TimeZone(identifier: "America/Indiana/Vevay")!
-    
+
     static let americaIndianaVincennes = TimeZone(identifier: "America/Indiana/Vincennes")!
-    
+
     static let americaIndianaWinamac = TimeZone(identifier: "America/Indiana/Winamac")!
-    
+
     static let americaInuvik = TimeZone(identifier: "America/Inuvik")!
-    
+
     static let americaIqaluit = TimeZone(identifier: "America/Iqaluit")!
-    
+
     static let americaJamaica = TimeZone(identifier: "America/Jamaica")!
-    
+
     static let americaJuneau = TimeZone(identifier: "America/Juneau")!
-    
+
     static let americaKentuckyLouisville = TimeZone(identifier: "America/Kentucky/Louisville")!
-    
+
     static let americaKentuckyMonticello = TimeZone(identifier: "America/Kentucky/Monticello")!
-    
+
     static let americaKralendijk = TimeZone(identifier: "America/Kralendijk")!
-    
+
     static let americaLaPaz = TimeZone(identifier: "America/La_Paz")!
-    
+
     static let americaLima = TimeZone(identifier: "America/Lima")!
-    
+
     static let americaLosAngeles = TimeZone(identifier: "America/Los_Angeles")!
-    
+
     static let americaLowerPrinces = TimeZone(identifier: "America/Lower_Princes")!
-    
+
     static let americaMaceio = TimeZone(identifier: "America/Maceio")!
-    
+
     static let americaManagua = TimeZone(identifier: "America/Managua")!
-    
+
     static let americaManaus = TimeZone(identifier: "America/Manaus")!
-    
+
     static let americaMarigot = TimeZone(identifier: "America/Marigot")!
-    
+
     static let americaMartinique = TimeZone(identifier: "America/Martinique")!
-    
+
     static let americaMatamoros = TimeZone(identifier: "America/Matamoros")!
-    
+
     static let americaMazatlan = TimeZone(identifier: "America/Mazatlan")!
-    
+
     static let americaMenominee = TimeZone(identifier: "America/Menominee")!
-    
+
     static let americaMerida = TimeZone(identifier: "America/Merida")!
-    
+
     static let americaMetlakatla = TimeZone(identifier: "America/Metlakatla")!
-    
+
     static let americaMexicoCity = TimeZone(identifier: "America/Mexico_City")!
-    
+
     static let americaMiquelon = TimeZone(identifier: "America/Miquelon")!
-    
+
     static let americaMoncton = TimeZone(identifier: "America/Moncton")!
-    
+
     static let americaMonterrey = TimeZone(identifier: "America/Monterrey")!
-    
+
     static let americaMontevideo = TimeZone(identifier: "America/Montevideo")!
-    
+
     static let americaMontreal = TimeZone(identifier: "America/Montreal")!
-    
+
     static let americaMontserrat = TimeZone(identifier: "America/Montserrat")!
-    
+
     static let americaNassau = TimeZone(identifier: "America/Nassau")!
-    
+
     static let americaNewYork = TimeZone(identifier: "America/New_York")!
-    
+
     static let americaNipigon = TimeZone(identifier: "America/Nipigon")!
-    
+
     static let americaNome = TimeZone(identifier: "America/Nome")!
-    
+
     static let americaNoronha = TimeZone(identifier: "America/Noronha")!
-    
+
     static let americaNorthDakotaBeulah = TimeZone(identifier: "America/North_Dakota/Beulah")!
-    
+
     static let americaNorthDakotaCenter = TimeZone(identifier: "America/North_Dakota/Center")!
-    
+
     static let americaNorthDakotaNewSalem = TimeZone(identifier: "America/North_Dakota/New_Salem")!
-    
+
     static let americaOjinaga = TimeZone(identifier: "America/Ojinaga")!
-    
+
     static let americaPanama = TimeZone(identifier: "America/Panama")!
-    
+
     static let americaPangnirtung = TimeZone(identifier: "America/Pangnirtung")!
-    
+
     static let americaParamaribo = TimeZone(identifier: "America/Paramaribo")!
-    
+
     static let americaPhoenix = TimeZone(identifier: "America/Phoenix")!
-    
+
     static let americaPortAuPrince = TimeZone(identifier: "America/Port-au-Prince")!
-    
+
     static let americaPortOfSpain = TimeZone(identifier: "America/Port_of_Spain")!
-    
+
     static let americaPortoVelho = TimeZone(identifier: "America/Porto_Velho")!
-    
+
     static let americaPuertoRico = TimeZone(identifier: "America/Puerto_Rico")!
-    
+
     static let americaPuntaArenas = TimeZone(identifier: "America/Punta_Arenas")!
-    
+
     static let americaRainyRiver = TimeZone(identifier: "America/Rainy_River")!
-    
+
     static let americaRankinInlet = TimeZone(identifier: "America/Rankin_Inlet")!
-    
+
     static let americaRecife = TimeZone(identifier: "America/Recife")!
-    
+
     static let americaRegina = TimeZone(identifier: "America/Regina")!
-    
+
     static let americaResolute = TimeZone(identifier: "America/Resolute")!
-    
+
     static let americaRioBranco = TimeZone(identifier: "America/Rio_Branco")!
-    
+
     static let americaSantaIsabel = TimeZone(identifier: "America/Santa_Isabel")!
-    
+
     static let americaSantarem = TimeZone(identifier: "America/Santarem")!
-    
+
     static let americaSantiago = TimeZone(identifier: "America/Santiago")!
-    
+
     static let americaSantoDomingo = TimeZone(identifier: "America/Santo_Domingo")!
-    
+
     static let americaSaoPaulo = TimeZone(identifier: "America/Sao_Paulo")!
-    
+
     static let americaScoresbysund = TimeZone(identifier: "America/Scoresbysund")!
-    
+
     static let americaShiprock = TimeZone(identifier: "America/Shiprock")!
-    
+
     static let americaSitka = TimeZone(identifier: "America/Sitka")!
-    
+
     static let americaStBarthelemy = TimeZone(identifier: "America/St_Barthelemy")!
-    
+
     static let americaStJohns = TimeZone(identifier: "America/St_Johns")!
-    
+
     static let americaStKitts = TimeZone(identifier: "America/St_Kitts")!
-    
+
     static let americaStLucia = TimeZone(identifier: "America/St_Lucia")!
-    
+
     static let americaStThomas = TimeZone(identifier: "America/St_Thomas")!
-    
+
     static let americaStVincent = TimeZone(identifier: "America/St_Vincent")!
-    
+
     static let americaSwiftCurrent = TimeZone(identifier: "America/Swift_Current")!
-    
+
     static let americaTegucigalpa = TimeZone(identifier: "America/Tegucigalpa")!
-    
+
     static let americaThule = TimeZone(identifier: "America/Thule")!
-    
+
     static let americaThunderBay = TimeZone(identifier: "America/Thunder_Bay")!
-    
+
     static let americaTijuana = TimeZone(identifier: "America/Tijuana")!
-    
+
     static let americaToronto = TimeZone(identifier: "America/Toronto")!
-    
+
     static let americaTortola = TimeZone(identifier: "America/Tortola")!
-    
+
     static let americaVancouver = TimeZone(identifier: "America/Vancouver")!
-    
+
     static let americaWhitehorse = TimeZone(identifier: "America/Whitehorse")!
-    
+
     static let americaWinnipeg = TimeZone(identifier: "America/Winnipeg")!
-    
+
     static let americaYakutat = TimeZone(identifier: "America/Yakutat")!
-    
+
     static let americaYellowknife = TimeZone(identifier: "America/Yellowknife")!
-    
+
     static let antarcticaCasey = TimeZone(identifier: "Antarctica/Casey")!
-    
+
     static let antarcticaDavis = TimeZone(identifier: "Antarctica/Davis")!
-    
+
     static let antarcticaDumontdurville = TimeZone(identifier: "Antarctica/DumontDUrville")!
-    
+
     static let antarcticaMacquarie = TimeZone(identifier: "Antarctica/Macquarie")!
-    
+
     static let antarcticaMawson = TimeZone(identifier: "Antarctica/Mawson")!
-    
+
     static let antarcticaMcmurdo = TimeZone(identifier: "Antarctica/McMurdo")!
-    
+
     static let antarcticaPalmer = TimeZone(identifier: "Antarctica/Palmer")!
-    
+
     static let antarcticaRothera = TimeZone(identifier: "Antarctica/Rothera")!
-    
+
     static let antarcticaSouthPole = TimeZone(identifier: "Antarctica/South_Pole")!
-    
+
     static let antarcticaSyowa = TimeZone(identifier: "Antarctica/Syowa")!
-    
+
     static let antarcticaTroll = TimeZone(identifier: "Antarctica/Troll")!
-    
+
     static let antarcticaVostok = TimeZone(identifier: "Antarctica/Vostok")!
-    
+
     static let arcticLongyearbyen = TimeZone(identifier: "Arctic/Longyearbyen")!
-    
+
     static let asiaAden = TimeZone(identifier: "Asia/Aden")!
-    
+
     static let asiaAlmaty = TimeZone(identifier: "Asia/Almaty")!
-    
+
     static let asiaAmman = TimeZone(identifier: "Asia/Amman")!
-    
+
     static let asiaAnadyr = TimeZone(identifier: "Asia/Anadyr")!
-    
+
     static let asiaAqtau = TimeZone(identifier: "Asia/Aqtau")!
-    
+
     static let asiaAqtobe = TimeZone(identifier: "Asia/Aqtobe")!
-    
+
     static let asiaAshgabat = TimeZone(identifier: "Asia/Ashgabat")!
-    
+
     static let asiaAtyrau = TimeZone(identifier: "Asia/Atyrau")!
-    
+
     static let asiaBaghdad = TimeZone(identifier: "Asia/Baghdad")!
-    
+
     static let asiaBahrain = TimeZone(identifier: "Asia/Bahrain")!
-    
+
     static let asiaBaku = TimeZone(identifier: "Asia/Baku")!
-    
+
     static let asiaBangkok = TimeZone(identifier: "Asia/Bangkok")!
-    
+
     static let asiaBarnaul = TimeZone(identifier: "Asia/Barnaul")!
-    
+
     static let asiaBeirut = TimeZone(identifier: "Asia/Beirut")!
-    
+
     static let asiaBishkek = TimeZone(identifier: "Asia/Bishkek")!
-    
+
     static let asiaBrunei = TimeZone(identifier: "Asia/Brunei")!
-    
+
     static let asiaCalcutta = TimeZone(identifier: "Asia/Calcutta")!
-    
+
     static let asiaChita = TimeZone(identifier: "Asia/Chita")!
-    
+
     static let asiaChoibalsan = TimeZone(identifier: "Asia/Choibalsan")!
-    
+
     static let asiaChongqing = TimeZone(identifier: "Asia/Chongqing")!
-    
+
     static let asiaColombo = TimeZone(identifier: "Asia/Colombo")!
-    
+
     static let asiaDamascus = TimeZone(identifier: "Asia/Damascus")!
-    
+
     static let asiaDhaka = TimeZone(identifier: "Asia/Dhaka")!
-    
+
     static let asiaDili = TimeZone(identifier: "Asia/Dili")!
-    
+
     static let asiaDubai = TimeZone(identifier: "Asia/Dubai")!
-    
+
     static let asiaDushanbe = TimeZone(identifier: "Asia/Dushanbe")!
-    
+
     static let asiaFamagusta = TimeZone(identifier: "Asia/Famagusta")!
-    
+
     static let asiaGaza = TimeZone(identifier: "Asia/Gaza")!
-    
+
     static let asiaHarbin = TimeZone(identifier: "Asia/Harbin")!
-    
+
     static let asiaHebron = TimeZone(identifier: "Asia/Hebron")!
-    
+
     static let asiaHoChiMinh = TimeZone(identifier: "Asia/Ho_Chi_Minh")!
-    
+
     static let asiaHongKong = TimeZone(identifier: "Asia/Hong_Kong")!
-    
+
     static let asiaHovd = TimeZone(identifier: "Asia/Hovd")!
-    
+
     static let asiaIrkutsk = TimeZone(identifier: "Asia/Irkutsk")!
-    
+
     static let asiaJakarta = TimeZone(identifier: "Asia/Jakarta")!
-    
+
     static let asiaJayapura = TimeZone(identifier: "Asia/Jayapura")!
-    
+
     static let asiaJerusalem = TimeZone(identifier: "Asia/Jerusalem")!
-    
+
     static let asiaKabul = TimeZone(identifier: "Asia/Kabul")!
-    
+
     static let asiaKamchatka = TimeZone(identifier: "Asia/Kamchatka")!
-    
+
     static let asiaKarachi = TimeZone(identifier: "Asia/Karachi")!
-    
+
     static let asiaKashgar = TimeZone(identifier: "Asia/Kashgar")!
-    
+
     static let asiaKathmandu = TimeZone(identifier: "Asia/Kathmandu")!
-    
+
     static let asiaKatmandu = TimeZone(identifier: "Asia/Katmandu")!
-    
+
     static let asiaKhandyga = TimeZone(identifier: "Asia/Khandyga")!
-    
+
     static let asiaKrasnoyarsk = TimeZone(identifier: "Asia/Krasnoyarsk")!
-    
+
     static let asiaKualaLumpur = TimeZone(identifier: "Asia/Kuala_Lumpur")!
-    
+
     static let asiaKuching = TimeZone(identifier: "Asia/Kuching")!
-    
+
     static let asiaKuwait = TimeZone(identifier: "Asia/Kuwait")!
-    
+
     static let asiaMacau = TimeZone(identifier: "Asia/Macau")!
-    
+
     static let asiaMagadan = TimeZone(identifier: "Asia/Magadan")!
-    
+
     static let asiaMakassar = TimeZone(identifier: "Asia/Makassar")!
-    
+
     static let asiaManila = TimeZone(identifier: "Asia/Manila")!
-    
+
     static let asiaMuscat = TimeZone(identifier: "Asia/Muscat")!
-    
+
     static let asiaNicosia = TimeZone(identifier: "Asia/Nicosia")!
-    
+
     static let asiaNovokuznetsk = TimeZone(identifier: "Asia/Novokuznetsk")!
-    
+
     static let asiaNovosibirsk = TimeZone(identifier: "Asia/Novosibirsk")!
-    
+
     static let asiaOmsk = TimeZone(identifier: "Asia/Omsk")!
-    
+
     static let asiaOral = TimeZone(identifier: "Asia/Oral")!
-    
+
     static let asiaPhnomPenh = TimeZone(identifier: "Asia/Phnom_Penh")!
-    
+
     static let asiaPontianak = TimeZone(identifier: "Asia/Pontianak")!
-    
+
     static let asiaPyongyang = TimeZone(identifier: "Asia/Pyongyang")!
-    
+
     static let asiaQatar = TimeZone(identifier: "Asia/Qatar")!
-    
+
+    static let asiaQostanay = TimeZone(identifier: "Asia/Qostanay")!
+
     static let asiaQyzylorda = TimeZone(identifier: "Asia/Qyzylorda")!
-    
+
     static let asiaRangoon = TimeZone(identifier: "Asia/Rangoon")!
-    
+
     static let asiaRiyadh = TimeZone(identifier: "Asia/Riyadh")!
-    
+
     static let asiaSakhalin = TimeZone(identifier: "Asia/Sakhalin")!
-    
+
     static let asiaSamarkand = TimeZone(identifier: "Asia/Samarkand")!
-    
+
     static let asiaSeoul = TimeZone(identifier: "Asia/Seoul")!
-    
+
     static let asiaShanghai = TimeZone(identifier: "Asia/Shanghai")!
-    
+
     static let asiaSingapore = TimeZone(identifier: "Asia/Singapore")!
-    
+
     static let asiaSrednekolymsk = TimeZone(identifier: "Asia/Srednekolymsk")!
-    
+
     static let asiaTaipei = TimeZone(identifier: "Asia/Taipei")!
-    
+
     static let asiaTashkent = TimeZone(identifier: "Asia/Tashkent")!
-    
+
     static let asiaTbilisi = TimeZone(identifier: "Asia/Tbilisi")!
-    
+
     static let asiaTehran = TimeZone(identifier: "Asia/Tehran")!
-    
+
     static let asiaThimphu = TimeZone(identifier: "Asia/Thimphu")!
-    
+
     static let asiaTokyo = TimeZone(identifier: "Asia/Tokyo")!
-    
+
     static let asiaTomsk = TimeZone(identifier: "Asia/Tomsk")!
-    
+
     static let asiaUlaanbaatar = TimeZone(identifier: "Asia/Ulaanbaatar")!
-    
+
     static let asiaUrumqi = TimeZone(identifier: "Asia/Urumqi")!
-    
+
     static let asiaUstNera = TimeZone(identifier: "Asia/Ust-Nera")!
-    
+
     static let asiaVientiane = TimeZone(identifier: "Asia/Vientiane")!
-    
+
     static let asiaVladivostok = TimeZone(identifier: "Asia/Vladivostok")!
-    
+
     static let asiaYakutsk = TimeZone(identifier: "Asia/Yakutsk")!
-    
+
     static let asiaYangon = TimeZone(identifier: "Asia/Yangon")!
-    
+
     static let asiaYekaterinburg = TimeZone(identifier: "Asia/Yekaterinburg")!
-    
+
     static let asiaYerevan = TimeZone(identifier: "Asia/Yerevan")!
-    
+
     static let atlanticAzores = TimeZone(identifier: "Atlantic/Azores")!
-    
+
     static let atlanticBermuda = TimeZone(identifier: "Atlantic/Bermuda")!
-    
+
     static let atlanticCanary = TimeZone(identifier: "Atlantic/Canary")!
-    
+
     static let atlanticCapeVerde = TimeZone(identifier: "Atlantic/Cape_Verde")!
-    
+
     static let atlanticFaroe = TimeZone(identifier: "Atlantic/Faroe")!
-    
+
     static let atlanticMadeira = TimeZone(identifier: "Atlantic/Madeira")!
-    
+
     static let atlanticReykjavik = TimeZone(identifier: "Atlantic/Reykjavik")!
-    
+
     static let atlanticSouthGeorgia = TimeZone(identifier: "Atlantic/South_Georgia")!
-    
+
     static let atlanticStHelena = TimeZone(identifier: "Atlantic/St_Helena")!
-    
+
     static let atlanticStanley = TimeZone(identifier: "Atlantic/Stanley")!
-    
+
     static let australiaAdelaide = TimeZone(identifier: "Australia/Adelaide")!
-    
+
     static let australiaBrisbane = TimeZone(identifier: "Australia/Brisbane")!
-    
+
     static let australiaBrokenHill = TimeZone(identifier: "Australia/Broken_Hill")!
-    
+
     static let australiaCurrie = TimeZone(identifier: "Australia/Currie")!
-    
+
     static let australiaDarwin = TimeZone(identifier: "Australia/Darwin")!
-    
+
     static let australiaEucla = TimeZone(identifier: "Australia/Eucla")!
-    
+
     static let australiaHobart = TimeZone(identifier: "Australia/Hobart")!
-    
+
     static let australiaLindeman = TimeZone(identifier: "Australia/Lindeman")!
-    
+
     static let australiaLordHowe = TimeZone(identifier: "Australia/Lord_Howe")!
-    
+
     static let australiaMelbourne = TimeZone(identifier: "Australia/Melbourne")!
-    
+
     static let australiaPerth = TimeZone(identifier: "Australia/Perth")!
-    
+
     static let australiaSydney = TimeZone(identifier: "Australia/Sydney")!
-    
+
     static let europeAmsterdam = TimeZone(identifier: "Europe/Amsterdam")!
-    
+
     static let europeAndorra = TimeZone(identifier: "Europe/Andorra")!
-    
+
     static let europeAstrakhan = TimeZone(identifier: "Europe/Astrakhan")!
-    
+
     static let europeAthens = TimeZone(identifier: "Europe/Athens")!
-    
+
     static let europeBelgrade = TimeZone(identifier: "Europe/Belgrade")!
-    
+
     static let europeBerlin = TimeZone(identifier: "Europe/Berlin")!
-    
+
     static let europeBratislava = TimeZone(identifier: "Europe/Bratislava")!
-    
+
     static let europeBrussels = TimeZone(identifier: "Europe/Brussels")!
-    
+
     static let europeBucharest = TimeZone(identifier: "Europe/Bucharest")!
-    
+
     static let europeBudapest = TimeZone(identifier: "Europe/Budapest")!
-    
+
     static let europeBusingen = TimeZone(identifier: "Europe/Busingen")!
-    
+
     static let europeChisinau = TimeZone(identifier: "Europe/Chisinau")!
-    
+
     static let europeCopenhagen = TimeZone(identifier: "Europe/Copenhagen")!
-    
+
     static let europeDublin = TimeZone(identifier: "Europe/Dublin")!
-    
+
     static let europeGibraltar = TimeZone(identifier: "Europe/Gibraltar")!
-    
+
     static let europeGuernsey = TimeZone(identifier: "Europe/Guernsey")!
-    
+
     static let europeHelsinki = TimeZone(identifier: "Europe/Helsinki")!
-    
+
     static let europeIsleOfMan = TimeZone(identifier: "Europe/Isle_of_Man")!
-    
+
     static let europeIstanbul = TimeZone(identifier: "Europe/Istanbul")!
-    
+
     static let europeJersey = TimeZone(identifier: "Europe/Jersey")!
-    
+
     static let europeKaliningrad = TimeZone(identifier: "Europe/Kaliningrad")!
-    
+
     static let europeKiev = TimeZone(identifier: "Europe/Kiev")!
-    
+
     static let europeKirov = TimeZone(identifier: "Europe/Kirov")!
-    
+
     static let europeLisbon = TimeZone(identifier: "Europe/Lisbon")!
-    
+
     static let europeLjubljana = TimeZone(identifier: "Europe/Ljubljana")!
-    
+
     static let europeLondon = TimeZone(identifier: "Europe/London")!
-    
+
     static let europeLuxembourg = TimeZone(identifier: "Europe/Luxembourg")!
-    
+
     static let europeMadrid = TimeZone(identifier: "Europe/Madrid")!
-    
+
     static let europeMalta = TimeZone(identifier: "Europe/Malta")!
-    
+
     static let europeMariehamn = TimeZone(identifier: "Europe/Mariehamn")!
-    
+
     static let europeMinsk = TimeZone(identifier: "Europe/Minsk")!
-    
+
     static let europeMonaco = TimeZone(identifier: "Europe/Monaco")!
-    
+
     static let europeMoscow = TimeZone(identifier: "Europe/Moscow")!
-    
+
     static let europeOslo = TimeZone(identifier: "Europe/Oslo")!
-    
+
     static let europeParis = TimeZone(identifier: "Europe/Paris")!
-    
+
     static let europePodgorica = TimeZone(identifier: "Europe/Podgorica")!
-    
+
     static let europePrague = TimeZone(identifier: "Europe/Prague")!
-    
+
     static let europeRiga = TimeZone(identifier: "Europe/Riga")!
-    
+
     static let europeRome = TimeZone(identifier: "Europe/Rome")!
-    
+
     static let europeSamara = TimeZone(identifier: "Europe/Samara")!
-    
+
     static let europeSanMarino = TimeZone(identifier: "Europe/San_Marino")!
-    
+
     static let europeSarajevo = TimeZone(identifier: "Europe/Sarajevo")!
-    
+
     static let europeSaratov = TimeZone(identifier: "Europe/Saratov")!
-    
+
     static let europeSimferopol = TimeZone(identifier: "Europe/Simferopol")!
-    
+
     static let europeSkopje = TimeZone(identifier: "Europe/Skopje")!
-    
+
     static let europeSofia = TimeZone(identifier: "Europe/Sofia")!
-    
+
     static let europeStockholm = TimeZone(identifier: "Europe/Stockholm")!
-    
+
     static let europeTallinn = TimeZone(identifier: "Europe/Tallinn")!
-    
+
     static let europeTirane = TimeZone(identifier: "Europe/Tirane")!
-    
+
     static let europeUlyanovsk = TimeZone(identifier: "Europe/Ulyanovsk")!
-    
+
     static let europeUzhgorod = TimeZone(identifier: "Europe/Uzhgorod")!
-    
+
     static let europeVaduz = TimeZone(identifier: "Europe/Vaduz")!
-    
+
     static let europeVatican = TimeZone(identifier: "Europe/Vatican")!
-    
+
     static let europeVienna = TimeZone(identifier: "Europe/Vienna")!
-    
+
     static let europeVilnius = TimeZone(identifier: "Europe/Vilnius")!
-    
+
     static let europeVolgograd = TimeZone(identifier: "Europe/Volgograd")!
-    
+
     static let europeWarsaw = TimeZone(identifier: "Europe/Warsaw")!
-    
+
     static let europeZagreb = TimeZone(identifier: "Europe/Zagreb")!
-    
+
     static let europeZaporozhye = TimeZone(identifier: "Europe/Zaporozhye")!
-    
+
     static let europeZurich = TimeZone(identifier: "Europe/Zurich")!
-    
+
     static let gmt = TimeZone(identifier: "GMT")!
-    
+
     static let indianAntananarivo = TimeZone(identifier: "Indian/Antananarivo")!
-    
+
     static let indianChagos = TimeZone(identifier: "Indian/Chagos")!
-    
+
     static let indianChristmas = TimeZone(identifier: "Indian/Christmas")!
-    
+
     static let indianCocos = TimeZone(identifier: "Indian/Cocos")!
-    
+
     static let indianComoro = TimeZone(identifier: "Indian/Comoro")!
-    
+
     static let indianKerguelen = TimeZone(identifier: "Indian/Kerguelen")!
-    
+
     static let indianMahe = TimeZone(identifier: "Indian/Mahe")!
-    
+
     static let indianMaldives = TimeZone(identifier: "Indian/Maldives")!
-    
+
     static let indianMauritius = TimeZone(identifier: "Indian/Mauritius")!
-    
+
     static let indianMayotte = TimeZone(identifier: "Indian/Mayotte")!
-    
+
     static let indianReunion = TimeZone(identifier: "Indian/Reunion")!
-    
+
     static let pacificApia = TimeZone(identifier: "Pacific/Apia")!
-    
+
     static let pacificAuckland = TimeZone(identifier: "Pacific/Auckland")!
-    
+
     static let pacificBougainville = TimeZone(identifier: "Pacific/Bougainville")!
-    
+
     static let pacificChatham = TimeZone(identifier: "Pacific/Chatham")!
-    
+
     static let pacificChuuk = TimeZone(identifier: "Pacific/Chuuk")!
-    
+
     static let pacificEaster = TimeZone(identifier: "Pacific/Easter")!
-    
+
     static let pacificEfate = TimeZone(identifier: "Pacific/Efate")!
-    
+
     static let pacificEnderbury = TimeZone(identifier: "Pacific/Enderbury")!
-    
+
     static let pacificFakaofo = TimeZone(identifier: "Pacific/Fakaofo")!
-    
+
     static let pacificFiji = TimeZone(identifier: "Pacific/Fiji")!
-    
+
     static let pacificFunafuti = TimeZone(identifier: "Pacific/Funafuti")!
-    
+
     static let pacificGalapagos = TimeZone(identifier: "Pacific/Galapagos")!
-    
+
     static let pacificGambier = TimeZone(identifier: "Pacific/Gambier")!
-    
+
     static let pacificGuadalcanal = TimeZone(identifier: "Pacific/Guadalcanal")!
-    
+
     static let pacificGuam = TimeZone(identifier: "Pacific/Guam")!
-    
+
     static let pacificHonolulu = TimeZone(identifier: "Pacific/Honolulu")!
-    
+
     static let pacificJohnston = TimeZone(identifier: "Pacific/Johnston")!
-    
+
     static let pacificKiritimati = TimeZone(identifier: "Pacific/Kiritimati")!
-    
+
     static let pacificKosrae = TimeZone(identifier: "Pacific/Kosrae")!
-    
+
     static let pacificKwajalein = TimeZone(identifier: "Pacific/Kwajalein")!
-    
+
     static let pacificMajuro = TimeZone(identifier: "Pacific/Majuro")!
-    
+
     static let pacificMarquesas = TimeZone(identifier: "Pacific/Marquesas")!
-    
+
     static let pacificMidway = TimeZone(identifier: "Pacific/Midway")!
-    
+
     static let pacificNauru = TimeZone(identifier: "Pacific/Nauru")!
-    
+
     static let pacificNiue = TimeZone(identifier: "Pacific/Niue")!
-    
+
     static let pacificNorfolk = TimeZone(identifier: "Pacific/Norfolk")!
-    
+
     static let pacificNoumea = TimeZone(identifier: "Pacific/Noumea")!
-    
+
     static let pacificPagoPago = TimeZone(identifier: "Pacific/Pago_Pago")!
-    
+
     static let pacificPalau = TimeZone(identifier: "Pacific/Palau")!
-    
+
     static let pacificPitcairn = TimeZone(identifier: "Pacific/Pitcairn")!
-    
+
     static let pacificPohnpei = TimeZone(identifier: "Pacific/Pohnpei")!
-    
+
     static let pacificPonape = TimeZone(identifier: "Pacific/Ponape")!
-    
+
     static let pacificPortMoresby = TimeZone(identifier: "Pacific/Port_Moresby")!
-    
+
     static let pacificRarotonga = TimeZone(identifier: "Pacific/Rarotonga")!
-    
+
     static let pacificSaipan = TimeZone(identifier: "Pacific/Saipan")!
-    
+
     static let pacificTahiti = TimeZone(identifier: "Pacific/Tahiti")!
-    
+
     static let pacificTarawa = TimeZone(identifier: "Pacific/Tarawa")!
-    
+
     static let pacificTongatapu = TimeZone(identifier: "Pacific/Tongatapu")!
-    
+
     static let pacificTruk = TimeZone(identifier: "Pacific/Truk")!
-    
+
     static let pacificWake = TimeZone(identifier: "Pacific/Wake")!
-    
+
     static let pacificWallis = TimeZone(identifier: "Pacific/Wallis")!
 }
 
