@@ -1,8 +1,10 @@
 import Foundation
 import Combine
 
+@available(iOS 13.0, *)
 private var cancellables = [String : AnyCancellable]()
 
+@available(iOS 13.0, *)
 extension Published {
     
     public init(wrappedValue value: Value, key: String) {
