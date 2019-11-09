@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 
 extension UIApplication {
@@ -17,3 +18,5 @@ extension UIApplication {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
 }
+
+#endif
