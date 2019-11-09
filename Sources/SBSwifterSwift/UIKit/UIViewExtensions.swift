@@ -468,7 +468,7 @@ extension UIView {
         }
         
         if let trailing = trailing {
-            anchors.append(rightAnchor.constraint(equalTo: trailing, constant: -trailingConstant))
+            anchors.append(trailingAnchor.constraint(equalTo: trailing, constant: -trailingConstant))
         }
         
         if widthConstant.isPositive {
