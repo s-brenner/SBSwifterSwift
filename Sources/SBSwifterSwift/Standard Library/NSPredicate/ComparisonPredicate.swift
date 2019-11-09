@@ -16,11 +16,11 @@ public final class ComparisonPredicate<Root>: NSComparisonPredicate, TypedPredic
     ///                     "Sc",
     ///                     options: .caseInsensitive)
     /// ````
-    convenience init<V>(_ keypath: KeyPath<Root, V>,
-                        _ type: Operator,
-                        _ value: V,
-                        modifier: Modifier = .direct,
-                        options: Options = []) {
+    public convenience init<V>(_ keypath: KeyPath<Root, V>,
+                               _ type: Operator,
+                               _ value: V,
+                               modifier: Modifier = .direct,
+                               options: Options = []) {
         
         self.init(leftExpression: \Root.self == keypath ? .expressionForEvaluatedObject() : .init(forKeyPath: keypath),
                   rightExpression: .init(forConstantValue: value),
