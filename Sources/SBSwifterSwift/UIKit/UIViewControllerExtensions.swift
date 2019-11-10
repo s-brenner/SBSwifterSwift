@@ -62,6 +62,19 @@ extension UIViewController {
         }
         return vc
     }
+    
+    public func replaceViews(_ oldViews: UIView?..., with newView: UIView, animated: Bool) {
+        let animationDuration = animated ? 0.3 : 0.0
+        guard !view.subviews.contains(newView) else { return }
+
+        oldViews.forEach() {
+            $0?.fadeTransition(duration: animationDuration)
+            $0?.removeFromSuperview()
+        }
+        
+        view.fadeTransition(duration: animationDuration)
+        view.addSubview(newView)
+    }
 }
 
 #endif
