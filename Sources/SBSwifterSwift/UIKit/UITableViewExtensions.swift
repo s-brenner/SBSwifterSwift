@@ -165,27 +165,33 @@ extension UITableView {
     ///   - style: A constant that specifies the style of the table view.
     ///   - vc: The view controller that will contain this table view.
     ///   - dataSource: The table view data source and delegate.
+    ///   - cells: The cells to be registered.
     ///   - contentInset: The custom distance that the content view is inset from the safe area or scroll view edges.
     ///   - cellLayoutMarginsFollowReadableWidth: A Boolean value that indicates whether the cell margins are derived from the width of the readable content guide.
-    ///   - cells: The cells to be registered.
+    ///   - estimatedRowHeight: The estimated row height.
+    ///   - rowHeight: The row height.
     @available(iOS 9.0, *)
     public static func make<DS>(style: Style,
                                 viewController vc: UIViewController,
                                 dataSource: DS? = nil,
+                                cells: [AnyClass],
                                 contentInset: UIEdgeInsets = .zero,
                                 cellLayoutMarginsFollowReadableWidth: Bool = true,
-                                cells: [AnyClass]) -> UITableView where
+                                estimatedRowHeight: CGFloat = automaticDimension,
+                                rowHeight: CGFloat = automaticDimension) -> UITableView where
         DS: UITableViewDataSource & UITableViewDelegate {
             
             let t = UITableView(frame: vc.view.frame, style: style)
             t.dataSource = dataSource
             t.delegate = dataSource
-            t.cellLayoutMarginsFollowReadableWidth = cellLayoutMarginsFollowReadableWidth
-            t.contentInset = contentInset
-            t.tableFooterView = UITableViewHeaderFooterView()
             cells.forEach() {
                 t.register($0.self, forCellReuseIdentifier: String(describing: $0))
             }
+            t.contentInset = contentInset
+            t.cellLayoutMarginsFollowReadableWidth = cellLayoutMarginsFollowReadableWidth
+            t.estimatedRowHeight = estimatedRowHeight
+            t.rowHeight = rowHeight
+            t.tableFooterView = UITableViewHeaderFooterView()
             return t
         }
 }
