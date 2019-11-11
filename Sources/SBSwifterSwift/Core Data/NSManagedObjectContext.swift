@@ -3,9 +3,9 @@ import CoreData
 extension NSManagedObjectContext {
     
     public struct ChangeCount {
-        let inserted: Int
-        let updated: Int
-        let deleted: Int
+        public let inserted: Int
+        public let updated: Int
+        public let deleted: Int
     }
     
     @discardableResult
