@@ -483,18 +483,45 @@ extension UIView {
         
         return anchors
     }
+        
+    /// Anchor center X into view with a constant margin value.
+    /// - Parameter view: The view to which to anchor.
+    /// - Parameter constant: Constant of the anchor constraint.
+    @available(iOS 9, *)
+    public func anchorCenterX(to view: UIView, constant: CGFloat = 0) {
+        
+        // https://videos.letsbuildthatapp.com/
+        translatesAutoresizingMaskIntoConstraints = false
+        centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: constant).isActive = true
+    }
+    
+    /// Anchor center Y into view with a constant margin value.
+    /// - Parameter view: The view to which to anchor.
+    /// - Parameter constant: Constant of the anchor constraint.
+    @available(iOS 9, *)
+    public func anchorCenterY(to view: UIView, constant: CGFloat = 0) {
+        
+        // https://videos.letsbuildthatapp.com/
+        translatesAutoresizingMaskIntoConstraints = false
+        centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: constant).isActive = true
+    }
+    
+    /// Anchor center into view.
+    /// - Parameter view: The view to which to anchor.
+    @available(iOS 9, *)
+    public func anchorCenter(to view: UIView) {
+        
+        anchorCenterX(to: view)
+        anchorCenterY(to: view)
+    }
     
     /// Anchor center X into current view's superview with a constant margin value.
     /// - Parameter constant: Constant of the anchor constraint.
     @available(iOS 9, *)
     public func anchorCenterXToSuperview(constant: CGFloat = 0) {
         
-        // https://videos.letsbuildthatapp.com/
-        
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        if let anchor = superview?.centerXAnchor {
-            centerXAnchor.constraint(equalTo: anchor, constant: constant).isActive = true
+        if let view = superview {
+            anchorCenterX(to: view, constant: constant)
         }
     }
     
@@ -503,22 +530,18 @@ extension UIView {
     @available(iOS 9, *)
     public func anchorCenterYToSuperview(constant: CGFloat = 0) {
         
-        // https://videos.letsbuildthatapp.com/
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        if let anchor = superview?.centerYAnchor {
-            centerYAnchor.constraint(equalTo: anchor, constant: constant).isActive = true
+        if let view = superview {
+            anchorCenterY(to: view, constant: constant)
         }
     }
     
     /// Anchor center X and Y into current view's superview.
     @available(iOS 9, *)
-    public func anchorCenterSuperview() {
+    public func anchorCenterToSuperview() {
         
-        // https://videos.letsbuildthatapp.com/
-        
-        anchorCenterXToSuperview()
-        anchorCenterYToSuperview()
+        if let view = superview {
+            anchorCenter(to: view)
+        }
     }
     
     /// Search all superviews until a view with the condition is found.
