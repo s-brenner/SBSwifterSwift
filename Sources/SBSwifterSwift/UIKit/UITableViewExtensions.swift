@@ -3,6 +3,23 @@ import UIKit
 
 extension UITableView {
     
+    // MARK: - Types
+    
+    /// A container for all the information required to define a section in a table view.
+    public struct Section<T> {
+        
+        public let title: String?
+        
+        public let cells: [T]
+        
+        public init(title: String? = nil, cells: [T]) {
+            
+            self.title = title
+            self.cells = cells
+        }
+    }
+    
+    
     // MARK: - Properties
     
     /// Index path of the last row in the tableView.
@@ -173,7 +190,7 @@ extension UITableView {
     @available(iOS 9.0, *)
     public static func make<DS>(style: Style,
                                 viewController vc: UIViewController,
-                                dataSource: DS? = nil,
+                                dataSource: DS?,
                                 cells: [AnyClass],
                                 contentInset: UIEdgeInsets = .zero,
                                 cellLayoutMarginsFollowReadableWidth: Bool = true,
