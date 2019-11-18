@@ -10,11 +10,16 @@ extension UITableView {
         
         public let title: String?
         
+        public let footer: String?
+        
         public let cells: [T]
         
-        public init(title: String? = nil, cells: [T]) {
+        public init(title: String? = nil,
+                    footer: String? = nil,
+                    cells: [T]) {
             
             self.title = title
+            self.footer = footer
             self.cells = cells
         }
     }
