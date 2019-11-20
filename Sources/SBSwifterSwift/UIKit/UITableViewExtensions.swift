@@ -156,6 +156,9 @@ extension UITableView {
     /// Register `UITableViewHeaderFooterView` using class name.
     /// - Parameter name: `UITableViewHeaderFooterView` type.
     public func register<T: UITableViewHeaderFooterView>(headerFooterViewClassWith name: T.Type) {
+        
+        print(String(describing: name))
+        
         register(T.self, forHeaderFooterViewReuseIdentifier: String(describing: name))
     }
     
