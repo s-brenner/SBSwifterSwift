@@ -187,6 +187,7 @@ extension UITableView {
     ///   - style: A constant that specifies the style of the table view.
     ///   - vc: The view controller that will contain this table view.
     ///   - dataSource: The table view data source and delegate.
+    ///   - headersAndFooters: The headers and footers to be registered.
     ///   - cells: The cells to be registered.
     ///   - contentInset: The custom distance that the content view is inset from the safe area or scroll view edges.
     ///   - cellLayoutMarginsFollowReadableWidth: A Boolean value that indicates whether the cell margins are derived from the width of the readable content guide.
@@ -196,6 +197,7 @@ extension UITableView {
     public static func make<DS>(style: Style,
                                 viewController vc: UIViewController,
                                 dataSource: DS?,
+                                headersAndFooters: [AnyClass] = [],
                                 cells: [AnyClass],
                                 contentInset: UIEdgeInsets = .zero,
                                 cellLayoutMarginsFollowReadableWidth: Bool = true,
@@ -206,9 +208,12 @@ extension UITableView {
             let t = UITableView(frame: vc.view.frame, style: style)
             t.dataSource = dataSource
             t.delegate = dataSource
-            cells.forEach() {
-                t.register($0.self, forCellReuseIdentifier: String(describing: $0))
-            }
+            headersAndFooters
+                .compactMap() { $0.self as? UITableViewHeaderFooterView.Type }
+                .forEach() { t.register(headerFooterViewClassWith: $0.self) }
+            cells
+                .compactMap() { $0.self as? UITableViewCell.Type }
+                .forEach() { t.register($0.self, forCellReuseIdentifier: String(describing: $0)) }
             t.contentInset = contentInset
             t.cellLayoutMarginsFollowReadableWidth = cellLayoutMarginsFollowReadableWidth
             t.estimatedRowHeight = estimatedRowHeight
