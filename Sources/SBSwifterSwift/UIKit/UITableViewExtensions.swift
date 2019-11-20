@@ -156,9 +156,6 @@ extension UITableView {
     /// Register `UITableViewHeaderFooterView` using class name.
     /// - Parameter name: `UITableViewHeaderFooterView` type.
     public func register<T: UITableViewHeaderFooterView>(headerFooterViewClassWith name: T.Type) {
-        
-        print(String(describing: name))
-        
         register(T.self, forHeaderFooterViewReuseIdentifier: String(describing: name))
     }
     
@@ -213,7 +210,7 @@ extension UITableView {
             t.delegate = dataSource
             headersAndFooters
                 .compactMap() { $0.self as? UITableViewHeaderFooterView.Type }
-                .forEach() { t.register(headerFooterViewClassWith: $0.self) }
+                .forEach() { t.register($0.self, forHeaderFooterViewReuseIdentifier: String(describing: $0)) }
             cells
                 .compactMap() { $0.self as? UITableViewCell.Type }
                 .forEach() { t.register($0.self, forCellReuseIdentifier: String(describing: $0)) }
