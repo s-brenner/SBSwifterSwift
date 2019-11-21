@@ -12,6 +12,9 @@ final class TimeZoneExtensionsTests: XCTestCase {
 //        print(TimeZone.staticTimeZoneTests.joined(separator: "\n\n"))
         XCTAssertEqual(TimeZone.staticTimeZones.count, 438)
         XCTAssertEqual(TimeZone.staticTimeZoneTests.count, 438)
+        
+//        print(TimeZone.allCasesBuilder.joined(separator: "\n"))
+        XCTAssertEqual(TimeZone.knownTimeZoneIdentifiers.count, TimeZone.allCases.count)
     }
     
     func testTimeZoneIdentifiers() {

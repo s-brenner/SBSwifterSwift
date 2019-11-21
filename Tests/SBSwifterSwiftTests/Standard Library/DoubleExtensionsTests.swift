@@ -12,4 +12,13 @@ final class DoubleExtensionsTests: XCTestCase {
     func testCGFloat() {
         XCTAssertEqual(Double(4.3).cgFloat, CGFloat(4.3))
     }
+    
+    func testInt() {
+        XCTAssertEqual(Double(-4.4).int, -4)
+        XCTAssertEqual(Double(-4.5).int, -5)
+        XCTAssertEqual(Double(-4.6).int, -5)
+        XCTAssertEqual(Double(4.4).int, 4)
+        XCTAssertEqual(Double(4.5).int, 5)
+        XCTAssertEqual(Double(4.6).int, 5)
+    }
 }
