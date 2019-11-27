@@ -39,4 +39,22 @@ extension Bundle {
             fatalError("Failed to decode \(file) from bundle: \(error.localizedDescription)")
         }
     }
+    
+    /// Returns the dictionary for the .plist file identified by the specified name.
+    /// - Parameter name: The name of the resource .plist file.
+    public func propertyList(forResource name: String) -> [String : Any] {
+        
+        var format = PropertyListSerialization.PropertyListFormat.xml
+        
+        guard let path = self.path(forResource: name, ofType: "plist"),
+            let xml = FileManager.default.contents(atPath: path),
+            let propertyList = try? PropertyListSerialization.propertyList(
+                from: xml,
+                options: .mutableContainersAndLeaves,
+                format: &format) else {
+                return [:]
+        }
+        
+        return propertyList as? [String : Any] ?? [:]
+    }
 }
