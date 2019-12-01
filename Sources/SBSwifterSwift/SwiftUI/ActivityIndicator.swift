@@ -8,7 +8,17 @@ public struct ActivityIndicator: UIViewRepresentable {
     
     public let style: UIActivityIndicatorView.Style
     
-    var configuration = { (indicator: UIActivityIndicatorView) in }
+    var configuration: (UIActivityIndicatorView) -> Void
+    
+    public init(
+        isAnimating: Binding<Bool>,
+        style: UIActivityIndicatorView.Style,
+        configuration: @escaping ((UIActivityIndicatorView) -> Void) = { _ in }) {
+
+        self._isAnimating = isAnimating
+        self.style = style
+        self.configuration = configuration
+    }
 
     public func makeUIView(
         context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
@@ -21,8 +31,10 @@ public struct ActivityIndicator: UIViewRepresentable {
         context: UIViewRepresentableContext<ActivityIndicator>) {
         
         isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
+        configuration(uiView)
     }
 }
+
 
 @available(iOS 13.0, *)
 extension View where Self == ActivityIndicator {
@@ -30,13 +42,18 @@ extension View where Self == ActivityIndicator {
     public func configure(
         _ configuration: @escaping (UIActivityIndicatorView) -> Void) -> Self {
         
-        Self.init(isAnimating: self.$isAnimating, style: self.style, configuration: configuration)
+        Self.init(
+            isAnimating: self.$isAnimating,
+            style: self.style,
+            configuration: configuration
+        )
     }
 }
 
+
 @available(iOS 13.0, *)
 struct ActivityIndicator_Preview: PreviewProvider {
-    
+
     static var previews: some View {
         ActivityIndicator(isAnimating: .constant(true), style: .medium)
             .configure { $0.color = .red }
