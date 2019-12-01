@@ -1,8 +1,12 @@
 import CoreData
 
-public extension NSManagedObjectModel {
+extension NSManagedObjectModel {
 
-    static func managedObjectModel(forResource resource: String, subdirectory: String? = nil) -> NSManagedObjectModel {
+    public static func managedObjectModel(
+        forResource resource: String,
+        subdirectory: String? = nil) -> NSManagedObjectModel {
+        
+        //https://williamboles.me/progressive-core-data-migration/
         
         let mainBundle = Bundle.main
         let omoURL = mainBundle.url(forResource: resource, withExtension: "omo", subdirectory: subdirectory)
@@ -19,7 +23,10 @@ public extension NSManagedObjectModel {
         return model
     }
     
-    static func compatibleModelForStoreMetadata(_ metadata: [String : Any]) -> NSManagedObjectModel? {
+    public static func compatibleModelForStoreMetadata(
+        _ metadata: [String : Any]) -> NSManagedObjectModel? {
+        
+        //https://williamboles.me/progressive-core-data-migration/
         
         NSManagedObjectModel.mergedModel(from: [.main], forStoreMetadata: metadata)
     }

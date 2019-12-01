@@ -5,6 +5,8 @@ extension NSPersistentStoreCoordinator {
     @available(iOS 9.0, *)
     public static func destroyStore(at storeURL: URL) {
         
+        //https://williamboles.me/progressive-core-data-migration/
+        
         do {
             let persistentStoreCoordinator =
                 NSPersistentStoreCoordinator(managedObjectModel: NSManagedObjectModel())
@@ -20,6 +22,8 @@ extension NSPersistentStoreCoordinator {
 
     @available(iOS 9.0, *)
     public static func replaceStore(at targetURL: URL, withStoreAt sourceURL: URL) {
+        
+        //https://williamboles.me/progressive-core-data-migration/
         
         do {
             let persistentStoreCoordinator =
@@ -38,6 +42,8 @@ extension NSPersistentStoreCoordinator {
 
     public static func metadata(at storeURL: URL) -> [String : Any]?  {
         
+        //https://williamboles.me/progressive-core-data-migration/
+        
         try? NSPersistentStoreCoordinator.metadataForPersistentStore(
             ofType: NSSQLiteStoreType,
             at: storeURL,
@@ -46,6 +52,8 @@ extension NSPersistentStoreCoordinator {
     }
 
     public func addPersistentStore(at storeURL: URL, options: [AnyHashable : Any]) -> NSPersistentStore {
+        
+        //https://williamboles.me/progressive-core-data-migration/
         
         do {
             return try addPersistentStore(
