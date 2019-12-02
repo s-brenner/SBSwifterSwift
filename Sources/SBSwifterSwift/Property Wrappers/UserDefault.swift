@@ -1,7 +1,7 @@
 import Foundation
 
 @propertyWrapper
-public struct UserDefault<T: Codable> {
+public struct UserDefault<T> where T: Equatable, T: Codable {
     
     // MARK: - Types
     
@@ -24,8 +24,9 @@ public struct UserDefault<T: Codable> {
         get {
             guard let data = defaults.object(forKey: key) as? Data,
                 let array = try? PropertyListDecoder().decode([T].self, from: data),
-                let first = array.first
-                else { return defaultValue() }
+                let first = array.first else {
+                    return defaultValue()
+            }
             return first
         }
         set {
@@ -33,6 +34,9 @@ public struct UserDefault<T: Codable> {
             defaults.set(data, forKey: key)
         }
     }
+    
+    /// A Boolean value that describes whether the wrapped value is equal to the default value.
+    public var isDefault: Bool { wrappedValue == defaultValue() }
     
     
     // MARK: - Initializers

@@ -30,8 +30,16 @@ final class UserDefaultTests: XCTestCase {
                 _isEnabled.reset()
                 _username.reset()
                 _duration.reset()
+                _soloNumber.reset()
             }
+            
+            static var soloNumberIsDefault: Bool { _soloNumber.isDefault }
         }
+    }
+    
+    override class func setUp() {
+        super.setUp()
+        UserDefaultsManager.Settings.reset()
     }
     
     
@@ -40,6 +48,15 @@ final class UserDefaultTests: XCTestCase {
         XCTAssertFalse(UserDefaultsManager.Settings.isEnabled)
         XCTAssertEqual(UserDefaultsManager.Settings.soloNumber, 980)
         XCTAssertEqual(UserDefaultsManager.Settings.duration, DateComponents(hour: 4))
+    }
+    
+    func testIsDefault() {
+        
+        XCTAssertTrue(UserDefaultsManager.Settings.soloNumberIsDefault)
+        UserDefaultsManager.Settings.soloNumber = 1000
+        XCTAssertFalse(UserDefaultsManager.Settings.soloNumberIsDefault)
+        UserDefaultsManager.Settings.reset()
+        XCTAssertTrue(UserDefaultsManager.Settings.soloNumberIsDefault)
     }
     
     func testSetter() {
