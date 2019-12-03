@@ -35,6 +35,9 @@ public struct UserDefault<T> where T: Equatable, T: Codable {
         }
     }
     
+    /// The projected value.
+    public var projectedValue: UserDefault<T> { self }
+    
     /// A Boolean value that describes whether the wrapped value is equal to the default value.
     public var isDefault: Bool { wrappedValue == defaultValue() }
     
