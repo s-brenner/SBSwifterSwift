@@ -442,10 +442,12 @@ extension UIView {
         leading: NSLayoutXAxisAnchor? = nil,
         bottom: NSLayoutYAxisAnchor? = nil,
         trailing: NSLayoutXAxisAnchor? = nil,
+        firstBaseline: NSLayoutYAxisAnchor? = nil,
         topConstant: CGFloat = 0,
         leadingConstant: CGFloat = 0,
         bottomConstant: CGFloat = 0,
         trailingConstant: CGFloat = 0,
+        firstBaselineConstant: CGFloat = 0,
         widthConstant: CGFloat = 0,
         heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
         
@@ -469,6 +471,10 @@ extension UIView {
         
         if let trailing = trailing {
             anchors.append(trailingAnchor.constraint(equalTo: trailing, constant: -trailingConstant))
+        }
+        
+        if let firstBaseline = firstBaseline {
+            anchors.append(firstBaselineAnchor.constraint(equalTo: firstBaseline, constant: firstBaselineConstant))
         }
         
         if widthConstant.isPositive {
