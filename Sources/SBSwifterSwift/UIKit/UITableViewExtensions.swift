@@ -221,6 +221,34 @@ extension UITableView {
             t.tableFooterView = UITableViewHeaderFooterView()
             return t
         }
+    
+    @available(iOS 9.0, *)
+    public static func make<Delegate: UITableViewDelegate>(
+        frame: CGRect,
+        style: Style,
+        delegate: Delegate,
+        headersAndFooters: [AnyClass] = [],
+        cells: [AnyClass],
+        contentInset: UIEdgeInsets = .zero,
+        cellLayoutMarginsFollowReadableWidth: Bool = true,
+        estimatedRowHeight: CGFloat = automaticDimension,
+        rowHeight: CGFloat = automaticDimension) -> UITableView {
+        
+            let t = UITableView(frame: frame, style: style)
+            t.delegate = delegate
+            headersAndFooters
+                .compactMap() { $0.self as? UITableViewHeaderFooterView.Type }
+                .forEach() { t.register($0.self, forHeaderFooterViewReuseIdentifier: String(describing: $0)) }
+            cells
+                .compactMap() { $0.self as? UITableViewCell.Type }
+                .forEach() { t.register($0.self, forCellReuseIdentifier: String(describing: $0)) }
+            t.contentInset = contentInset
+            t.cellLayoutMarginsFollowReadableWidth = cellLayoutMarginsFollowReadableWidth
+            t.estimatedRowHeight = estimatedRowHeight
+            t.rowHeight = rowHeight
+            t.tableFooterView = UITableViewHeaderFooterView()
+            return t
+    }
 }
 
 #endif
