@@ -18,7 +18,8 @@ extension UIEdgeInsets {
                     return .zero
             }
             let keyboardFrameEnd = view.convert(keyboardFrameEndValue.cgRectValue, from: view.window)
-            return .init(top: 0, left: 0, bottom: keyboardFrameEnd.height, right: 0)
+            let height = keyboardFrameEnd.height - view.safeAreaInsets.bottom
+            return .init(top: 0, left: 0, bottom: height, right: 0)
             
         default:
             return .zero
