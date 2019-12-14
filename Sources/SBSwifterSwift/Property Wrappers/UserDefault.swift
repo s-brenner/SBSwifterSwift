@@ -17,7 +17,7 @@ public struct UserDefault<T> where T: Equatable, T: Codable {
     public let defaults: UserDefaults
     
     /// The default value.
-    var defaultValue: DefaultValue
+    public private(set) var defaultValue: DefaultValue
     
     /// The wrapped value.
     public var wrappedValue: T {
@@ -63,5 +63,15 @@ public struct UserDefault<T> where T: Equatable, T: Codable {
     public mutating func reset() {
         
         wrappedValue = defaultValue()
+    }
+}
+
+
+extension UserDefault: Equatable {
+    
+    public static func == (lhs: UserDefault<T>, rhs: UserDefault<T>) -> Bool {
+        
+        lhs.defaults == rhs.defaults &&
+            lhs.key == rhs.key
     }
 }
