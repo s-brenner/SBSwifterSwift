@@ -6,7 +6,8 @@ extension UIScrollView {
     
     /// Adjust the content inset and scroll indicator inset when the keyboard shows or hides.
     @available(iOS 13.0, *)
-    public var keyboardPublisher: AnyCancellable {
+    @discardableResult
+    public func adjustForKeyboard() -> AnyCancellable {
         
         let keyboardWillOpen = NotificationCenter.default
             .publisher(for: UIResponder.keyboardWillShowNotification)
