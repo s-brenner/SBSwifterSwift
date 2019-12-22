@@ -182,49 +182,9 @@ extension UITableView {
         scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
     }
     
-    /// A factory method for creating a table view.
-    /// - Parameters:
-    ///   - style: A constant that specifies the style of the table view.
-    ///   - vc: The view controller that will contain this table view.
-    ///   - dataSource: The table view data source and delegate.
-    ///   - headersAndFooters: The headers and footers to be registered.
-    ///   - cells: The cells to be registered.
-    ///   - contentInset: The custom distance that the content view is inset from the safe area or scroll view edges.
-    ///   - cellLayoutMarginsFollowReadableWidth: A Boolean value that indicates whether the cell margins are derived from the width of the readable content guide.
-    ///   - estimatedRowHeight: The estimated row height.
-    ///   - rowHeight: The row height.
-    @available(iOS 9.0, *)
-    public static func make<DS>(style: Style,
-                                viewController vc: UIViewController,
-                                dataSource: DS?,
-                                headersAndFooters: [AnyClass] = [],
-                                cells: [AnyClass],
-                                contentInset: UIEdgeInsets = .zero,
-                                cellLayoutMarginsFollowReadableWidth: Bool = true,
-                                estimatedRowHeight: CGFloat = automaticDimension,
-                                rowHeight: CGFloat = automaticDimension) -> UITableView where
-        DS: UITableViewDataSource & UITableViewDelegate {
-            
-            let t = UITableView(frame: vc.view.frame, style: style)
-            t.dataSource = dataSource
-            t.delegate = dataSource
-            headersAndFooters
-                .compactMap() { $0.self as? UITableViewHeaderFooterView.Type }
-                .forEach() { t.register($0.self, forHeaderFooterViewReuseIdentifier: String(describing: $0)) }
-            cells
-                .compactMap() { $0.self as? UITableViewCell.Type }
-                .forEach() { t.register($0.self, forCellReuseIdentifier: String(describing: $0)) }
-            t.contentInset = contentInset
-            t.cellLayoutMarginsFollowReadableWidth = cellLayoutMarginsFollowReadableWidth
-            t.estimatedRowHeight = estimatedRowHeight
-            t.rowHeight = rowHeight
-            t.tableFooterView = UITableViewHeaderFooterView()
-            return t
-        }
     
-    @available(iOS 9.0, *)
-    public static func make<Delegate: UITableViewDelegate>(
-        frame: CGRect,
+    public convenience init<Delegate: UITableViewDelegate>(
+        frame: CGRect = .zero,
         style: Style,
         delegate: Delegate,
         headersAndFooters: [AnyClass] = [],
@@ -232,23 +192,52 @@ extension UITableView {
         contentInset: UIEdgeInsets = .zero,
         cellLayoutMarginsFollowReadableWidth: Bool = true,
         estimatedRowHeight: CGFloat = automaticDimension,
-        rowHeight: CGFloat = automaticDimension) -> UITableView {
+        rowHeight: CGFloat = automaticDimension,
+        tableFooterView: UITableViewHeaderFooterView = .init()) {
         
-            let t = UITableView(frame: frame, style: style)
-            t.delegate = delegate
-            headersAndFooters
-                .compactMap() { $0.self as? UITableViewHeaderFooterView.Type }
-                .forEach() { t.register($0.self, forHeaderFooterViewReuseIdentifier: String(describing: $0)) }
-            cells
-                .compactMap() { $0.self as? UITableViewCell.Type }
-                .forEach() { t.register($0.self, forCellReuseIdentifier: String(describing: $0)) }
-            t.contentInset = contentInset
-            t.cellLayoutMarginsFollowReadableWidth = cellLayoutMarginsFollowReadableWidth
-            t.estimatedRowHeight = estimatedRowHeight
-            t.rowHeight = rowHeight
-            t.tableFooterView = UITableViewHeaderFooterView()
-            return t
+        self.init(frame: frame, style: style)
+        
+        self.delegate = delegate
+        headersAndFooters
+            .compactMap() { $0.self as? UITableViewHeaderFooterView.Type }
+            .forEach() { register($0.self, forHeaderFooterViewReuseIdentifier: String(describing: $0)) }
+        cells
+            .compactMap() { $0.self as? UITableViewCell.Type }
+            .forEach() { register($0.self, forCellReuseIdentifier: String(describing: $0)) }
+        self.contentInset = contentInset
+        self.cellLayoutMarginsFollowReadableWidth = cellLayoutMarginsFollowReadableWidth
+        self.estimatedRowHeight = estimatedRowHeight
+        self.rowHeight = rowHeight
+        self.tableFooterView = tableFooterView
     }
+    
+//    @available(iOS 9.0, *)
+//    public static func make<Delegate: UITableViewDelegate>(
+//        frame: CGRect = .zero,
+//        style: Style,
+//        delegate: Delegate,
+//        headersAndFooters: [AnyClass] = [],
+//        cells: [AnyClass],
+//        contentInset: UIEdgeInsets = .zero,
+//        cellLayoutMarginsFollowReadableWidth: Bool = true,
+//        estimatedRowHeight: CGFloat = automaticDimension,
+//        rowHeight: CGFloat = automaticDimension) -> UITableView {
+//
+//            let t = UITableView(frame: frame, style: style)
+//            t.delegate = delegate
+//            headersAndFooters
+//                .compactMap() { $0.self as? UITableViewHeaderFooterView.Type }
+//                .forEach() { t.register($0.self, forHeaderFooterViewReuseIdentifier: String(describing: $0)) }
+//            cells
+//                .compactMap() { $0.self as? UITableViewCell.Type }
+//                .forEach() { t.register($0.self, forCellReuseIdentifier: String(describing: $0)) }
+//            t.contentInset = contentInset
+//            t.cellLayoutMarginsFollowReadableWidth = cellLayoutMarginsFollowReadableWidth
+//            t.estimatedRowHeight = estimatedRowHeight
+//            t.rowHeight = rowHeight
+//            t.tableFooterView = UITableViewHeaderFooterView()
+//            return t
+//    }
 }
 
 #endif
