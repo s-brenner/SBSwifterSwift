@@ -7,6 +7,7 @@ extension UIEdgeInsets {
     /// - Parameters:
     ///   - notification: The notification that dictates the return value. Only notifications named `UIResponder.keyboardWillChangeFrameNotification` will return a nonzero inset.
     ///   - view: The view used to calculate the keyboard height. Normally the scroll view's superview.
+    
     public static func insetForKeyboardNotification(
         _ notification: Notification,
         in view: UIView) -> UIEdgeInsets {

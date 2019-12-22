@@ -23,6 +23,21 @@ extension UIViewController {
         NotificationCenter.default.addObserver(self, selector: selector, name: name, object: nil)
     }
     
+    /// Assign observer as listener to keyboard notification.
+    /// - Parameters:
+    ///   - observer: Object registering as an observer.
+    ///   - selector: Selector to run when notified.
+    ///   - events: Keyboard events to listen for.
+    public func addKeyboardObserver(
+        _ observer: Any,
+        selector: Selector,
+        events: Set<UIResponder.KeyboardNotification.Event> = [.willShow, .willHide]) {
+        
+        events.forEach() {
+            NotificationCenter.default.addObserver(observer, selector: selector, name: $0.name, object: nil)
+        }
+    }
+    
     /// Unassign as listener to notification.
     /// - Parameter name: Notification name.
     public func removeNotificationObserver(name: Notification.Name) {

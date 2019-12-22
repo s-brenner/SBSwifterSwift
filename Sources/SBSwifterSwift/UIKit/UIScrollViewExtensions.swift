@@ -1,29 +1,26 @@
-#if canImport(UIKit) && canImport(Combine)
+#if canImport(UIKit)
+
 import UIKit
-import Combine
 
 extension UIScrollView {
     
-    /// Adjust the content inset and scroll indicator inset when the keyboard shows or hides.
-    @available(iOS 13.0, *)
-    @discardableResult
-    public func adjustForKeyboard() -> AnyCancellable {
+    @objc public final func handleKeyboardNotification(_ notification: Notification) {
         
-        let keyboardWillOpen = NotificationCenter.default
-            .publisher(for: UIResponder.keyboardWillShowNotification)
-            .map { $0.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect }
-            .map { [unowned self] in $0.height - (self.superview?.safeAreaInsets.bottom ?? 0) }
+        guard let notification = KeyboardNotification(notification) else { return }
+        adjustForKeyboardNotification(notification)
+    }
+    
+    public final func adjustForKeyboardNotification(_ notification: UIResponder.KeyboardNotification) {
 
-        let keyboardWillHide =  NotificationCenter.default
-            .publisher(for: UIResponder.keyboardWillHideNotification)
-            .map { _ in CGFloat(0) }
+        let bottom = notification.event == .willShow ? notification.frameEnd.height - (superview?.safeAreaInsets.bottom ?? 0) : 0
 
-        return Publishers.Merge(keyboardWillOpen, keyboardWillHide)
-            .subscribe(on: RunLoop.main)
-            .sink(receiveValue: { [unowned self] in
-                self.contentInset.bottom = $0
-                self.verticalScrollIndicatorInsets.bottom = $0
-            })
+        UIView.animate(withDuration: notification.animationDuration) { [weak self] in
+
+            guard let self = self else { return }
+            self.contentInset.bottom = bottom
+            self.verticalScrollIndicatorInsets.bottom = bottom
+        }
     }
 }
+
 #endif
