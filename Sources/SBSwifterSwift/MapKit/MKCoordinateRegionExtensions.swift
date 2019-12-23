@@ -69,12 +69,16 @@ extension MKCoordinateRegion {
                                transform: Transform = { $0 },
                                inverseTransform: Transform = { $0 }) throws -> MKCoordinateRegion {
         
+        // Eliminate any duplicate coordinates
+        let coordinates = coordinates.withoutDuplicates()
+        
         // Handle an empty array of coordinates
         guard !coordinates.isEmpty else { throw MKCoordinateRegionError.emptyCoordinateArray }
         
         // Handle a single coordinate
         guard coordinates.count > 1 else {
-            let span = MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5)
+            // This should be about 3 miles by 3 miles
+            let span = MKCoordinateSpan(latitudeDelta: 1/20, longitudeDelta: 1/20)
             return MKCoordinateRegion(center: coordinates[0], span: span)
         }
         
