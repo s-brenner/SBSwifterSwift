@@ -74,7 +74,7 @@ extension MKCoordinateRegion {
         
         // Handle a single coordinate
         guard coordinates.count > 1 else {
-            let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+            let span = MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5)
             return MKCoordinateRegion(center: coordinates[0], span: span)
         }
         
