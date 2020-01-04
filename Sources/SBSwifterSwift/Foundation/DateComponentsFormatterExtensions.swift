@@ -11,11 +11,11 @@ extension DateComponentsFormatter {
         private let value: (DateComponentsFormatter) -> Void
 
         /// Configures formatter to return a value like "1d 0h 12m"
-        public static let dayHourMinute = Configuration({
+        public static let dayHourMinute = Configuration {
             $0.allowedUnits = [.day, .hour, .minute]
             $0.unitsStyle = .abbreviated
             $0.zeroFormattingBehavior = .pad
-        })
+        }
 
 
         // MARK: - Initializers

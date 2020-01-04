@@ -1,7 +1,7 @@
 import Foundation
 
-extension DateComponents
-{
+extension DateComponents {
+    
     // MARK: - Types
     
     public enum Error: LocalizedError {
@@ -57,7 +57,7 @@ extension DateComponents
     ]
     
     /// A dictionary containing only those components that are not `nil`.
-    public var componentDictionary: [Calendar.Component : Int] {
+    public var componentDictionary: [Calendar.Component: Int] {
         var list: [Calendar.Component : Int] = [:]
         DateComponents.allComponents.forEach { component in
             let value = self.value(for: component)
