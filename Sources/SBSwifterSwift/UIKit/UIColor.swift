@@ -3,6 +3,22 @@ import UIKit
 
 extension UIColor {
     
+    public struct Pair {
+        
+        public var light: UIColor?
+        
+        public var dark: UIColor?
+        
+        public init(light: UIColor?, dark: UIColor?) {
+            
+            self.light = light
+            self.dark = dark
+        }
+        
+        @available(iOS 13.0, *)
+        public var color: UIColor? { UIColor.colorPair(light: light, dark: dark) }
+    }
+    
     @available(iOS 13.0, *)
     public static func colorPair(light: UIColor?, dark: UIColor?) -> UIColor? {
         
@@ -28,19 +44,19 @@ extension UIColor {
         return desiredColor == randomColor ? nil : desiredColor
     }
     
-    public static func == (l: UIColor, r: UIColor) -> Bool {
+    public static func == (lhs: UIColor, rhs: UIColor) -> Bool {
         
       var r1: CGFloat = 0
       var g1: CGFloat = 0
       var b1: CGFloat = 0
       var a1: CGFloat = 0
-      l.getRed(&r1, green: &g1, blue: &b1, alpha: &a1)
+      lhs.getRed(&r1, green: &g1, blue: &b1, alpha: &a1)
         
       var r2: CGFloat = 0
       var g2: CGFloat = 0
       var b2: CGFloat = 0
       var a2: CGFloat = 0
-      r.getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
+      rhs.getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
         
       return r1 == r2 && g1 == g2 && b1 == b2 && a1 == a2
     }
