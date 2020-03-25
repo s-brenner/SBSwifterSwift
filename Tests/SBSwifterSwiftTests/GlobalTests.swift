@@ -20,4 +20,20 @@ final class GlobalTests: XCTestCase {
         XCTAssertEqual(michelle.name, json.name)
         XCTAssertFalse(setIfNeeded((michelle, \.name), to: (json, \.name)))
     }
+    
+    func testConfigure() {
+        
+        let reference = configure(Person()) {
+            $0.name = "Michelle"
+        }
+        
+        XCTAssertEqual(reference.name, "Michelle")
+        
+        var value = PersonJSON(name: "")
+        value = configure(value) {
+            $0.name = "Scott"
+        }
+        
+        XCTAssertEqual(value.name, "Scott")
+    }
 }
