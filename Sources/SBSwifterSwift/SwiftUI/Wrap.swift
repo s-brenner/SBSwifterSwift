@@ -7,7 +7,7 @@ public struct Wrap<Wrapped: UIView>: UIViewRepresentable {
 
     var makeView: () -> Wrapped
     
-    var update: (Wrapped, Context) -> Void
+    var update: Updater
 
     public func makeUIView(context: Context) -> Wrapped {
         

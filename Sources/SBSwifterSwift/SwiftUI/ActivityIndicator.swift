@@ -20,15 +20,12 @@ public struct ActivityIndicator: UIViewRepresentable {
         self.configuration = configuration
     }
 
-    public func makeUIView(
-        context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
+    public func makeUIView(context: Context) -> UIActivityIndicatorView {
         
         UIActivityIndicatorView(style: style)
     }
 
-    public func updateUIView(
-        _ uiView: UIActivityIndicatorView,
-        context: UIViewRepresentableContext<ActivityIndicator>) {
+    public func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) {
         
         isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
         configuration(uiView)
