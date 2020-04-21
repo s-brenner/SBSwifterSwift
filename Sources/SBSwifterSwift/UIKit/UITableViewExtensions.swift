@@ -210,6 +210,17 @@ extension UITableView {
         self.rowHeight = rowHeight
         self.tableFooterView = tableFooterView
     }
+    
+    
+    public func configure<T: UITableViewCell>(
+        _ type: T.Type,
+        for indexPath: IndexPath,
+        using closure: (inout T) -> Void) -> T {
+        
+        var cell = dequeueReusableCell(withClass: type, for: indexPath)
+        closure(&cell)
+        return cell
+    }
 }
 
 #endif
