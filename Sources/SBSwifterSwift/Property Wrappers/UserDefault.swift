@@ -21,7 +21,16 @@ public struct UserDefault<T: Codable> {
     
     /// The wrapped value.
     public var wrappedValue: T {
-        get { defaults.object(T.self, forKey: key) ?? defaultValue() }
+        get {
+            // Legacy code. Overwrite values saved with a previous implementation.
+            if let data = defaults.object(forKey: key) as? Data,
+                let array = try? PropertyListDecoder().decode([T].self, from: data),
+                let first = array.first {
+                defaults.set(object: first, forKey: key)
+            }
+            
+            return defaults.object(T.self, forKey: key) ?? defaultValue()
+        }
         set { defaults.set(object: newValue, forKey: key) }
     }
     
