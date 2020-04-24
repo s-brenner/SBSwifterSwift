@@ -79,6 +79,7 @@ extension CLLocation {
     /// - Parameter coordinate: A coordinate structure containing the latitude and longitude values.
     /// - Returns: A location object initialized with the specified geographical coordinate.
     public convenience init(coordinate: CLLocationCoordinate2D) {
+        
         self.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
     
@@ -129,7 +130,8 @@ extension CLLocation {
     /// - Parameter origin: Location to calculate bearing.
     /// - Returns: Calculated bearing degrees in the range 0° ... 360°.
     public func bearing(from origin: CLLocation) -> CLLocationDegrees {
-        return (bearing(to: origin) + 180).truncatingRemainder(dividingBy: 360)
+        
+        (bearing(to: origin) + 180).truncatingRemainder(dividingBy: 360)
     }
     
     /// Calculates the halfway point along a great circle path between two points.
@@ -137,14 +139,15 @@ extension CLLocation {
     /// - Parameter end: End location.
     /// - Returns: Location that represents the halfway point.
     public static func midLocation(start: CLLocation, end: CLLocation) -> CLLocation {
-        let greatCircle = GreatCircle(start: start, end: end)
-        return greatCircle.intermediatePoint(routeFraction: 0.5)
+        
+        GreatCircle(start: start, end: end).intermediatePoint(routeFraction: 0.5)
     }
     
     /// Calculates the halfway point along a great circle path between self and the destination.
     /// - Parameter destination: End location.
     /// - Returns: Location that represents the halfway point.
     public func midLocation(to destination: CLLocation) -> CLLocation {
-        return CLLocation.midLocation(start: self, end: destination)
+        
+        CLLocation.midLocation(start: self, end: destination)
     }
 }
