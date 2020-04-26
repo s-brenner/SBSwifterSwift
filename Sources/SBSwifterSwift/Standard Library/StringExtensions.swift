@@ -34,6 +34,19 @@ extension String {
         return String(data: data, encoding: encoding)
     }
     
+    /// Returns the Base-64 URL encoding of the receiver.
+    /// - Author: Scott Brenner | SBSwifterSwift
+    /// - Parameter encoding: The text encoding to use.
+    /// - Returns: The Base-64 URL encoding of the receiver.
+    public func base64URLEncoded(using encoding: Encoding = .utf8) -> String? {
+        
+        guard var result = base64Encoded(using: encoding) else { return nil }
+        result = result.replacingOccurrences(of: "+", with: "-")
+        result = result.replacingOccurrences(of: "/", with: "_")
+        result = result.replacingOccurrences(of: "=", with: "")
+        return result
+    }
+    
     /// A random string of a prescribed length including only the allowed characters.
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter length: The number of characters in the output.
