@@ -40,7 +40,7 @@ extension String {
     /// - Returns: The Base-64 URL encoding of the receiver.
     public func base64URLEncoded(using encoding: Encoding = .utf8) -> String? {
         
-        data(using: encoding)?.base64urlEncodedString()
+        data(using: encoding)?.base64URLEncodedString()
     }
     
     /// Returns the Base-64 URL decoding of the receiver.
