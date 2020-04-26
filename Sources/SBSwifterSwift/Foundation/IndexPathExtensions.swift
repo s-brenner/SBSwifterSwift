@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 
 public extension IndexPath {
@@ -15,3 +16,4 @@ public extension IndexPath {
         self.init(row: integers[0], section: integers[1])
     }
 }
+#endif

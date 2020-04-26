@@ -1,4 +1,4 @@
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(iOS)
 import SwiftUI
 
 public struct Wrap<Wrapped: UIView>: UIViewRepresentable {

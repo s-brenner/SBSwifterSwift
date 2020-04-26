@@ -1,7 +1,9 @@
+
 import MapKit
 
 extension MKMapSnapshotter.Options {
     
+    #if os(iOS)
     @available(iOS 13.0, *)
     public convenience init(
         coordinates: [CLLocationCoordinate2D],
@@ -25,4 +27,5 @@ extension MKMapSnapshotter.Options {
         self.size = size
         self.scale = scale
     }
+    #endif
 }

@@ -1,4 +1,4 @@
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && os(iOS)
 import SwiftUI
 
 @available(iOS 13.0, *)
