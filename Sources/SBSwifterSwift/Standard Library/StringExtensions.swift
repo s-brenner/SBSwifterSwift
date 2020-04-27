@@ -71,11 +71,7 @@ extension String {
     /// - Returns: `true` if receiver contains only the allowed characters; otherwise, `false`.
     public func contains(only allowed: AllowedCharacters) -> Bool {
         
-        let characters = Set(allowed.characters)
-        for element in self {
-            guard characters.contains(element) else { return false }
-        }
-        return true
+        allowed.characters.contains(self, matchedBy: { $0 == $1 })
     }
     
     public enum AllowedCharacters: CustomStringConvertible {
@@ -92,7 +88,7 @@ extension String {
         /// Allow all characters appearing within the specified String.
         case allCharactersIn(String)
         
-        public var characters: [Character] { Array(description) }
+        public var characters: Set<Character> { Set(description) }
         
         public var description: String {
             switch self {
@@ -108,6 +104,16 @@ extension String {
             case .allCharactersIn(let allowed):
                 return allowed
             }
+        }
+        
+        public static func +(lhs: Self, rhs: Self) -> Self {
+            
+            .allCharactersIn(String(lhs.characters.union(rhs.characters)))
+        }
+        
+        public static func -(lhs: Self, rhs: Self) -> Self {
+            
+            .allCharactersIn(String(lhs.characters.subtracting(rhs.characters)))
         }
     }
 }
