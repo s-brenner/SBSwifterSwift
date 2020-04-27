@@ -2,6 +2,9 @@ import Foundation
 
 public extension String {
     
+    /// - Author: Scott Brenner | SBSwifterSwift
+    var bytes: [UInt8] { .init(self.utf8) }
+    
     /// Returns the camelcased conversion of the receiver.
     /// - Author: Scott Brenner | SBSwifterSwift
     /// ````
