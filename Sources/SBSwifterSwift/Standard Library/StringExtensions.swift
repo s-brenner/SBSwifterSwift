@@ -1,15 +1,17 @@
 import Foundation
 
-extension String {
+public extension String {
     
-    /// Camel cased string.
+    /// Returns the camelcased conversion of the receiver.
     /// - Author: Scott Brenner | SBSwifterSwift
     /// ````
     /// "sOme vAriable naMe".camelCased
     /// // "someVariableName"
     /// ````
-    public var camelCased: String {
-        let source = capitalized.removingAll([" ", "\n"])
+    /// - Returns: The camelcased conversion of the receiver.
+    func camelcased() -> Self {
+        
+        let source = capitalized.removingAll([" ", "\n", "_"])
         let first = source[..<source.index(after: source.startIndex)].lowercased()
         let rest = String(source.dropFirst())
         return first + rest
@@ -19,7 +21,7 @@ extension String {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter encoding: The text encoding to use.
     /// - Returns: The Base-64 encoding of the receiver.
-    public func base64Encoded(using encoding: Encoding = .utf8) -> String? {
+    func base64Encoded(using encoding: Encoding = .utf8) -> Self? {
         
         data(using: encoding)?.base64EncodedString()
     }
@@ -28,7 +30,7 @@ extension String {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter encoding: The text encoding to use.
     /// - Returns: The Base-64 decoding of the receiver.
-    public func base64Decoded(using encoding: Encoding = .utf8) -> String? {
+    func base64Decoded(using encoding: Encoding = .utf8) -> Self? {
         
         guard let data = Data(base64Encoded: self) else { return nil }
         return String(data: data, encoding: encoding)
@@ -38,7 +40,7 @@ extension String {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter encoding: The text encoding to use.
     /// - Returns: The Base-64 URL encoding of the receiver.
-    public func base64URLEncoded(using encoding: Encoding = .utf8) -> String? {
+    func base64URLEncoded(using encoding: Encoding = .utf8) -> Self? {
         
         data(using: encoding)?.base64URLEncodedString()
     }
@@ -47,7 +49,7 @@ extension String {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter encoding: The text encoding to use.
     /// - Returns: The Base-64 URL decoding of the receiver.
-    public func base64URLDecoded(using encoding: Encoding = .utf8) -> String? {
+    func base64URLDecoded(using encoding: Encoding = .utf8) -> Self? {
         
         guard let data = Data(base64URLEncoded: self) else { return nil }
         return String(data: data, encoding: encoding)
@@ -57,7 +59,7 @@ extension String {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter length: The number of characters in the output.
     /// - Parameter allowed: The characters allowed in the output.
-    public init(
+    init(
         randomWithLength length: Int,
         allowedCharacters allowed: AllowedCharacters = .alphaNumeric) {
         
@@ -69,12 +71,12 @@ extension String {
     /// - Complexity: O(n), where n is the length of the receiver.
     /// - Parameter allowed: The characters allowed in the receiver.
     /// - Returns: `true` if receiver contains only the allowed characters; otherwise, `false`.
-    public func contains(only allowed: AllowedCharacters) -> Bool {
+    func contains(only allowed: AllowedCharacters) -> Bool {
         
         allowed.characters.contains(self, matchedBy: { $0 == $1 })
     }
     
-    public enum AllowedCharacters: CustomStringConvertible {
+    enum AllowedCharacters: CustomStringConvertible {
         
         /// Allow all numbers from 0 to 9.
         case numeric

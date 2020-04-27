@@ -1783,21 +1783,21 @@ extension TimeZone {
     
     internal static var allCasesBuilder: [String] {
         knownTimeZoneIdentifiers.map() {
-            let name = $0.camelCased.removingAll(["/", "_", "-"])
+            let name = $0.camelcased().removingAll(["/", "_", "-"])
             return ".\(name),"
         }
     }
     
     internal static var staticTimeZones: [String] {
         knownTimeZoneIdentifiers.map() {
-            let name = $0.camelCased.removingAll(["/", "_", "-"])
+            let name = $0.camelcased().removingAll(["/", "_", "-"])
             return "static let \(name) = TimeZone(identifier: \"\($0)\")!"
         }
     }
     
     internal static var staticTimeZoneTests: [String] {
         knownTimeZoneIdentifiers.map() {
-            let name = $0.camelCased.removingAll(["/", "_", "-"])
+            let name = $0.camelcased().removingAll(["/", "_", "-"])
             return "XCTAssertEqual(TimeZone.\(name).identifier, \"\($0)\")"
         }
     }

@@ -5,7 +5,8 @@ final class StringExtensionsTests: XCTestCase {
     
     func testCamelCased() {
         
-        XCTAssertEqual("SoMe vAriable naMe".camelCased, "someVariableName")
+        XCTAssertEqual("SoMe vAriable naMe".camelcased(), "someVariableName")
+        XCTAssertEqual("some_variable_name".camelcased(), "someVariableName")
     }
     
     func testBase64() {
@@ -26,11 +27,9 @@ final class StringExtensionsTests: XCTestCase {
             
             let length = 100
             let random = String(randomWithLength: 100, allowedCharacters: $0)
-            
             XCTAssertEqual(random.count, length)
             XCTAssertTrue(random.contains(only: $0))
         }
-        
     }
     
     func testContainsOnly() {
