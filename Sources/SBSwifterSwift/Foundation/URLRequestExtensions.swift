@@ -86,15 +86,18 @@ extension URLRequest.Builder {
         return self
     }
     
-    public func withBody(_ body: Data?) -> Self {
+    public func withBody(_ body: Data?, encoding: URLRequest.BodyEncoding = .none) -> Self {
         
+        if let header = encoding.header {
+            headers.append(header)
+        }
         self.body = body
         return self
     }
     
     public func withJSONBody<Value: Encodable>(_ value: Value, encodedWith encoder: JSONEncoder = .init()) -> Self {
         
-        self.withBody(try? encoder.encode(value))
+        self.withBody(try? encoder.encode(value), encoding: .json)
     }
     
     public func build() -> URLRequest {
@@ -131,8 +134,30 @@ extension URLRequest.Builder {
 
 extension URLRequest {
     
-    public enum MIMEType: CustomStringConvertible {
+    public enum BodyEncoding {
+        case none
+        case formData
+        case json
+        case x_www_form_urlencoded
         
+        var header: HTTPHeaderField? {
+            switch self {
+            case .none:
+                return nil
+                
+            case .formData:
+                return .contentType(.multipart(.form_data))
+                
+            case .json:
+                return .contentType(.application(.json))
+                
+            case .x_www_form_urlencoded:
+                return .contentType(.application(.x_www_form_urlencoded))
+            }
+        }
+    }
+    
+    public enum MIMEType: CustomStringConvertible {
         case application(ApplicationSubtype)
         case image(ImageSubtype)
         case multipart(MultipartSubtype)
@@ -217,6 +242,7 @@ extension URLRequest {
     public enum HTTPHeaderField: CustomStringConvertible {
         case accept([MIMEType])
         case authorization(Authorization)
+        case contentType(MIMEType)
         
         public var key: Key {
             switch self {
@@ -225,6 +251,9 @@ extension URLRequest {
                 
             case .authorization:
                 return .authorization
+                
+            case .contentType:
+                return .contentType
             }
         }
         
@@ -235,16 +264,20 @@ extension URLRequest {
                 
             case .authorization(let auth):
                 return auth.value
+                
+            case .contentType(let mime):
+                return mime.description
             }
         }
         
         public var description: String { "\(key.description): \(value)" }
         
         public enum Key: String, CustomStringConvertible {
-            case accept
-            case authorization
+            case accept = "Accept"
+            case authorization = "Authorization"
+            case contentType = "Content-Type"
             
-            public var description: String { rawValue.capitalized }
+            public var description: String { rawValue }
         }
         
         public enum Authorization {
