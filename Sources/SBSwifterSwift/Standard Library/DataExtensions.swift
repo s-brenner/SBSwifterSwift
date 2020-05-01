@@ -1,9 +1,9 @@
 import Foundation
 
-extension Data {
+public extension Data {
     
     /// - Author: Scott Brenner | SBSwifterSwift
-    public init?(base64URLEncoded input: String) {
+    init?(base64URLEncoded input: String) {
         
         var base64 = input
         base64 = base64.replacingOccurrences(of: "-", with: "+")
@@ -17,12 +17,23 @@ extension Data {
     /// Returns a Base-64 URL encoded string.
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Returns: The Base-64 URL encoded string.
-    public func base64URLEncodedString() -> String {
+    func base64URLEncodedString() -> String {
         
         var result = self.base64EncodedString()
         result = result.replacingOccurrences(of: "+", with: "-")
         result = result.replacingOccurrences(of: "/", with: "_")
         result = result.replacingOccurrences(of: "=", with: "")
         return result
+    }
+     
+    /// - Author: Scott Brenner | SBSwifterSwift
+    var prettyPrintedJSONString: String {
+        
+        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
+            let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
+            let string = String(data: data, encoding: .utf8) else {
+                return ""
+        }
+        return string
     }
 }
