@@ -53,13 +53,16 @@ extension URLSession {
         
         dataTask(with: request) { result, response in
             
-            let transformed = result.flatMap { data in
-                Result { try decoder.decode(T.self, from: data) }
-            }
-            
-            switch transformed {
-            case .success(let item):
-                completionHandler(.success(item), response)
+            switch result {
+            case .success(let data):
+                do {
+                    let decoded = try decoder.decode(T.self, from: data)
+                    completionHandler(.success(decoded), response)
+                }
+                catch {
+                    print(data.prettyPrintedJSONString)
+                    completionHandler(.failure(error), response)
+                }
                 
             case .failure(let error):
                 completionHandler(.failure(error), response)
