@@ -1,10 +1,8 @@
-import Foundation
 import Combine
+import Foundation
 
-@available(iOS 13.0, macOS 10.15, *)
 private var cancellables = [String : AnyCancellable]()
 
-@available(iOS 13.0, macOS 10.15, *)
 extension Published {
     
     public init(wrappedValue value: Value, key: String, defaults: UserDefaults = .standard) {

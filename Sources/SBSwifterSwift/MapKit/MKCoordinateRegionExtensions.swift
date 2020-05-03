@@ -1,4 +1,8 @@
-import MapKit
+import Foundation
+import struct CoreLocation.CLLocationCoordinate2D
+import struct MapKit.MKCoordinateRegion
+import struct MapKit.MKCoordinateSpan
+
 
 extension MKCoordinateRegion {
     

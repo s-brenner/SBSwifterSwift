@@ -1,4 +1,7 @@
-import CoreLocation
+import Foundation
+import class  CoreLocation.CLLocation
+import struct CoreLocation.CLLocationCoordinate2D
+import struct CoreLocation.CLLocationDegrees
 
 extension CLLocation {
     

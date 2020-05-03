@@ -1,4 +1,4 @@
-import CoreData
+import class CoreData.NSManagedObjectContext
 
 extension NSManagedObjectContext {
     
