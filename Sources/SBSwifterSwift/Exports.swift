@@ -11,6 +11,8 @@
 @_exported import struct   CoreLocation.CLLocationCoordinate2D
 @_exported import let      CoreLocation.kCLLocationCoordinate2DInvalid
 
+@_exported import struct   CryptoKit.SymmetricKey
+
 @_exported import protocol MapKit.MKAnnotation
 @_exported import class    MapKit.MKAnnotationView
 @_exported import struct   MapKit.MKCoordinateRegion
