@@ -562,6 +562,26 @@ extension UIView {
     public func ancestorView<T: UIView>(withClass name: T.Type) -> T? {
         ancestorView(where: { $0 is T }) as? T
     }
+    
+    public func makeRounded() {
+        
+        layer.cornerRadius = frame.height / 2
+        clipsToBounds = true
+    }
+    
+    public func replaceViews(_ oldViews: UIView?..., with newView: UIView, animated: Bool) {
+        
+        let animationDuration = animated ? 0.3 : 0.0
+        guard !subviews.contains(newView) else { return }
+
+        oldViews.forEach() {
+            $0?.fadeTransition(duration: animationDuration)
+            $0?.removeFromSuperview()
+        }
+        
+        fadeTransition(duration: animationDuration)
+        addSubview(newView)
+    }
 }
 
 #endif
