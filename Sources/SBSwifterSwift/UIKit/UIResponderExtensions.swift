@@ -82,8 +82,12 @@ public extension UIResponder {
             self.frameEnd = frameEnd ?? .zero
         }
     }
+}
+
+
+extension UIResponder {
     
-    @objc func handle(_ error: Error, from viewController: UIViewController, retryHandler: @escaping () -> Void) {
+    @objc open func handle(_ error: Error, from viewController: UIViewController, retryHandler: @escaping () -> Void) {
         
         // https://www.swiftbysundell.com/articles/propagating-user-facing-errors-in-swift/
         
