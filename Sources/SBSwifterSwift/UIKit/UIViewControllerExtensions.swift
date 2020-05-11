@@ -86,11 +86,14 @@ public extension UIViewController {
         view.fadeTransition(duration: animationDuration)
         view.addSubview(newView)
     }
+}
+
+
+extension UIViewController {
     
-    func handle(_ error: Error, retryHandler: @escaping () -> Void) {
+    open func handle(_ error: Error, retryHandler: @escaping () -> Void) {
         
         handle(error, from: self, retryHandler: retryHandler)
     }
 }
-
 #endif
