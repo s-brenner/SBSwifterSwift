@@ -91,7 +91,7 @@ public extension UIViewController {
 
 extension UIViewController {
     
-    open func handle(_ error: Error, retryHandler: @escaping () -> Void) {
+    @objc open func handle(_ error: Error, retryHandler: @escaping () -> Void) {
         
         handle(error, from: self, retryHandler: retryHandler)
     }
