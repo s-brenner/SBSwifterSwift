@@ -85,6 +85,8 @@ public extension UIResponder {
     
     @objc func handle(_ error: Error, from viewController: UIViewController, retryHandler: @escaping () -> Void) {
         
+        // https://www.swiftbysundell.com/articles/propagating-user-facing-errors-in-swift/
+        
         guard let nextResponder = next else {
             return assertionFailure("""
             Unhandled error \(error) from \(viewController)

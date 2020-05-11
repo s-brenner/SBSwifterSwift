@@ -13,6 +13,8 @@ public protocol CategorizedError: Error {
 
 public extension Error {
     
+    // https://www.swiftbysundell.com/articles/propagating-user-facing-errors-in-swift/
+    
     func resolveCategory() -> ErrorCategory {
         
         guard let categorized = self as? CategorizedError else {
