@@ -2,9 +2,9 @@
 
 import UIKit
 
-extension UIResponder {
+public extension UIResponder {
     
-    public struct KeyboardNotification {
+    struct KeyboardNotification {
         
         public enum Event: CaseIterable {
             case willShow
@@ -82,6 +82,16 @@ extension UIResponder {
             self.frameEnd = frameEnd ?? .zero
         }
     }
+    
+    @objc func handle(_ error: Error, from viewController: UIViewController, retryHandler: @escaping () -> Void) {
+        
+        guard let nextResponder = next else {
+            return assertionFailure("""
+            Unhandled error \(error) from \(viewController)
+            """)
+        }
+        
+        nextResponder.handle(error, from: viewController, retryHandler: retryHandler)
+    }
 }
-
 #endif
