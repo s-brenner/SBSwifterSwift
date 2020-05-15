@@ -121,4 +121,28 @@ public extension String {
             .allCharactersIn(String(lhs.characters.subtracting(rhs.characters)))
         }
     }
+    
+    /// Returns a localized string.
+    /// - Author: Scott Brenner | SBSwifterSwift
+    /// - Parameter key: The key in the .strings file that corresponds to a localized value.
+    /// - Returns: A localized string.
+    static func localized(_ key: Localizable) -> String {
+        key.contents
+    }
+    
+    /// - Author: Scott Brenner | SBSwifterSwift
+    struct Localizable: ExpressibleByStringLiteral {
+        
+        fileprivate let contents: String
+        
+        public init(_ key: String, comment: String = "") {
+            
+            contents = NSLocalizedString(key, comment: comment)
+        }
+        
+        public init(stringLiteral value: StringLiteralType) {
+            
+            self.init(value)
+        }
+    }
 }
