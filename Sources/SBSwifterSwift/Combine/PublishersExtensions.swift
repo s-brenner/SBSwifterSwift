@@ -57,7 +57,6 @@ extension Publishers {
             
             let total = totalBytesExpectedToWrite == -1 ? totalBytesExpected : totalBytesExpectedToWrite
             progress = total == -1 ? 0 : Float(totalBytesWritten) / Float(total)
-            print("\(totalBytesWritten), / \(total), \(progress)")
             _ = subscriber?.receive((progress: progress, data: nil))
         }
     }
