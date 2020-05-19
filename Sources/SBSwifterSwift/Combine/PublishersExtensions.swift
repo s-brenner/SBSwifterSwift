@@ -30,6 +30,7 @@ extension Publishers {
         func cancel() {
             
             subscriber = nil
+            session.invalidateAndCancel()
         }
         
         func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
@@ -37,12 +38,14 @@ extension Publishers {
             guard let data = try? Data(contentsOf: location) else { return }
             _ = subscriber?.receive((progress: progress, data: data))
             subscriber?.receive(completion: .finished)
+            session.invalidateAndCancel()
         }
         
         func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
             
             guard let error = error as? URLError else { return }
             subscriber?.receive(completion: .failure(error))
+            session.invalidateAndCancel()
         }
         
         func urlSession(
@@ -54,6 +57,7 @@ extension Publishers {
             
             let total = totalBytesExpectedToWrite == -1 ? totalBytesExpected : totalBytesExpectedToWrite
             progress = total == -1 ? 0 : Float(totalBytesWritten) / Float(total)
+            print("\(totalBytesWritten), / \(total), \(progress)")
             _ = subscriber?.receive((progress: progress, data: nil))
         }
     }
