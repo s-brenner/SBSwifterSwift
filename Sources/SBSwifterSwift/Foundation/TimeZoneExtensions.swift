@@ -321,6 +321,8 @@ public extension TimeZone {
     static let americaNorthDakotaCenter = TimeZone(identifier: "America/North_Dakota/Center")!
 
     static let americaNorthDakotaNewSalem = TimeZone(identifier: "America/North_Dakota/New_Salem")!
+    
+    static let americaNuuk = TimeZone(identifier: "America/Nuuk")!
 
     static let americaOjinaga = TimeZone(identifier: "America/Ojinaga")!
 
@@ -1494,6 +1496,7 @@ extension TimeZone: CaseIterable {
             .americaNorthDakotaBeulah,
             .americaNorthDakotaCenter,
             .americaNorthDakotaNewSalem,
+            .americaNuuk,
             .americaOjinaga,
             .americaPanama,
             .americaPangnirtung,
