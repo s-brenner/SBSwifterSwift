@@ -4,7 +4,7 @@ import Foundation
 extension Publishers {
     
     class DownloadSubscription<S: Subscriber>: NSObject, Subscription, URLSessionDownloadDelegate
-    where S.Input == (progress: Float, data: Data?), S.Failure == URLError {
+    where S.Input == (progress: Progress?, data: Data?), S.Failure == URLError {
         
         private lazy var session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
         
@@ -12,7 +12,7 @@ extension Publishers {
         
         private var subscriber: S?
         
-        private var progress: Float = 0
+        private var progress: Progress?
         
         private let totalBytesExpected: Int64
         
@@ -22,7 +22,8 @@ extension Publishers {
             self.subscriber = subscriber
             self.totalBytesExpected = totalBytesExpected
             super.init()
-            session.downloadTask(with: request).resume()
+            let task = session.downloadTask(with: request)
+            task.resume()
         }
         
         func request(_ demand: Subscribers.Demand) { }
@@ -30,14 +31,16 @@ extension Publishers {
         func cancel() {
             
             subscriber = nil
+            progress = nil
             session.invalidateAndCancel()
         }
         
         func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
             
             guard let data = try? Data(contentsOf: location) else { return }
-            _ = subscriber?.receive((progress: progress, data: data))
+            _ = subscriber?.receive((progress: nil, data: data))
             subscriber?.receive(completion: .finished)
+            progress = nil
             session.invalidateAndCancel()
         }
         
@@ -45,6 +48,7 @@ extension Publishers {
             
             guard let error = error as? URLError else { return }
             subscriber?.receive(completion: .failure(error))
+            progress = nil
             session.invalidateAndCancel()
         }
         
@@ -55,15 +59,21 @@ extension Publishers {
             totalBytesWritten: Int64,
             totalBytesExpectedToWrite: Int64) {
             
-            let total = totalBytesExpectedToWrite == -1 ? totalBytesExpected : totalBytesExpectedToWrite
-            progress = total == -1 ? 0 : Float(totalBytesWritten) / Float(total)
-            _ = subscriber?.receive((progress: progress, data: nil))
+            let total = totalBytesExpectedToWrite == NSURLSessionTransferSizeUnknown ? totalBytesExpected : totalBytesExpectedToWrite
+            if progress == nil {
+                progress = Progress(totalUnitCount: total == NSURLSessionTransferSizeUnknown ? 0 : total)
+                progress?.completedUnitCount = totalBytesWritten
+                _ = subscriber?.receive((progress: progress, data: nil))
+            }
+            else {
+                progress?.completedUnitCount = totalBytesWritten
+            }
         }
     }
     
     public struct DownloadPublisher: Publisher {
         
-        public typealias Output = (progress: Float, data: Data?)
+        public typealias Output = (progress: Progress?, data: Data?)
         
         public typealias Failure = URLError
         
@@ -71,7 +81,7 @@ extension Publishers {
         
         private let totalBytesExpected: Int64
         
-        init(request: URLRequest, totalBytesExpected: Int64 = -1) {
+        init(request: URLRequest, totalBytesExpected: Int64 = NSURLSessionTransferSizeUnknown) {
             
             self.request = request
             self.totalBytesExpected = totalBytesExpected
@@ -170,7 +180,7 @@ public extension URLSession {
     
     static func downloadPublisher(
         for request: URLRequest,
-        totalBytesExpected total: Int64 = -1) -> Publishers.DownloadPublisher {
+        totalBytesExpected total: Int64 = NSURLSessionTransferSizeUnknown) -> Publishers.DownloadPublisher {
         
         .init(request: request, totalBytesExpected: total)
     }
