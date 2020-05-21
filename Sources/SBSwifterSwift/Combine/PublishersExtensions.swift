@@ -98,81 +98,6 @@ extension Publishers {
                 subscriber.receive(subscription: subscription)
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    class DataTaskProgressSubscription<S: Subscriber>: Subscription where
-        S.Input == (progress: Progress?, result: (data: Data, response: HTTPURLResponse)?),
-        S.Failure == URLError {
-        
-        private let session: URLSession
-        
-        private let request: URLRequest
-        
-        private var subscriber: S?
-        
-        init(session: URLSession, request: URLRequest, subscriber: S) {
-            
-            self.session = session
-            self.request = request
-            self.subscriber = subscriber
-            
-            let task = session.dataTask(with: request) { data, response, error in
-                if let data = data,
-                    let response = response as? HTTPURLResponse {
-                    _ = subscriber.receive((progress: nil, result: (data: data, response: response)))
-                    subscriber.receive(completion: .finished)
-                    session.invalidateAndCancel()
-                }
-                else if let error = error as? URLError {
-                    subscriber.receive(completion: .failure(error))
-                    session.invalidateAndCancel()
-                }
-            }
-            _ = subscriber.receive((progress: task.progress, result: nil))
-            task.resume()
-        }
-        
-        func request(_ demand: Subscribers.Demand) { }
-        
-        func cancel() {
-            
-            subscriber = nil
-            session.invalidateAndCancel()
-        }
-    }
-    
-    public struct DataTaskProgressPublisher: Publisher {
-        
-        public typealias Output = (progress: Progress?, result: (data: Data, response: HTTPURLResponse)?)
-        
-        public typealias Failure = URLError
-        
-        private let session: URLSession
-        
-        private let request: URLRequest
-        
-        init(session: URLSession, request: URLRequest) {
-            
-            self.session = session
-            self.request = request
-        }
-        
-        public func receive<S>(subscriber: S) where
-            S : Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
-                
-                let subscription = DataTaskProgressSubscription(session: session, request: request, subscriber: subscriber)
-                subscriber.receive(subscription: subscription)
-        }
-    }
 }
 
 
@@ -185,13 +110,10 @@ public extension URLSession {
         .init(request: request, totalBytesExpected: total)
     }
     
-    func dataTaskProgressPublisher(for request: URLRequest) -> Publishers.DataTaskProgressPublisher {
+    static func downloadPublisher(
+        for url: URL,
+        totalBytesExpected total: Int64 = NSURLSessionTransferSizeUnknown) -> Publishers.DownloadPublisher {
         
-        .init(session: self, request: request)
-    }
-    
-    func dataTaskProgressPublisher(for url: URL) -> Publishers.DataTaskProgressPublisher {
-        
-        .init(session: self, request: .init(url: url))
+        .init(request: .init(url: url), totalBytesExpected: total)
     }
 }
