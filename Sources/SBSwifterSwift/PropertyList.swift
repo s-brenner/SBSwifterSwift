@@ -1,5 +1,4 @@
 import Foundation
-import class UIKit.UIImage
 
 public enum PropertyList {
     
@@ -32,15 +31,23 @@ public enum PropertyList {
         public static let version = list["CFBundleShortVersionString"] as? String ?? ""
         
         public static let build = list["CFBundleVersion"] as? String ?? ""
-        
-        public static var icon: UIImage? {
-            if let icons = list["CFBundleIcons"] as? [String: Any],
-                let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
-                let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
-                let lastIcon = iconFiles.last {
-                return UIImage(named: lastIcon)
-            }
-            return nil
-        }
     }
 }
+
+
+#if canImport(UIKit)
+import class UIKit.UIImage
+
+public extension PropertyList.Info {
+    
+    static var icon: UIImage? {
+        if let icons = list["CFBundleIcons"] as? [String: Any],
+            let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
+            let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
+            let lastIcon = iconFiles.last {
+            return UIImage(named: lastIcon)
+        }
+        return nil
+    }
+}
+#endif
