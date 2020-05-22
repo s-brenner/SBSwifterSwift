@@ -11,6 +11,13 @@ public protocol CategorizedError: Error {
     var category: ErrorCategory { get }
 }
 
+public protocol PresentableError: CategorizedError {
+    
+    var title: String { get }
+    
+    var message: String { get }
+}
+
 public extension Error {
     
     // https://www.swiftbysundell.com/articles/propagating-user-facing-errors-in-swift/
