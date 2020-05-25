@@ -20,23 +20,23 @@ public struct Wrap<Wrapped: UIView>: UIViewRepresentable {
     }
 }
 
-extension Wrap {
+public extension Wrap {
     
-    public init(_ makeView: @escaping @autoclosure () -> Wrapped,
+    init(_ makeView: @escaping @autoclosure () -> Wrapped,
          updater update: @escaping Updater) {
         
         self.makeView = makeView
         self.update = update
     }
     
-    public init(_ makeView: @escaping @autoclosure () -> Wrapped,
+    init(_ makeView: @escaping @autoclosure () -> Wrapped,
          updater update: @escaping (Wrapped) -> Void) {
         
         self.makeView = makeView
         self.update = { view, _ in update(view) }
     }
 
-    public init(_ makeView: @escaping @autoclosure () -> Wrapped) {
+    init(_ makeView: @escaping @autoclosure () -> Wrapped) {
         
         self.makeView = makeView
         self.update = { _, _ in }

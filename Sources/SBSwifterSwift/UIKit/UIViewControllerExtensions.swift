@@ -97,3 +97,28 @@ extension UIViewController {
     }
 }
 #endif
+
+
+#if canImport(SwiftUI) && os(iOS)
+import SwiftUI
+
+extension UIViewController {
+    
+    private struct Preview: UIViewControllerRepresentable {
+        
+        var viewController: UIViewController
+        
+        func makeUIViewController(context: Context) -> UIViewController {
+            
+            viewController
+        }
+        
+        func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
+    }
+    
+    public func asPreview() -> some View {
+        
+        Preview(viewController: self)
+    }
+}
+#endif
