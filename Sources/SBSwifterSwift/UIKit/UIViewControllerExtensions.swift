@@ -86,6 +86,12 @@ public extension UIViewController {
         view.fadeTransition(duration: animationDuration)
         view.addSubview(newView)
     }
+    
+    enum ViewState<Model> {
+        case loading
+        case presenting(Model)
+        case failed(PresentableError)
+    }
 }
 
 
