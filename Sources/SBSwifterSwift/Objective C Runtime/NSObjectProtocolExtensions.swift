@@ -19,7 +19,7 @@ extension NSObjectProtocol {
     
     /// Prints a message to the console that indicates that this object has been deallocated.
     /// Use this method inside an object's `deinit` method.
-    func printDeinitMessage() {
+    public func printDeinitMessage() {
         
         print("Deinit " + String(describing: self))
     }
