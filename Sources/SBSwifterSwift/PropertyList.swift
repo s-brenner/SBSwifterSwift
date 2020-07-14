@@ -26,6 +26,8 @@ public enum PropertyList {
         
         public static let list = PropertyList.named("Info")
         
+        public static let identifier = list["CFBundleIdentifier"] as? String ?? ""
+        
         public static let name =  list["CFBundleDisplayName"] as? String ?? ""
         
         public static let version = list["CFBundleShortVersionString"] as? String ?? ""
