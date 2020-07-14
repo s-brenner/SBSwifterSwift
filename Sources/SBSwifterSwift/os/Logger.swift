@@ -9,4 +9,10 @@ public extension Logger {
         
         self.init(subsystem: PropertyList.Info.identifier, category: category)
     }
+    
+    /// - Author: Scott Brenner | SBSwifterSwift
+    func logDeinit() {
+        
+        log("Deinit \(String(describing: self))")
+    }
 }
