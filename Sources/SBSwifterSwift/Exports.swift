@@ -1,5 +1,6 @@
 @_exported import Combine
 @_exported import Foundation
+@_exported import os
 
 @_exported import class    CoreData.NSManagedObjectContext
 
