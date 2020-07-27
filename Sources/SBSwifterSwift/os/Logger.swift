@@ -11,8 +11,8 @@ public extension Logger {
     }
     
     /// - Author: Scott Brenner | SBSwifterSwift
-    func logDeinit() {
+    func logDeinit(for object: NSObject) {
         
-        log("Deinit \(String(describing: self))")
+        log("Deinit \(String(describing: object))")
     }
 }
