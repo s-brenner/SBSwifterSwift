@@ -24,5 +24,7 @@ public extension UIButton {
       self.clipsToBounds = true
       self.setBackgroundImage(colorImage, for: state)
     }
+    
+    var tapPublisher: EventPublisher { publisher(for: .touchUpInside) }
 }
 #endif
