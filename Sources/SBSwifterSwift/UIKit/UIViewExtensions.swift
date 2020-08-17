@@ -526,9 +526,8 @@ extension UIView {
     @available(iOS 9, *)
     public func anchorCenterXToSuperview(constant: CGFloat = 0) {
         
-        if let view = superview {
-            anchorCenterX(to: view, constant: constant)
-        }
+        guard let view = superview else { return }
+        anchorCenterX(to: view, constant: constant)
     }
     
     /// Anchor center Y into current view's superview with a constant margin value.
@@ -536,9 +535,8 @@ extension UIView {
     @available(iOS 9, *)
     public func anchorCenterYToSuperview(constant: CGFloat = 0) {
         
-        if let view = superview {
-            anchorCenterY(to: view, constant: constant)
-        }
+        guard let view = superview else { return }
+        anchorCenterY(to: view, constant: constant)
     }
     
     /// Anchor center X and Y into current view's superview.
@@ -548,6 +546,60 @@ extension UIView {
         if let view = superview {
             anchorCenter(to: view)
         }
+    }
+    
+    @available(iOS 9, *)
+    public func anchor(
+        to item: Anchorable,
+        topConstant: CGFloat = 0,
+        leadingConstant: CGFloat = 0,
+        bottomConstant: CGFloat = 0,
+        trailingConstant: CGFloat = 0) {
+        
+        anchor(
+            top: .top(item, constant: topConstant),
+            leading: .leading(item, constant: leadingConstant),
+            bottom: .bottom(item, constant: bottomConstant),
+            trailing: .trailing(item, constant: trailingConstant)
+        )
+    }
+    
+    @available(iOS 9, *)
+    @discardableResult
+    public func anchor(
+        top: YAxisAnchor? = nil,
+        leading: XAxisAnchor? = nil,
+        bottom: YAxisAnchor? = nil,
+        trailing: XAxisAnchor? = nil,
+        firstBaseline: YAxisAnchor? = nil,
+        widthConstant: CGFloat = 0,
+        heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        var anchors = [NSLayoutConstraint]()
+        if let top = top {
+            anchors.append(topAnchor.constraint(equalTo: top.anchor, constant: top.constant))
+        }
+        if let leading = leading {
+            anchors.append(leadingAnchor.constraint(equalTo: leading.anchor, constant: leading.constant))
+        }
+        if let bottom = bottom {
+            anchors.append(bottomAnchor.constraint(equalTo: bottom.anchor, constant: -bottom.constant))
+        }
+        if let trailing = trailing {
+            anchors.append(trailingAnchor.constraint(equalTo: trailing.anchor, constant: -trailing.constant))
+        }
+        if let firstBaseline = firstBaseline {
+            anchors.append(firstBaselineAnchor.constraint(equalTo: firstBaseline.anchor, constant: firstBaseline.constant))
+        }
+        if widthConstant.isPositive {
+            anchors.append(widthAnchor.constraint(equalToConstant: widthConstant))
+        }
+        if heightConstant.isPositive {
+            anchors.append(heightAnchor.constraint(equalToConstant: heightConstant))
+        }
+        anchors.forEach { $0.isActive = true }
+        return anchors
     }
     
     /// Search all superviews until a view with the condition is found.
@@ -583,5 +635,64 @@ extension UIView {
         addSubview(newView)
     }
 }
+
+
+// MARK: - Anchor
+
+public struct Anchor<Axis> {
+    
+    public let anchor: Axis
+    
+    public let constant: CGFloat
+    
+    public init(anchor: Axis, constant: CGFloat = 0) {
+        self.anchor = anchor
+        self.constant = constant
+    }
+}
+
+public typealias XAxisAnchor = Anchor<NSLayoutXAxisAnchor>
+
+public extension XAxisAnchor {
+    
+    static func leading(_ item: Anchorable, constant: CGFloat = 0) -> Self {
+        Self(anchor: item.leadingAnchor, constant: constant)
+    }
+    
+    static func trailing(_ item: Anchorable, constant: CGFloat = 0) -> Self {
+        Self(anchor: item.trailingAnchor, constant: constant)
+    }
+}
+
+public typealias YAxisAnchor = Anchor<NSLayoutYAxisAnchor>
+
+public extension YAxisAnchor {
+    
+    static func top(_ item: Anchorable, constant: CGFloat = 0) -> Self {
+        Self(anchor: item.topAnchor, constant: constant)
+    }
+    
+    static func bottom(_ item: Anchorable, constant: CGFloat = 0) -> Self {
+        Self(anchor: item.bottomAnchor, constant: constant)
+    }
+    
+    static func firstBaseline(_ view: UIView, constant: CGFloat = 0) -> Self {
+        Self(anchor: view.firstBaselineAnchor, constant: constant)
+    }
+}
+
+
+// MARK: - Anchorable
+
+public protocol Anchorable {
+    var topAnchor: NSLayoutYAxisAnchor { get }
+    var bottomAnchor: NSLayoutYAxisAnchor { get }
+    var leadingAnchor: NSLayoutXAxisAnchor { get }
+    var trailingAnchor: NSLayoutXAxisAnchor { get }
+}
+
+extension UIView: Anchorable { }
+
+extension UILayoutGuide: Anchorable { }
 
 #endif
