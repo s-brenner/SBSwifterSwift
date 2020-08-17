@@ -436,6 +436,7 @@ extension UIView {
     /// - Parameter heightConstant: Current view's height.
     /// - Returns: Array of newly added constraints (if applicable).
     @available(iOS 9, *)
+    @available(*, deprecated, message: "Use other anchor API")
     @discardableResult
     public func anchor(
         top: NSLayoutYAxisAnchor? = nil,
