@@ -1,9 +1,39 @@
 import Combine
 import Foundation
 
-extension Publishers {
+public extension URLSession {
     
-    class DownloadSubscription<S: Subscriber>: NSObject, Subscription, URLSessionDownloadDelegate
+    struct DownloadPublisher: Publisher {
+        
+        public typealias Output = (progress: Progress?, data: Data?)
+        
+        public typealias Failure = URLError
+        
+        private let request: URLRequest
+        
+        private let totalBytesExpected: Int64
+        
+        init(request: URLRequest, totalBytesExpected: Int64 = NSURLSessionTransferSizeUnknown) {
+            self.request = request
+            self.totalBytesExpected = totalBytesExpected
+        }
+        
+        public func receive<S>(subscriber: S)
+        where S : Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
+            let subscription = Inner(
+                request: request,
+                subscriber: subscriber,
+                totalBytesExpected: totalBytesExpected
+            )
+            subscriber.receive(subscription: subscription)
+        }
+    }
+}
+
+
+private extension URLSession.DownloadPublisher {
+    
+    class Inner<S: Subscriber>: NSObject, Subscription, URLSessionDownloadDelegate
     where S.Input == (progress: Progress?, data: Data?), S.Failure == URLError {
         
         private lazy var session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
@@ -70,34 +100,6 @@ extension Publishers {
             }
         }
     }
-    
-    public struct DownloadPublisher: Publisher {
-        
-        public typealias Output = (progress: Progress?, data: Data?)
-        
-        public typealias Failure = URLError
-        
-        private let request: URLRequest
-        
-        private let totalBytesExpected: Int64
-        
-        init(request: URLRequest, totalBytesExpected: Int64 = NSURLSessionTransferSizeUnknown) {
-            
-            self.request = request
-            self.totalBytesExpected = totalBytesExpected
-        }
-        
-        public func receive<S>(subscriber: S)
-            where S : Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
-                
-                let subscription = DownloadSubscription(
-                    request: request,
-                    subscriber: subscriber,
-                    totalBytesExpected: totalBytesExpected
-                )
-                subscriber.receive(subscription: subscription)
-        }
-    }
 }
 
 
@@ -105,14 +107,14 @@ public extension URLSession {
     
     static func downloadPublisher(
         for request: URLRequest,
-        totalBytesExpected total: Int64 = NSURLSessionTransferSizeUnknown) -> Publishers.DownloadPublisher {
+        totalBytesExpected total: Int64 = NSURLSessionTransferSizeUnknown) -> DownloadPublisher {
         
         .init(request: request, totalBytesExpected: total)
     }
     
     static func downloadPublisher(
         for url: URL,
-        totalBytesExpected total: Int64 = NSURLSessionTransferSizeUnknown) -> Publishers.DownloadPublisher {
+        totalBytesExpected total: Int64 = NSURLSessionTransferSizeUnknown) -> DownloadPublisher {
         
         .init(request: .init(url: url), totalBytesExpected: total)
     }
