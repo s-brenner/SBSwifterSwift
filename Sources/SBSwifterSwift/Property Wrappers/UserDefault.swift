@@ -21,17 +21,18 @@ public struct UserDefault<T: Codable> {
     
     /// The wrapped value.
     public var wrappedValue: T {
-        get {
-            // Legacy code. Overwrite values saved with a previous implementation.
-            if let data = defaults.object(forKey: key) as? Data,
-                let array = try? PropertyListDecoder().decode([T].self, from: data),
-                let first = array.first {
-                defaults.set(object: first, forKey: key)
-            }
-            
-            return defaults.object(T.self, forKey: key) ?? defaultValue()
+        get { defaults.object(T.self, forKey: key) ?? defaultValue() }
+        set {
+            defaults.set(object: newValue, forKey: key)
+            subject.send(newValue)
         }
-        set { defaults.set(object: newValue, forKey: key) }
+    }
+    
+    private let subject = PassthroughSubject<T, Never>()
+    
+    /// A publisher that fires when the wrapped value is modified.
+    public var publisher: AnyPublisher<T, Never> {
+        subject.eraseToAnyPublisher()
     }
     
     /// The projected value.
