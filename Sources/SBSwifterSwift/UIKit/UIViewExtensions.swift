@@ -558,10 +558,10 @@ extension UIView {
         trailingConstant: CGFloat = 0) {
         
         anchor(
-            top: .top(item, constant: topConstant),
-            leading: .leading(item, constant: leadingConstant),
-            bottom: .bottom(item, constant: bottomConstant),
-            trailing: .trailing(item, constant: trailingConstant)
+            top: item.top(topConstant),
+            leading: item.leading(leadingConstant),
+            bottom: item.bottom(bottomConstant),
+            trailing: item.trailing(trailingConstant)
         )
     }
     
@@ -692,7 +692,31 @@ public protocol Anchorable {
     var trailingAnchor: NSLayoutXAxisAnchor { get }
 }
 
-extension UIView: Anchorable { }
+public extension Anchorable {
+    
+    func leading(_ constant: CGFloat = 0) -> XAxisAnchor {
+        XAxisAnchor(anchor: leadingAnchor, constant: constant)
+    }
+    
+    func trailing(_ constant: CGFloat = 0) -> XAxisAnchor {
+        XAxisAnchor(anchor: trailingAnchor, constant: constant)
+    }
+    
+    func top(_ constant: CGFloat = 0) -> YAxisAnchor {
+        YAxisAnchor(anchor: topAnchor, constant: constant)
+    }
+    
+    func bottom(_ constant: CGFloat = 0) -> YAxisAnchor {
+        YAxisAnchor(anchor: bottomAnchor, constant: constant)
+    }
+}
+
+extension UIView: Anchorable {
+    
+    public func firstBaseline(_ constant: CGFloat = 0) -> YAxisAnchor {
+        YAxisAnchor(anchor: firstBaselineAnchor, constant: constant)
+    }
+}
 
 extension UILayoutGuide: Anchorable { }
 
