@@ -93,6 +93,9 @@ extension NSManagedObjectContext.ChangesPublisher {
             fetchedResultsController!.delegate = self
             do {
                 try fetchedResultsController!.performFetch()
+                if #available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *) {
+                    logger.info("NSFetchedResultsController performed fetch")
+                }
             } catch {
                 downstream.receive(completion: .failure(error))
             }
@@ -110,7 +113,7 @@ extension NSManagedObjectContext.ChangesPublisher {
         
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
             if #available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *) {
-                logger.info("FRC did change content")
+                logger.info("NSFetchedResultsController did change content")
             }
             fulfillDemand()
         }
