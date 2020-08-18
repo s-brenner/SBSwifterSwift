@@ -78,6 +78,9 @@ extension NSManagedObjectContext.ChangesPublisher {
         
         private var demand: Subscribers.Demand = .none
         
+        @available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+        private lazy var logger = Logger(category: "NSManagedObjectContext.ChangesPublisher")
+        
         init(downstream: Downstream, fetchRequest: NSFetchRequest<Object>, context: NSManagedObjectContext) {
             self.downstream = downstream
             fetchedResultsController = NSFetchedResultsController(
@@ -106,12 +109,19 @@ extension NSManagedObjectContext.ChangesPublisher {
         }
         
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+            if #available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *) {
+                logger.info("FRC did change content")
+            }
             fulfillDemand()
         }
         
         private func fulfillDemand() {
             guard demand > 0 else { return }
-            let newDemand = downstream.receive(fetchedResultsController?.fetchedObjects ?? [])
+            let objects = fetchedResultsController?.fetchedObjects ?? []
+            let newDemand = downstream.receive(objects)
+            if #available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *) {
+                logger.info("\(objects.count) objects sent downstream")
+            }
             demand += newDemand
             demand -= 1
         }
