@@ -23,12 +23,13 @@ public extension UIViewController {
     ///   - observer: Object registering as an observer.
     ///   - selector: Selector to run when notified.
     ///   - events: Keyboard events to listen for.
+    @available(*, deprecated, message: "Use NotificationCenter.default.keyboardPublisher() instead")
     func addKeyboardObserver(
         _ observer: Any,
         selector: Selector,
         events: Set<UIResponder.KeyboardNotification.Event> = [.willShow, .willHide]) {
         
-        events.forEach() {
+        events.forEach {
             NotificationCenter.default.addObserver(observer, selector: selector, name: $0.name, object: nil)
         }
     }
@@ -98,7 +99,6 @@ public extension UIViewController {
 extension UIViewController {
     
     @objc open func handle(_ error: Error, retryHandler: @escaping () -> Void) {
-        
         handle(error, from: self, retryHandler: retryHandler)
     }
 }
@@ -115,7 +115,6 @@ extension UIViewController {
         var viewController: UIViewController
         
         func makeUIViewController(context: Context) -> UIViewController {
-            
             viewController
         }
         
@@ -123,7 +122,6 @@ extension UIViewController {
     }
     
     public func asPreview() -> some View {
-        
         Preview(viewController: self)
     }
 }

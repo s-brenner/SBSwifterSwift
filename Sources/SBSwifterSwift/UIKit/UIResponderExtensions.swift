@@ -84,6 +84,13 @@ public extension UIResponder {
     }
 }
 
+public extension Notification.Name {
+    
+    static func keyboard(_ event: UIResponder.KeyboardNotification.Event) -> Self {
+        event.name
+    }
+}
+
 
 extension UIResponder {
     

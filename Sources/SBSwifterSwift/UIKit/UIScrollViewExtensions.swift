@@ -1,9 +1,9 @@
 #if canImport(UIKit)
-
 import UIKit
 
 extension UIScrollView {
     
+    @available(*, deprecated, message: "Use NotificationCenter.default.keyboardPublisher() instead")
     @objc public final func handleKeyboardNotification(_ notification: Notification) {
         
         guard let notification = KeyboardNotification(notification) else { return }
@@ -12,7 +12,8 @@ extension UIScrollView {
     
     public final func adjustForKeyboardNotification(_ notification: UIResponder.KeyboardNotification) {
 
-        let bottom = notification.event == .willShow ? notification.frameEnd.height - (superview?.safeAreaInsets.bottom ?? 0) : 0
+        let bottom = notification.event == .willShow ?
+            notification.frameEnd.height - (superview?.safeAreaInsets.bottom ?? 0) : 0
         
         let animator = UIViewPropertyAnimator(duration: notification.animationDuration, curve: notification.animationCurve) { [weak self] in
             guard let self = self else { return }
@@ -22,5 +23,4 @@ extension UIScrollView {
         animator.startAnimation()
     }
 }
-
 #endif

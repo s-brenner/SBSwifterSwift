@@ -3,19 +3,18 @@
 import UIKit
 import Combine
 
-extension NotificationCenter {
-    
-    @available(iOS 13.0, *)
-    @discardableResult
-    public func keyboardNotificationSink(
-        _ events: [UIResponder.KeyboardNotification.Event] = [.willShow, .willHide],
-        receiveValue: @escaping (UIResponder.KeyboardNotification) -> Void) -> AnyCancellable {
+public extension NotificationCenter {
 
-        let publishers = events.map() { publisher(for: $0.name) }
-
-        return Publishers.MergeMany(publishers).compactMap { UIResponder.KeyboardNotification($0) }
+    /// Returns a publisher that emits events whenever the selected keyboard events occur.
+    /// - Parameter events: The keyboard events that cause the publisher to emit. Defaults to `willShow` and `willHide`.
+    func keyboardPublisher(
+        forEvents events: [UIResponder.KeyboardNotification.Event] = [.willShow, .willHide]
+    ) -> AnyPublisher<UIResponder.KeyboardNotification, Never> {
+        
+        Publishers.MergeMany(events.map { publisher(for: $0.name) })
+            .compactMap { UIResponder.KeyboardNotification($0) }
             .receive(on: RunLoop.main)
-            .sink(receiveValue: receiveValue)
+            .eraseToAnyPublisher()
     }
 }
 

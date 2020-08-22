@@ -19,6 +19,11 @@ public extension NSMutableAttributedString {
         return self
     }
     
+    func link(_ urlString: String) -> Self {
+        addAttribute(.link, value: urlString, range: range)
+        return self
+    }
+    
     func strikethrough(color: UIColor, style: NSUnderlineStyle) -> Self {
         addAttributes([.strikethroughColor: color, .strikethroughStyle: style.rawValue], range: range)
         return self
