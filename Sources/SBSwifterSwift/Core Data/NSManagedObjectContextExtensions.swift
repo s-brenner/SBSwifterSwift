@@ -76,11 +76,7 @@ extension NSManagedObjectContext.ChangesPublisher {
         
         private var fetchedResultsController: NSFetchedResultsController<Object>?
         
-        private var demand: Subscribers.Demand = .none {
-            didSet {
-                log("Demand is \(demand)")
-            }
-        }
+        private var demand: Subscribers.Demand = .none
         
         @available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
         private lazy var logger = Logger(category: "NSManagedObjectContext.ChangesPublisher")
@@ -129,7 +125,8 @@ extension NSManagedObjectContext.ChangesPublisher {
             guard demand > 0 else { return }
             let objects = fetchedResultsController?.fetchedObjects ?? []
             let newDemand = downstream.receive(objects)
-            log("\(objects.count) \(objects.count == 1 ? "object" : "objects") sent downstream")
+            let item = String(describing: Downstream.Input.Element.self)
+            log("\(objects.count) \(item)\(objects.count == 1 ? "" : "s") sent downstream")
             demand += newDemand
             demand -= 1
         }
