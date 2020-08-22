@@ -720,4 +720,27 @@ extension UIView: Anchorable {
 
 extension UILayoutGuide: Anchorable { }
 
+public extension UIView {
+    
+    final func adjustForKeyboardNotification(_ notification: UIResponder.KeyboardNotification) {
+        
+        let bottom = notification.event == .willShow ?
+            notification.frameEnd.height - (superview?.safeAreaInsets.bottom ?? 0) : 0
+        
+        let animator = UIViewPropertyAnimator(
+            duration: notification.animationDuration,
+            curve: notification.animationCurve) { [weak self] in
+            if let scrollView = self as? UIScrollView {
+                scrollView.contentInset.bottom = bottom
+                scrollView.verticalScrollIndicatorInsets.bottom = bottom
+            }
+            else {
+                self?.constraints.first(where: { $0.firstAttribute == .bottom })?.constant = -bottom
+                self?.layoutIfNeeded()
+            }
+        }
+        animator.startAnimation()
+    }
+}
+
 #endif
