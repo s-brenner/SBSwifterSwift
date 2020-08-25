@@ -343,8 +343,8 @@ private extension UICollectionView.Cells.TextFieldCell {
         }
         
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            guard let text = textField.text, !text.isEmpty else { return false }
-            return resignFirstResponder()
+            guard let text = textField.text else { return false }
+            return text.isEmpty ? currentConfiguration.textFieldProperties.returnsWhenEmpty : true
         }
     }
 }
@@ -353,40 +353,24 @@ private extension UICollectionView.Cells.TextFieldCell {
 public extension UIListContentConfiguration {
     
     struct TextFieldProperties: Hashable {
-        
         public var textColor: UIColor
-        
         public var font: UIFont
-        
         public var textAlignment: NSTextAlignment
-        
         public var placeholder: String?
-        
         public var borderStyle: UITextField.BorderStyle
-        
         public var clearButtonMode: UITextField.ViewMode
-        
         public var minimumFontSize: CGFloat
-        
         public var autocapitalizationType: UITextAutocapitalizationType
-        
         public var autocorrectionType: UITextAutocorrectionType
-        
         public var spellCheckingType: UITextSpellCheckingType
-        
         public var keyboardType: UIKeyboardType
-        
         public var keyboardAppearance: UIKeyboardAppearance
-        
         public var returnKeyType: UIReturnKeyType
-        
         public var adjustsFontSizeToFitWidth: Bool
-        
         public var adjustsFontForContentSizeCategory: Bool
-        
         public var clearsOnBeginEditing: Bool
-        
         public var clearsOnInsertion: Bool
+        public var returnsWhenEmpty: Bool
         
         private init() {
             let textField = UITextField()
@@ -407,6 +391,7 @@ public extension UIListContentConfiguration {
             adjustsFontForContentSizeCategory = textField.adjustsFontForContentSizeCategory
             clearsOnBeginEditing = textField.clearsOnBeginEditing
             clearsOnInsertion = textField.clearsOnInsertion
+            returnsWhenEmpty = true
         }
         
         public static let `default` = TextFieldProperties()
