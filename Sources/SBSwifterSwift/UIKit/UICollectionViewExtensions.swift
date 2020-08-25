@@ -344,7 +344,8 @@ private extension UICollectionView.Cells.TextFieldCell {
         
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             guard let text = textField.text else { return false }
-            return text.isEmpty ? currentConfiguration.textFieldProperties.returnsWhenEmpty : true
+            let returnsWhenEmpty = currentConfiguration.textFieldProperties.returnsWhenEmpty
+            return text.isEmpty ? returnsWhenEmpty : resignFirstResponder()
         }
     }
 }
