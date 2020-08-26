@@ -342,7 +342,10 @@ private extension UICollectionView.Cells.TextFieldCell {
             shouldChangeCharactersIn range: NSRange,
             replacementString string: String) -> Bool {
             
-            guard let limit = currentConfiguration.textFieldProperties.characterLimit else { return true }
+            guard case .limitedTo(let limit) = currentConfiguration.textFieldProperties.characterLimit,
+                  limit.isPositive else {
+                return true
+            }
             let textCount = textField.text?.count ?? 0
             let newLength = textCount + string.count - range.length
             return newLength <= limit
@@ -390,7 +393,12 @@ public extension UIListContentConfiguration {
         public var clearsOnBeginEditing: Bool
         public var clearsOnInsertion: Bool
         public var returnsWhenEmpty: Bool
-        public var characterLimit: Int?
+        public var characterLimit: CharacterLimit
+        
+        public enum CharacterLimit: Hashable {
+            case unlimited
+            case limitedTo(Int)
+        }
         
         private init() {
             let textField = UITextField()
@@ -412,7 +420,7 @@ public extension UIListContentConfiguration {
             clearsOnBeginEditing = textField.clearsOnBeginEditing
             clearsOnInsertion = textField.clearsOnInsertion
             returnsWhenEmpty = true
-            characterLimit = nil
+            characterLimit = .unlimited
         }
         
         public static let `default` = TextFieldProperties()
