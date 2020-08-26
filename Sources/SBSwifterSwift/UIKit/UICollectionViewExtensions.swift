@@ -190,6 +190,7 @@ public extension UICollectionView.Cells {
         
         public var textFieldProperties = UIListContentConfiguration.TextFieldProperties.default
         
+        /// This value will be included in the notifications sent from this cell
         public var id: UUID?
         
         public override func updateConfiguration(using state: UICellConfigurationState) {
@@ -206,8 +207,13 @@ public extension UICollectionView.Cells {
         }
         
         public enum Notifications {
+            
+            private static func name(_ name: String) -> Notification.Name {
+                Notification.Name("UICollectionView.Cells.TextFieldCell." + name)
+            }
+            
             public enum TextDidBeginEditing {
-                public static let name = Notification.Name("TextFieldCell.textDidBeginEditing")
+                public static let name = Notifications.name("textDidBeginEditing")
                 public struct Object {
                     public let id: UUID?
                     public let text: String
@@ -215,7 +221,7 @@ public extension UICollectionView.Cells {
             }
             
             public enum TextDidChange {
-                public static let name = Notification.Name("TextFieldCell.textDidChange")
+                public static let name = Notifications.name("textDidChange")
                 public struct Object {
                     public let id: UUID?
                     public let text: String
@@ -223,7 +229,7 @@ public extension UICollectionView.Cells {
             }
             
             public enum TextDidEndEditing {
-                public static let name = Notification.Name("TextFieldCell.textDidEndEditing")
+                public static let name = Notifications.name("textDidEndEditing")
                 public struct Object {
                     public let id: UUID?
                     public let text: String
@@ -278,6 +284,7 @@ private extension UICollectionView.Cells.TextFieldCell {
             guard currentConfiguration != configuration else { return }
             currentConfiguration = configuration
             id = configuration.id
+            textField.text = configuration.text
             textField.textColor  = configuration.textFieldProperties.textColor
             textField.font = configuration.textFieldProperties.font
             textField.textAlignment = configuration.textFieldProperties.textAlignment
@@ -307,9 +314,9 @@ private extension UICollectionView.Cells.TextFieldCell {
             textField.resignFirstResponder()
         }
         
-        struct ContentConfiguration: UIContentConfiguration, Equatable {
+        struct ContentConfiguration: UIContentConfiguration, Hashable {
             
-            var text: String?
+            var text = ""
             
             var textFieldProperties = UIListContentConfiguration.TextFieldProperties.default
             
@@ -328,6 +335,17 @@ private extension UICollectionView.Cells.TextFieldCell {
             typealias TextDidBeginEditing = UICollectionView.Cells.TextFieldCell.Notifications.TextDidBeginEditing
             let object = TextDidBeginEditing.Object(id: id, text: textField.text ?? "")
             NotificationCenter.default.post(name: TextDidBeginEditing.name, object: object)
+        }
+        
+        func textField(
+            _ textField: UITextField,
+            shouldChangeCharactersIn range: NSRange,
+            replacementString string: String) -> Bool {
+            
+            guard let limit = currentConfiguration.textFieldProperties.characterLimit else { return true }
+            let textCount = textField.text?.count ?? 0
+            let newLength = textCount + string.count - range.length
+            return newLength <= limit
         }
         
         func textFieldDidChangeSelection(_ textField: UITextField) {
@@ -372,6 +390,7 @@ public extension UIListContentConfiguration {
         public var clearsOnBeginEditing: Bool
         public var clearsOnInsertion: Bool
         public var returnsWhenEmpty: Bool
+        public var characterLimit: Int?
         
         private init() {
             let textField = UITextField()
@@ -393,6 +412,7 @@ public extension UIListContentConfiguration {
             clearsOnBeginEditing = textField.clearsOnBeginEditing
             clearsOnInsertion = textField.clearsOnInsertion
             returnsWhenEmpty = true
+            characterLimit = nil
         }
         
         public static let `default` = TextFieldProperties()
