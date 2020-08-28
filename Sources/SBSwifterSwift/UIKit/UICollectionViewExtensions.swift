@@ -201,9 +201,16 @@ public extension UICollectionView.Cells {
             }
         }
         
+        @discardableResult
         public override func becomeFirstResponder() -> Bool {
             let views = subviews.compactMap { $0 as? View }
             return views.first?.becomeFirstResponder() ?? false
+        }
+        
+        @discardableResult
+        public override func resignFirstResponder() -> Bool {
+            let views = subviews.compactMap { $0 as? View }
+            return views.first?.resignFirstResponder() ?? false
         }
         
         public enum Notifications {
@@ -225,6 +232,14 @@ public extension UICollectionView.Cells {
                 public struct Object {
                     public let id: UUID?
                     public let text: String
+                }
+            }
+            
+            public enum TextLimited {
+                public static let name = Notifications.name("textLimited")
+                public struct Object {
+                    public let id: UUID?
+                    public let limit: UIListContentConfiguration.TextFieldProperties.CharacterLimit
                 }
             }
             
@@ -342,13 +357,17 @@ private extension UICollectionView.Cells.TextFieldCell {
             shouldChangeCharactersIn range: NSRange,
             replacementString string: String) -> Bool {
             
-            guard case .limitedTo(let limit) = currentConfiguration.textFieldProperties.characterLimit,
-                  limit.isPositive else {
-                return true
-            }
+            let characterLimit = currentConfiguration.textFieldProperties.characterLimit
+            guard case .limitedTo(let limit) = characterLimit, limit.isPositive else { return true }
             let textCount = textField.text?.count ?? 0
             let newLength = textCount + string.count - range.length
-            return newLength <= limit
+            let shouldChangeCharacters = newLength <= limit
+            if !shouldChangeCharacters {
+                typealias TextLimited = UICollectionView.Cells.TextFieldCell.Notifications.TextLimited
+                let object = TextLimited.Object(id: id, limit: characterLimit)
+                NotificationCenter.default.post(name: TextLimited.name, object: object)
+            }
+            return shouldChangeCharacters
         }
         
         func textFieldDidChangeSelection(_ textField: UITextField) {
