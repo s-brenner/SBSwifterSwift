@@ -213,11 +213,14 @@ public extension UICollectionView.Cells {
                 $0.textFieldProperties = textFieldProperties
                 $0.item = item
             }
-            contentConfiguration = content
-            guard view == nil else { return }
-            view = View(configuration: content)
-            contentView.addSubview(view)
-            view.anchor(to: contentView.layoutMarginsGuide)
+            if view == nil {
+                view = View(configuration: content)
+                contentView.addSubview(view)
+                view.anchor(to: contentView.layoutMarginsGuide)
+            }
+            else {
+                view.configuration = content
+            }
         }
         
         @discardableResult
