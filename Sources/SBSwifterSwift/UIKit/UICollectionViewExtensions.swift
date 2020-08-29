@@ -215,8 +215,11 @@ public extension UICollectionView.Cells {
             }
             if view == nil {
                 view = View(configuration: content)
-                contentView.addSubview(view)
-                view.anchor(to: contentView.layoutMarginsGuide)
+                let x = UILabel()
+                contentView.addSubview(x)
+                x.anchor(to: contentView.layoutMarginsGuide)
+//                contentView.addSubview(view)
+//                view.anchor(to: contentView.layoutMarginsGuide)
             }
             else {
                 view.configuration = content
@@ -225,14 +228,12 @@ public extension UICollectionView.Cells {
         
         @discardableResult
         public override func becomeFirstResponder() -> Bool {
-            let views = subviews.compactMap { $0 as? View }
-            return views.first?.becomeFirstResponder() ?? false
+            view.becomeFirstResponder()
         }
         
         @discardableResult
         public override func resignFirstResponder() -> Bool {
-            let views = subviews.compactMap { $0 as? View }
-            return views.first?.resignFirstResponder() ?? false
+            view.resignFirstResponder()
         }
         
         private enum Notifications {
