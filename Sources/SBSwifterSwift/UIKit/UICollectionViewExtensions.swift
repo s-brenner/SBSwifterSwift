@@ -215,11 +215,8 @@ public extension UICollectionView.Cells {
             }
             if view == nil {
                 view = View(configuration: content)
-                let x = UILabel()
-                contentView.addSubview(x)
-                x.anchor(to: contentView.layoutMarginsGuide)
-//                contentView.addSubview(view)
-//                view.anchor(to: contentView.layoutMarginsGuide)
+                contentView.addSubview(view)
+                view.anchor(to: contentView.layoutMarginsGuide, topConstant: 3, bottomConstant: 3)
             }
             else {
                 view.configuration = content
