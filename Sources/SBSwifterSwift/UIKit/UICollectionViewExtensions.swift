@@ -186,15 +186,26 @@ public extension UICollectionView.Cells {
         
         public typealias Registration = UICollectionView.CellRegistration<TextFieldCell<Item>, Item>
         
-        public var text = ""
+        private var text = ""
         
-        public var textFieldProperties = UIListContentConfiguration.TextFieldProperties.default
+        private var textFieldProperties = UIListContentConfiguration.TextFieldProperties.default
         
         /// This value is necessary to access this cell's publishers.
         /// Use the item value in the diffable data source.
-        public var item: Item?
+        private var item: Item!
         
         private var view: View!
+        
+        public func update(
+            text: String,
+            item: Item,
+            textFieldProperties: UIListContentConfiguration.TextFieldProperties = .default) {
+            
+            self.text = text
+            self.item = item
+            self.textFieldProperties = textFieldProperties
+            setNeedsUpdateConfiguration()
+        }
         
         public override func updateConfiguration(using state: UICellConfigurationState) {
             let content =  configure(View.ContentConfiguration().updated(for: state)) {
@@ -206,7 +217,7 @@ public extension UICollectionView.Cells {
             guard view == nil else { return }
             view = View(configuration: content)
             contentView.addSubview(view)
-            view.anchor(to: contentView.layoutMarginsGuide)
+            view.anchor(to: contentView)
         }
         
         @discardableResult
@@ -328,7 +339,7 @@ private extension UICollectionView.Cells.TextFieldCell {
         private func setupViews() {
             isOpaque = true
             addSubview(textField)
-            textField.anchor(to: layoutMarginsGuide)
+            textField.anchor(to: self)
         }
         
         private func apply(configuration: ContentConfiguration) {
