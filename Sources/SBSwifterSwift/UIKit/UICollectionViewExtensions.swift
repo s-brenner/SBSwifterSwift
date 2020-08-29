@@ -217,7 +217,7 @@ public extension UICollectionView.Cells {
             guard view == nil else { return }
             view = View(configuration: content)
             contentView.addSubview(view)
-            view.anchor(to: contentView)
+            view.anchor(to: contentView.layoutMarginsGuide)
         }
         
         @discardableResult
