@@ -14,7 +14,8 @@ public extension UICollectionView {
     
     typealias ListCellRegistration<Item> = CellRegistration<UICollectionViewListCell, Item>
     
-    typealias TextFieldCellRegistration<Item> = CellRegistration<Cells.TextFieldCell, Item>
+    typealias TextFieldCellRegistration<Item> = CellRegistration<Cells.TextFieldCell<Item>, Item>
+    where Item: Hashable
 }
 
 
@@ -184,14 +185,14 @@ public extension UIListContentConfiguration.TextProperties.TextAlignment {
 @available(iOS 14.0, *)
 public extension UICollectionView.Cells {
     
-    class TextFieldCell: UICollectionViewListCell {
+    class TextFieldCell<Item: Hashable>: UICollectionViewListCell {
         
         public var text = ""
         
         public var textFieldProperties = UIListContentConfiguration.TextFieldProperties.default
         
         /// This value will be included in the notifications sent from this cell
-        public var id: UUID?
+        public var id: Item?
         
         public override func updateConfiguration(using state: UICellConfigurationState) {
             contentConfiguration = configure(View.ContentConfiguration().updated(for: state)) {
@@ -220,61 +221,61 @@ public extension UICollectionView.Cells {
             }
             
             enum TextDidBeginEditing {
-                static let name = Notifications.name("textDidBeginEditing")
+                static var name: Notification.Name { Notifications.name("textDidBeginEditing") }
                 struct Object {
-                    let id: UUID
+                    let id: Item
                     let text: String
                 }
             }
             
             enum TextDidChange {
-                static let name = Notifications.name("textDidChange")
+                static var name: Notification.Name { Notifications.name("textDidChange") }
                 struct Object {
-                    let id: UUID
+                    let id: Item
                     let text: String
                 }
             }
             
             enum TextLimited {
-                static let name = Notifications.name("textLimited")
+                static var name: Notification.Name { Notifications.name("textLimited") }
                 struct Object {
-                    let id: UUID
+                    let id: Item
                     let limit: UIListContentConfiguration.TextFieldProperties.CharacterLimit
                 }
             }
             
             enum TextDidEndEditing {
-                static let name = Notifications.name("textDidEndEditing")
+                static var name: Notification.Name { Notifications.name("textDidEndEditing") }
                 struct Object {
-                    let id: UUID
+                    let id: Item
                     let text: String
                     let reason: UITextField.DidEndEditingReason
                 }
             }
         }
         
-        public static func textDidBeginEditingPublisher(id: UUID) -> AnyPublisher<String, Never> {
+        public static func textDidBeginEditingPublisher(id: Item) -> AnyPublisher<String, Never> {
             NotificationCenter.default.publisher(for: Notifications.TextDidBeginEditing.name)
                 .compactMap { $0.object as? Notifications.TextDidBeginEditing.Object }
                 .compactMap { $0.id == id ? $0.text : nil }
                 .eraseToAnyPublisher()
         }
         
-        public static func textDidChangePublisher(id: UUID) -> AnyPublisher<String, Never> {
+        public static func textDidChangePublisher(id: Item) -> AnyPublisher<String, Never> {
             NotificationCenter.default.publisher(for: Notifications.TextDidChange.name)
                 .compactMap { $0.object as? Notifications.TextDidChange.Object }
                 .compactMap { $0.id == id ? $0.text : nil }
                 .eraseToAnyPublisher()
         }
         
-        public static func textLimited(id: UUID) -> AnyPublisher<UIListContentConfiguration.TextFieldProperties.CharacterLimit, Never> {
+        public static func textLimited(id: Item) -> AnyPublisher<UIListContentConfiguration.TextFieldProperties.CharacterLimit, Never> {
             NotificationCenter.default.publisher(for: Notifications.TextLimited.name)
                 .compactMap { $0.object as? Notifications.TextLimited.Object }
                 .compactMap { $0.id == id ? $0.limit : nil }
                 .eraseToAnyPublisher()
         }
         
-        public static func textDidEndEditingPublisher(id: UUID) -> AnyPublisher<(text: String, reason: UITextField.DidEndEditingReason), Never> {
+        public static func textDidEndEditingPublisher(id: Item) -> AnyPublisher<(text: String, reason: UITextField.DidEndEditingReason), Never> {
             NotificationCenter.default.publisher(for: Notifications.TextDidEndEditing.name)
                 .compactMap { $0.object as? Notifications.TextDidEndEditing.Object }
                 .compactMap { $0.id == id ? ($0.text, $0.reason) : nil }
@@ -290,7 +291,7 @@ private extension UICollectionView.Cells.TextFieldCell {
         
         private lazy var storage = Set<AnyCancellable>()
         
-        private var id: UUID?
+        private var id: Item?
         
         private lazy var textField = configure(UITextField()) { [weak self] in
             $0.delegate = self
@@ -363,7 +364,7 @@ private extension UICollectionView.Cells.TextFieldCell {
             
             var textFieldProperties = UIListContentConfiguration.TextFieldProperties.default
             
-            var id: UUID?
+            var id: Item?
             
             func makeContentView() -> UIView & UIContentView {
                 View(configuration: self)
@@ -376,7 +377,7 @@ private extension UICollectionView.Cells.TextFieldCell {
         
         func textFieldDidBeginEditing(_ textField: UITextField) {
             guard let id = id else { return }
-            typealias TextDidBeginEditing = UICollectionView.Cells.TextFieldCell.Notifications.TextDidBeginEditing
+            typealias TextDidBeginEditing = UICollectionView.Cells.TextFieldCell<Item>.Notifications.TextDidBeginEditing
             let object = TextDidBeginEditing.Object(id: id, text: textField.text ?? "")
             NotificationCenter.default.post(name: TextDidBeginEditing.name, object: object)
         }
@@ -392,7 +393,7 @@ private extension UICollectionView.Cells.TextFieldCell {
             let newLength = textCount + string.count - range.length
             let shouldChangeCharacters = newLength <= limit
             if !shouldChangeCharacters, let id = id {
-                typealias TextLimited = UICollectionView.Cells.TextFieldCell.Notifications.TextLimited
+                typealias TextLimited = UICollectionView.Cells.TextFieldCell<Item>.Notifications.TextLimited
                 let object = TextLimited.Object(id: id, limit: characterLimit)
                 NotificationCenter.default.post(name: TextLimited.name, object: object)
             }
@@ -401,14 +402,14 @@ private extension UICollectionView.Cells.TextFieldCell {
         
         func textFieldDidChangeSelection(_ textField: UITextField) {
             guard let id = id else { return }
-            typealias TextDidChange = UICollectionView.Cells.TextFieldCell.Notifications.TextDidChange
+            typealias TextDidChange = UICollectionView.Cells.TextFieldCell<Item>.Notifications.TextDidChange
             let object = TextDidChange.Object(id: id, text: textField.text ?? "")
             NotificationCenter.default.post(name: TextDidChange.name, object: object)
         }
         
         func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
             guard let id = id else { return }
-            typealias TextDidEndEditing = UICollectionView.Cells.TextFieldCell.Notifications.TextDidEndEditing
+            typealias TextDidEndEditing = UICollectionView.Cells.TextFieldCell<Item>.Notifications.TextDidEndEditing
             let object = TextDidEndEditing.Object(id: id, text: textField.text ?? "", reason: reason)
             NotificationCenter.default.post(name: TextDidEndEditing.name, object: object)
         }
