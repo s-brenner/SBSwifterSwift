@@ -13,9 +13,6 @@ public extension UICollectionView {
     typealias ListHeaderFooterRegistration = SupplementaryRegistration<SupplementaryViews.ListHeaderFooterView>
     
     typealias ListCellRegistration<Item> = CellRegistration<UICollectionViewListCell, Item>
-    
-//    typealias TextFieldCellRegistration<Item> = CellRegistration<Cells.TextFieldCell<Item>, Item>
-//    where Item: Hashable
 }
 
 
@@ -197,12 +194,19 @@ public extension UICollectionView.Cells {
         /// Use the item value in the diffable data source.
         public var item: Item?
         
+        private var view: View!
+        
         public override func updateConfiguration(using state: UICellConfigurationState) {
-            contentConfiguration = configure(View.ContentConfiguration().updated(for: state)) {
+            let content =  configure(View.ContentConfiguration().updated(for: state)) {
                 $0.text = text
                 $0.textFieldProperties = textFieldProperties
                 $0.item = item
             }
+            contentConfiguration = content
+            guard view == nil else { return }
+            view = View(configuration: content)
+            contentView.addSubview(view)
+            view.anchor(to: contentView.layoutMarginsGuide)
         }
         
         @discardableResult
@@ -271,7 +275,7 @@ public extension UICollectionView.Cells {
                 .eraseToAnyPublisher()
         }
         
-        public static func textLimited(item: Item) -> AnyPublisher<UIListContentConfiguration.TextFieldProperties.CharacterLimit, Never> {
+        public static func textLimitedPublisher(item: Item) -> AnyPublisher<UIListContentConfiguration.TextFieldProperties.CharacterLimit, Never> {
             NotificationCenter.default.publisher(for: Notifications.TextLimited.name)
                 .compactMap { $0.object as? Notifications.TextLimited.Object }
                 .compactMap { $0.item == item ? $0.limit : nil }
