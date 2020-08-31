@@ -193,7 +193,7 @@ public extension UICollectionView.Cells {
         
         private var textFieldProperties = UIListContentConfiguration.TextFieldProperties.default
         
-        private var view: View!
+        private var view = View(configuration: .init())
         
         public typealias TextFieldPropertiesConfiguration =
             (inout UIListContentConfiguration.TextFieldProperties) -> Void
@@ -205,22 +205,17 @@ public extension UICollectionView.Cells {
         }
         
         public override func updateConfiguration(using state: UICellConfigurationState) {
-            let content =  configure(View.ContentConfiguration().updated(for: state)) {
+            setupViewIfNeeded()
+            view.configuration = configure(View.ContentConfiguration().updated(for: state)) {
                 $0.text = text
                 $0.textFieldProperties = textFieldProperties
             }
-            setupView(configuration: content)
         }
         
-        private func setupView(configuration: View.ContentConfiguration) {
-            if view == nil {
-                view = View(configuration: configuration)
-                contentView.addSubview(view)
-                view.anchor(to: contentView.layoutMarginsGuide, topConstant: 3, bottomConstant: 3)
-            }
-            else {
-                view.configuration = configuration
-            }
+        private func setupViewIfNeeded() {
+            guard !contentView.subviews.contains(view) else { return }
+            contentView.addSubview(view)
+            view.anchor(to: contentView.layoutMarginsGuide, topConstant: 3, bottomConstant: 3)
         }
         
         @discardableResult
@@ -233,27 +228,22 @@ public extension UICollectionView.Cells {
             view.resignFirstResponder()
         }
         
-        private func publisher<Output, Failure>(for subject: PassthroughSubject<Output, Failure>?) -> AnyPublisher<Output, Failure> {
-            guard let subject = subject else { return Empty(completeImmediately: false).eraseToAnyPublisher() }
-            return subject.eraseToAnyPublisher()
-        }
-        
         public var textDidBeginEditingPublisher: AnyPublisher<String, Never> {
-            publisher(for: view?.textFieldDidBeginEditingSubject)
+            view.textFieldDidBeginEditingSubject.eraseToAnyPublisher()
         }
         
         public var textDidChangePublisher: AnyPublisher<String, Never> {
-            publisher(for: view?.textFieldDidChangeSelectionSubject)
+            view.textFieldDidChangeSelectionSubject.eraseToAnyPublisher()
         }
         
         public typealias CharacterLimit = UIListContentConfiguration.TextFieldProperties.CharacterLimit
         public var textLimitedPublisher: AnyPublisher<CharacterLimit, Never> {
-            publisher(for: view?.textLimitedSubject)
+            view.textLimitedSubject.eraseToAnyPublisher()
         }
         
         public typealias DidEndEditing = (text: String, reason: UITextField.DidEndEditingReason)
         public var textDidEndEditingPublisher: AnyPublisher<DidEndEditing, Never> {
-            publisher(for: view?.textFieldDidEndEditingSubject)
+            view.textFieldDidEndEditingSubject.eraseToAnyPublisher()
         }
     }
 }
