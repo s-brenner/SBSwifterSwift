@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Unit {
+public extension Measurement {
     
     public typealias Acceleration = Measurement<UnitAcceleration>
     
