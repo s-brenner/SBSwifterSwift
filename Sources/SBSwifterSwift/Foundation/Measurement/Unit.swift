@@ -1,6 +1,6 @@
 import Foundation
 
-public extension Measurement {
+//public extension Measurement {
     
     public typealias Acceleration = Measurement<UnitAcceleration>
     
@@ -43,4 +43,4 @@ public extension Measurement {
     public typealias Temperature = Measurement<UnitTemperature>
     
     public typealias Volume = Measurement<UnitVolume>
-}
+//}
