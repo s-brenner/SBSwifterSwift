@@ -7,7 +7,7 @@ public extension URLSession {
         
         public enum Output {
             case downloading(progress: Double, bytesExpected: Int)
-            case finished(data: Data)
+            case finished(url: URL)
         }
         
         public typealias Failure = URLError
@@ -58,10 +58,17 @@ private extension URLSession.DownloadTaskPublisher {
             downloadTask: URLSessionDownloadTask,
             didFinishDownloadingTo location: URL
         ) {
-            guard let data = try? Data(contentsOf: location) else { return }
-            _ = subscriber?.receive(.finished(data: data))
-            subscriber?.receive(completion: .finished)
-            session.invalidateAndCancel()
+            do {
+                let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+                let fileURL = cacheDirectory.appendingPathComponent((UUID().uuidString))
+                try FileManager.default.moveItem(atPath: location.path, toPath: fileURL.path)
+                _ = subscriber?.receive(.finished(url: fileURL))
+                subscriber?.receive(completion: .finished)
+                session.invalidateAndCancel()
+            }
+            catch {
+                subscriber?.receive(completion: .failure(URLError(.cannotCreateFile)))
+            }
         }
         
         func urlSession(
