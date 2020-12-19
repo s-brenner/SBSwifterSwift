@@ -88,10 +88,9 @@ private extension URLSession.DownloadTaskPublisher {
             totalBytesWritten: Int64,
             totalBytesExpectedToWrite: Int64
         ) {
-            let bytesWritten = Int(totalBytesWritten)
-            let bytesExpected = Int(totalBytesExpectedToWrite)
-            let progress = bytesWritten.double / bytesExpected.double
-            _ = subscriber?.receive(.downloading(progress: progress, bytesExpected: bytesExpected))
+            let expected = Int(totalBytesExpectedToWrite)
+            let progress = Double(totalBytesWritten) / expected.double
+            _ = subscriber?.receive(.downloading(progress: progress, bytesExpected: expected))
         }
     }
 }
