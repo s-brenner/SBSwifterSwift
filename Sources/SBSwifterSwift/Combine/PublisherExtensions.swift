@@ -7,7 +7,6 @@ public extension Publisher where Self.Failure == Never {
         to keyPath: ReferenceWritableKeyPath<Root, Self.Output>,
         on object: Root
     ) -> AnyCancellable {
-        
         sink { [weak object] value in
             object?[keyPath: keyPath] = value
         }
@@ -17,7 +16,7 @@ public extension Publisher where Self.Failure == Never {
 public extension Publisher {
     
     func convertToResult() -> AnyPublisher<Result<Output, Failure>, Never> {
-        self.map(Result.success)
+        map(Result.success)
             .catch { Just(.failure($0)) }
             .eraseToAnyPublisher()
     }
@@ -42,6 +41,32 @@ public extension Publisher {
             try validator(output)
             return output
         }
+    }
+}
+
+public extension Publisher where Output: Collection {
+    
+    func mapEach<T>(
+        _ transform: @escaping (Output.Element) -> T
+    ) -> AnyPublisher<[T], Failure> {
+        map { $0.map(transform) }
+            .eraseToAnyPublisher()
+    }
+    
+    func compactMapEach<T>(
+        _ transform: @escaping (Output.Element) -> T?
+    ) -> AnyPublisher<[T], Failure> {
+        map { $0.compactMap(transform) }
+            .eraseToAnyPublisher()
+    }
+    
+    func sorted<V>(
+        by keyPath: KeyPath<Output.Element, V>,
+        ascending: Bool = true
+    ) -> AnyPublisher<[Output.Element], Failure>
+    where V: Comparable {
+        map { $0.sorted(by: keyPath, ascending: ascending) }
+            .eraseToAnyPublisher()
     }
 }
 
