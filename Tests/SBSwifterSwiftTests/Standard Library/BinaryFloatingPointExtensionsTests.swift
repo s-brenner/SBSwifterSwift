@@ -17,4 +17,9 @@ final class BinaryFloatingPointExtensionsTests: XCTestCase {
         XCTAssertEqual(CGFloat(2).int, 2)
         XCTAssertEqual(CGFloat(4.3).int, 4)
     }
+    
+    func testRoundedTo() {
+        XCTAssertEqual(Double.pi.roundedTo(places: 5), 3.14159)
+        XCTAssertEqual(-Double.pi.roundedTo(places: 4), -3.1416)
+    }
 }
