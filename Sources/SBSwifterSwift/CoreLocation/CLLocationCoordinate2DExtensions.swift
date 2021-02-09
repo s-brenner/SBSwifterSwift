@@ -1,3 +1,4 @@
+#if canImport(CoreLocation)
 import class  CoreLocation.CLLocation
 import struct CoreLocation.CLLocationCoordinate2D
 
@@ -14,3 +15,4 @@ extension CLLocationCoordinate2D {
     
     public var location: CLLocation { CLLocation(coordinate: self) }
 }
+#endif

@@ -1,3 +1,4 @@
+#if canImport(MapKit)
 import Foundation
 import struct CoreLocation.CLLocationCoordinate2D
 import struct MapKit.MKCoordinateRegion
@@ -113,3 +114,4 @@ extension MKCoordinateRegion {
         return MKCoordinateRegion(center: center, span: span)
     }
 }
+#endif

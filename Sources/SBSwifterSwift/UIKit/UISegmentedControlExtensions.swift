@@ -10,5 +10,4 @@ public extension UISegmentedControl {
             .eraseToAnyPublisher()
     }
 }
-
 #endif

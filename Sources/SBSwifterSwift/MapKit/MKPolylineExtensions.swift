@@ -1,3 +1,4 @@
+#if canImport(MapKit)
 import Foundation
 import struct CoreLocation.CLLocationCoordinate2D
 import let    CoreLocation.kCLLocationCoordinate2DInvalid
@@ -19,3 +20,4 @@ public extension MKPolyline {
         self.init(coordinates: &refCoordinates, count: refCoordinates.count)
     }
 }
+#endif

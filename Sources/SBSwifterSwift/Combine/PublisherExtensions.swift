@@ -1,5 +1,5 @@
+#if canImport(Combine)
 import Combine
-import Foundation
 
 public extension Publisher where Self.Failure == Never {
     
@@ -79,3 +79,4 @@ public extension Publisher where Output: Collection {
 //        decode(type: type, decoder: decoder)
 //    }
 //}
+#endif

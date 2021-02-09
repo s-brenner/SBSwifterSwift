@@ -18,5 +18,4 @@ extension UIApplication {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
 }
-
 #endif

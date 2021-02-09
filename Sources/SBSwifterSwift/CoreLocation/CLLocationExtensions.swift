@@ -1,3 +1,4 @@
+#if canImport(CoreLocation)
 import Foundation
 import class  CoreLocation.CLLocation
 import struct CoreLocation.CLLocationCoordinate2D
@@ -133,7 +134,6 @@ extension CLLocation {
     /// - Parameter origin: Location to calculate bearing.
     /// - Returns: Calculated bearing degrees in the range 0° ... 360°.
     public func bearing(from origin: CLLocation) -> CLLocationDegrees {
-        
         (bearing(to: origin) + 180).truncatingRemainder(dividingBy: 360)
     }
     
@@ -142,7 +142,6 @@ extension CLLocation {
     /// - Parameter end: End location.
     /// - Returns: Location that represents the halfway point.
     public static func midLocation(start: CLLocation, end: CLLocation) -> CLLocation {
-        
         GreatCircle(start: start, end: end).intermediatePoint(routeFraction: 0.5)
     }
     
@@ -150,7 +149,7 @@ extension CLLocation {
     /// - Parameter destination: End location.
     /// - Returns: Location that represents the halfway point.
     public func midLocation(to destination: CLLocation) -> CLLocation {
-        
         CLLocation.midLocation(start: self, end: destination)
     }
 }
+#endif

@@ -1,5 +1,5 @@
+#if canImport(Combine)
 import Combine
-import Foundation
 
 public extension URLSession {
     
@@ -106,3 +106,4 @@ public extension URLSession {
         .init(request: .init(url: url))
     }
 }
+#endif

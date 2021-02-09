@@ -1,3 +1,4 @@
+#if canImport(CoreData)
 import CoreData
 
 public extension NSManagedObjectContext {
@@ -132,3 +133,4 @@ extension NSManagedObjectContext.ChangesPublisher {
         }
     }
 }
+#endif

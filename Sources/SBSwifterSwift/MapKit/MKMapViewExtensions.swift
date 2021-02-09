@@ -1,3 +1,4 @@
+#if canImport(MapKit)
 import protocol MapKit.MKAnnotation
 import class    MapKit.MKAnnotationView
 import class    MapKit.MKMapView
@@ -32,3 +33,4 @@ extension MKMapView {
         return annotationView
     }
 }
+#endif

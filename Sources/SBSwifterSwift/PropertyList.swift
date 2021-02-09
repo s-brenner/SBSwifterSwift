@@ -7,8 +7,10 @@ public enum PropertyList {
     /// - Parameter name: The name of the resource .plist file.
     /// - Parameter bundle: The bundle in which the file is contained.
     /// - Returns: The dictionary for the .plist file or an empty dictionary if the resource could not be parsed.
-    public static func named(_ name: String, inBundle bundle: Bundle = .main) -> [String: Any] {
-        
+    public static func named(
+        _ name: String,
+        inBundle bundle: Bundle = .main
+    ) -> [String: Any] {
         do {
             guard let path = bundle.path(forResource: name, ofType: "plist") else { return [:] }
             guard let xml = FileManager.default.contents(atPath: path) else { return [:] }

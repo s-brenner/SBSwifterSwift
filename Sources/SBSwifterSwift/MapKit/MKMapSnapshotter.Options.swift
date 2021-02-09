@@ -1,3 +1,4 @@
+#if canImport(MapKit)
 import struct CoreGraphics.CGFloat
 import struct CoreGraphics.CGSize
 import struct CoreLocation.CLLocationCoordinate2D
@@ -37,3 +38,4 @@ extension MKMapSnapshotter.Options {
     }
     #endif
 }
+#endif

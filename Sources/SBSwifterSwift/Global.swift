@@ -28,8 +28,8 @@ import Foundation
 @discardableResult
 public func setIfNeeded<R1, R2, V: Equatable>(
     _ this: (source: R1, keyPath: ReferenceWritableKeyPath<R1, V>),
-    to that: (source: R2, keyPath: KeyPath<R2, V>)) -> Bool {
-    
+    to that: (source: R2, keyPath: KeyPath<R2, V>)
+) -> Bool {
     if this.source[keyPath: this.keyPath] != that.source[keyPath: that.keyPath] {
         this.source[keyPath: this.keyPath] = that.source[keyPath: that.keyPath]
         return true

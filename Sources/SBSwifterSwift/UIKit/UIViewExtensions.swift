@@ -742,5 +742,4 @@ public extension UIView {
         animator.startAnimation()
     }
 }
-
 #endif

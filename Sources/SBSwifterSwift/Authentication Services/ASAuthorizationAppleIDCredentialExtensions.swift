@@ -1,3 +1,4 @@
+#if canImport(AuthenticationServices)
 import AuthenticationServices
 
 extension ASAuthorizationAppleIDCredential {
@@ -15,7 +16,6 @@ extension ASAuthorizationAppleIDCredential {
         let email: String?
         
         init?(credential: ASAuthorizationAppleIDCredential) {
-            
             guard let identityToken = credential.identityToken?.string(),
                 let authorizationCode = credential.authorizationCode?.string() else {
                     return nil
@@ -34,3 +34,4 @@ extension ASAuthorizationAppleIDCredential {
         Printable(credential: self)!.description
     }
 }
+#endif

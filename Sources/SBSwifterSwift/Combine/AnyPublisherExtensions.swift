@@ -1,3 +1,4 @@
+#if canImport(Combine)
 import Combine
 
 public extension AnyPublisher {
@@ -13,3 +14,4 @@ public extension AnyPublisher {
             .eraseToAnyPublisher()
     }
 }
+#endif

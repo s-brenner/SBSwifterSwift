@@ -57,14 +57,11 @@ public extension UIScreen {
     }
     
     func isWiderThan(_ device: Device) -> Bool {
-        
         bounds.width > device.screenWidth
     }
     
     func isTallerThan(_ device: Device) -> Bool {
-        
         bounds.height > device.screenHeight
     }
 }
-
 #endif

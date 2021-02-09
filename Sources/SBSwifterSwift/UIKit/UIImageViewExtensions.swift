@@ -9,5 +9,4 @@ extension UIImageView {
         self.image = image
     }
 }
-
 #endif
