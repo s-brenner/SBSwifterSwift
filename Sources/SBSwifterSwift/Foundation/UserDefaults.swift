@@ -1,5 +1,4 @@
-import Foundation
-
+#if os(iOS) || os(macOS) || os(watchOS)
 public extension UserDefaults {
     
     /// Get and set objects using subscript.
@@ -54,3 +53,4 @@ public extension UserDefaults {
         self[key] = try? encoder.encode(object)
     }
 }
+#endif
