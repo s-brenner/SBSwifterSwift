@@ -1,5 +1,4 @@
-import Foundation
-
+#if os(iOS) || os(macOS) || os(watchOS)
 public extension DateComponents {
     
     enum Error: LocalizedError {
@@ -198,3 +197,4 @@ extension DateComponents: Comparable {
         return lhsDuration < rhsDuration
     }
 }
+#endif

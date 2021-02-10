@@ -1,13 +1,12 @@
-import Foundation
-
-extension Calendar.Component {
+#if os(iOS) || os(macOS) || os(watchOS)
+public extension Calendar.Component {
     
     /// Return a description of the calendar component in seconds.
     ///
     /// The values for `era`,`weekday`,`weekdayOrdinal`, `yearForWeekOfYear`, `calendar`, `timezone` are `nil`.
     ///
     /// The values for `weekOfYear` and `weekOfMonth` are identical.
-    public var timeInterval: TimeInterval? {
+    var timeInterval: TimeInterval? {
         switch self {
         case .era:                      return nil
         case .year:                     return (Calendar.Component.day.timeInterval! * 365.0)
@@ -28,3 +27,4 @@ extension Calendar.Component {
         }
     }
 }
+#endif
