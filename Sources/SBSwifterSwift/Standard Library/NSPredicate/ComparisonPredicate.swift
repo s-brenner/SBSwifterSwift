@@ -1,5 +1,4 @@
-import Foundation
-
+#if os(iOS) || os(macOS) || os(watchOS)
 /// A specialized predicate that you use to compare a keypath to a value.
 public final class ComparisonPredicate<Root>: NSComparisonPredicate, TypedPredicateProtocol {
     
@@ -16,17 +15,20 @@ public final class ComparisonPredicate<Root>: NSComparisonPredicate, TypedPredic
     ///                     "Sc",
     ///                     options: .caseInsensitive)
     /// ````
-    public convenience init<V>(_ keypath: KeyPath<Root, V>,
-                               _ type: Operator,
-                               _ value: V,
-                               modifier: Modifier = .direct,
-                               options: Options = []) {
-        
-        self.init(leftExpression: \Root.self == keypath ? .expressionForEvaluatedObject() : .init(forKeyPath: keypath),
-                  rightExpression: .init(forConstantValue: value),
-                  modifier: modifier,
-                  type: type,
-                  options: options)
+    public convenience init<V>(
+        _ keypath: KeyPath<Root, V>,
+        _ type: Operator,
+        _ value: V,
+        modifier: Modifier = .direct,
+        options: Options = []
+    ) {
+        self.init(
+            leftExpression: \Root.self == keypath ? .expressionForEvaluatedObject() : .init(forKeyPath: keypath),
+            rightExpression: .init(forConstantValue: value),
+            modifier: modifier,
+            type: type,
+            options: options
+        )
     }
     
     /// Initializes a predicate to a given type formed by combining given keypath and sequence of values using a given modifier and options.
@@ -42,17 +44,20 @@ public final class ComparisonPredicate<Root>: NSComparisonPredicate, TypedPredic
     ///                     ["Scott", "Michelle"],
     ///                     options: .caseInsensitive)
     /// ````
-    public convenience init<S: Sequence, K: KeyPath<Root, S.Element>>(_ keypath: K,
-                               _ type: Operator,
-                               _ values: S,
-                               modifier: Modifier = .direct,
-                               options: Options = []) {
-
-        self.init(leftExpression: \Root.self == keypath ? .expressionForEvaluatedObject() : .init(forKeyPath: keypath),
-                  rightExpression: .init(forConstantValue: values),
-                  modifier: modifier,
-                  type: type,
-                  options: options)
+    public convenience init<S: Sequence, K: KeyPath<Root, S.Element>>(
+        _ keypath: K,
+        _ type: Operator,
+        _ values: S,
+        modifier: Modifier = .direct,
+        options: Options = []
+    ) {
+        self.init(
+            leftExpression: \Root.self == keypath ? .expressionForEvaluatedObject() : .init(forKeyPath: keypath),
+            rightExpression: .init(forConstantValue: values),
+            modifier: modifier,
+            type: type,
+            options: options
+        )
     }
 }
 
@@ -86,3 +91,4 @@ public func >= <C: Comparable, R, K: KeyPath<R, C>>(kp: K, value: C) -> Comparis
 public func === <S: Sequence, R, K: KeyPath<R, S.Element>>(kp: K, values: S) -> ComparisonPredicate<R> where S.Element: Equatable {
     ComparisonPredicate(kp, .in, values)
 }
+#endif

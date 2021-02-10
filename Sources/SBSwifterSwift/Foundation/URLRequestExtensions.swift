@@ -1,5 +1,4 @@
-import Foundation
-
+#if os(iOS) || os(macOS) || os(watchOS)
 public extension URLRequest {
     
     class Builder {
@@ -25,13 +24,13 @@ public extension URLRequest {
 }
 
 
-extension URLRequest.Builder {
+public extension URLRequest.Builder {
     
-    public enum Error: Swift.Error {
+    enum Error: Swift.Error {
         case invalidURL
     }
     
-    public enum HTTPMethod: String {
+    enum HTTPMethod: String {
         case put = "PUT"
         case post = "POST"
         case get = "GET"
@@ -39,55 +38,47 @@ extension URLRequest.Builder {
         case head = "HEAD"
     }
     
-    public enum Scheme: String {
+    enum Scheme: String {
         case http
         case https
     }
     
-    public func withMethod(_ method: HTTPMethod) -> Self {
-        
+    func withMethod(_ method: HTTPMethod) -> Self {
         self.method = method
         return self
     }
     
-    public func withScheme(_ scheme: Scheme) -> Self {
-        
+    func withScheme(_ scheme: Scheme) -> Self {
         self.scheme = scheme
         return self
     }
     
-    public func withHost(_ host: String) -> Self {
-        
+    func withHost(_ host: String) -> Self {
         self.host = host
         return self
     }
     
-    public func withPort(_ port: Int) -> Self {
-        
+    func withPort(_ port: Int) -> Self {
         self.port = port
         return self
     }
     
-    public func withPath(_ path: String) -> Self {
-        
+    func withPath(_ path: String) -> Self {
         self.path = path
         return self
     }
     
-    public func withQueryItem(_ item: URLQueryItem) -> Self {
-        
+    func withQueryItem(_ item: URLQueryItem) -> Self {
         queryItems.append(item)
         return self
     }
     
-    public func withHeader(_ header: URLRequest.HTTPHeaderField) -> Self {
-        
+    func withHeader(_ header: URLRequest.HTTPHeaderField) -> Self {
         headers.append(header)
         return self
     }
     
-    public func withBody(_ body: Data?, encoding: URLRequest.BodyEncoding = .none) -> Self {
-        
+    func withBody(_ body: Data?, encoding: URLRequest.BodyEncoding = .none) -> Self {
         if let header = encoding.header {
             headers.append(header)
         }
@@ -95,46 +86,46 @@ extension URLRequest.Builder {
         return self
     }
     
-    public func withJSONBody<Value: Encodable>(_ value: Value, encodedWith encoder: JSONEncoder = .init()) -> Self {
-        
+    func withJSONBody<Value: Encodable>(
+        _ value: Value,
+        encodedWith encoder: JSONEncoder = .init()
+    ) -> Self {
         self.withBody(try? encoder.encode(value), encoding: .json)
     }
     
-    public func build() -> URLRequest {
-        
+    func build() -> URLRequest {
         switch compose() {
         case .failure(let error):
             fatalError(error.localizedDescription)
-            
         case .success(let request):
             return request
         }
     }
-    
-    private func compose() -> Result<URLRequest, Error> {
+}
 
-        var components = URLComponents()
-        components.scheme = scheme.rawValue
-        components.host = host
-        components.port = port
-        components.path = path
-        components.queryItems = queryItems.isEmpty ? nil : queryItems
-        
+private extension URLRequest.Builder {
+    
+    func compose() -> Result<URLRequest, Error> {
+        let components = configure(URLComponents()) {
+            $0.scheme = scheme.rawValue
+            $0.host = host
+            $0.port = port
+            $0.path = path
+            $0.queryItems = queryItems.isEmpty ? nil : queryItems
+        }
         guard let url = components.url else { return .failure(.invalidURL) }
-        
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         headers.forEach { request.setHTTPHeaderField(to: $0) }
         request.httpBody = body
-        
         return .success(request)
     }
 }
 
 
-extension URLRequest {
+public extension URLRequest {
     
-    public enum BodyEncoding {
+    enum BodyEncoding {
         case none
         case formData
         case json
@@ -157,7 +148,7 @@ extension URLRequest {
         }
     }
     
-    public enum MIMEType: CustomStringConvertible {
+    enum MIMEType: CustomStringConvertible {
         case application(ApplicationSubtype)
         case image(ImageSubtype)
         case multipart(MultipartSubtype)
@@ -239,7 +230,7 @@ extension URLRequest {
         }
     }
     
-    public enum HTTPHeaderField: CustomStringConvertible {
+    enum HTTPHeaderField: CustomStringConvertible {
         case accept([MIMEType])
         case authorization(Authorization)
         case contentType(MIMEType)
@@ -296,13 +287,11 @@ extension URLRequest {
         }
     }
     
-    public mutating func setHTTPHeaderField(to field: HTTPHeaderField) {
-
+    mutating func setHTTPHeaderField(to field: HTTPHeaderField) {
         setValue(field.value, forHTTPHeaderField: field.key.description)
     }
     
-    public func value(forHTTPHeaderField key: HTTPHeaderField.Key) -> String? {
-        
+    func value(forHTTPHeaderField key: HTTPHeaderField.Key) -> String? {
         value(forHTTPHeaderField: key.description)
     }
 }
@@ -314,3 +303,4 @@ public extension MIMESubtype where Self.RawValue == String {
     
     var description: String { rawValue }
 }
+#endif

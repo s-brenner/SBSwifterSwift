@@ -1,12 +1,10 @@
-import Foundation
-
-extension URLSession {
+#if os(iOS) || os(macOS) || os(watchOS)
+public extension URLSession {
     
-    public func dataTask(
+    func dataTask(
         with url: URL,
         completionHandler: @escaping (_ result: Result<Data, Error>, _ response: URLResponse?) -> Void
     ) -> URLSessionDataTask {
-        
         dataTask(with: url) { data, response, error in
             
             if let error = error {
@@ -18,11 +16,10 @@ extension URLSession {
         }
     }
     
-    public func dataTask(
+    func dataTask(
         with request: URLRequest,
         completionHandler: @escaping (_ result: Result<Data, Error>, _ response: URLResponse?) -> Void
     ) -> URLSessionDataTask {
-        
         dataTask(with: request) { data, response, error in
             
             if let error = error {
@@ -44,15 +41,13 @@ extension URLSession {
     /// - Parameter result: The decoded object returned by the server or an error object that indicates why the request failed.
     /// - Parameter response: An object that provides response metadata, such as HTTP headers and status code.
     /// - Returns: The new session data task.
-    public func dataTask<T: Decodable>(
+    func dataTask<T: Decodable>(
         with request: URLRequest,
         decodedAs type: T.Type,
         usingDecoder decoder: JSONDecoder = .init(),
         completionHandler: @escaping (_ result: Result<T, Error>, _ response: URLResponse?) -> Void
     ) -> URLSessionDataTask {
-        
         dataTask(with: request) { result, response in
-            
             switch result {
             case .success(let data):
                 do {
@@ -63,10 +58,10 @@ extension URLSession {
                     print(data.prettyPrintedJSONString)
                     completionHandler(.failure(error), response)
                 }
-                
             case .failure(let error):
                 completionHandler(.failure(error), response)
             }
         }
     }
 }
+#endif

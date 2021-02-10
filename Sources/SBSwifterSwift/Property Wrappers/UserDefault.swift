@@ -1,14 +1,8 @@
-import Foundation
-
+#if os(iOS) || os(macOS) || os(watchOS)
 @propertyWrapper
 public struct UserDefault<T: Codable> {
     
-    // MARK: - Types
-    
     public typealias DefaultValue = () -> T
-    
-    
-    // MARK: - Properties
     
     /// A key in the current user‘s defaults database.
     public let key: String
@@ -37,9 +31,6 @@ public struct UserDefault<T: Codable> {
     
     /// The projected value.
     public var projectedValue: UserDefault<T> { self }
-        
-    
-    // MARK: - Initializers
     
     /// - Parameter key: The key with which to associate the value.
     /// - Parameter defaultValue: The default value.
@@ -53,12 +44,8 @@ public struct UserDefault<T: Codable> {
         self.defaults = defaults
     }
     
-    
-    // MARK: - Methods
-    
     /// Reset the receiver to the default value.
     public mutating func reset() {
-        
         wrappedValue = defaultValue()
     }
 }
@@ -74,8 +61,8 @@ extension UserDefault where T: Equatable {
 extension UserDefault: Equatable {
     
     public static func == (lhs: UserDefault<T>, rhs: UserDefault<T>) -> Bool {
-        
         lhs.defaults == rhs.defaults &&
             lhs.key == rhs.key
     }
 }
+#endif
