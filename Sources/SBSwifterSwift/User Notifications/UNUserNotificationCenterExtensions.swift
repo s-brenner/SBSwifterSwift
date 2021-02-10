@@ -1,3 +1,4 @@
+#if canImport(UserNotifications)
 import UserNotifications
 
 public extension UNUserNotificationCenter {
@@ -20,3 +21,4 @@ public extension UNUserNotificationCenter {
         .eraseToAnyPublisher()
     }
 }
+#endif
