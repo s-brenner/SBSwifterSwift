@@ -1,5 +1,4 @@
 #if canImport(UIKit) && canImport(Combine)
-
 import UIKit
 import Combine
 
@@ -10,12 +9,10 @@ public extension NotificationCenter {
     func keyboardPublisher(
         forEvents events: [UIResponder.KeyboardNotification.Event] = [.willShow, .willHide]
     ) -> AnyPublisher<UIResponder.KeyboardNotification, Never> {
-        
         Publishers.MergeMany(events.map { publisher(for: $0.name) })
             .compactMap { UIResponder.KeyboardNotification($0) }
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
 }
-
 #endif

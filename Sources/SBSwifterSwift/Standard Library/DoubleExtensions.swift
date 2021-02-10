@@ -1,6 +1,3 @@
-import Darwin
-import CoreGraphics
-
 public extension Double {
     
     /// Float.

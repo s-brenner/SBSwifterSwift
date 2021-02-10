@@ -13,7 +13,6 @@ public extension String {
     /// ````
     /// - Returns: The camelcased conversion of the receiver.
     func camelcased() -> Self {
-        
         let source = capitalized.removingAll([" ", "\n", "_"])
         let first = source[..<source.index(after: source.startIndex)].lowercased()
         let rest = String(source.dropFirst())
@@ -25,7 +24,6 @@ public extension String {
     /// - Parameter encoding: The text encoding to use.
     /// - Returns: The Base-64 encoding of the receiver.
     func base64Encoded(using encoding: Encoding = .utf8) -> Self? {
-        
         data(using: encoding)?.base64EncodedString()
     }
     
@@ -34,7 +32,6 @@ public extension String {
     /// - Parameter encoding: The text encoding to use.
     /// - Returns: The Base-64 decoding of the receiver.
     func base64Decoded(using encoding: Encoding = .utf8) -> Self? {
-        
         guard let data = Data(base64Encoded: self) else { return nil }
         return String(data: data, encoding: encoding)
     }
@@ -44,7 +41,6 @@ public extension String {
     /// - Parameter encoding: The text encoding to use.
     /// - Returns: The Base-64 URL encoding of the receiver.
     func base64URLEncoded(using encoding: Encoding = .utf8) -> Self? {
-        
         data(using: encoding)?.base64URLEncodedString()
     }
     
@@ -53,7 +49,6 @@ public extension String {
     /// - Parameter encoding: The text encoding to use.
     /// - Returns: The Base-64 URL decoding of the receiver.
     func base64URLDecoded(using encoding: Encoding = .utf8) -> Self? {
-        
         guard let data = Data(base64URLEncoded: self) else { return nil }
         return String(data: data, encoding: encoding)
     }
@@ -64,8 +59,8 @@ public extension String {
     /// - Parameter allowed: The characters allowed in the output.
     init(
         randomWithLength length: Int,
-        allowedCharacters allowed: AllowedCharacters = .alphaNumeric) {
-        
+        allowedCharacters allowed: AllowedCharacters = .alphaNumeric
+    ) {
         self = String((0..<length).map { _ in allowed.characters.randomElement()! })
     }
     
@@ -75,7 +70,6 @@ public extension String {
     /// - Parameter allowed: The characters allowed in the receiver.
     /// - Returns: `true` if receiver contains only the allowed characters; otherwise, `false`.
     func contains(only allowed: AllowedCharacters) -> Bool {
-        
         allowed.characters.contains(self, matchedBy: { $0 == $1 })
     }
     
@@ -112,12 +106,10 @@ public extension String {
         }
         
         public static func +(lhs: Self, rhs: Self) -> Self {
-            
             .allCharactersIn(String(lhs.characters.union(rhs.characters)))
         }
         
         public static func -(lhs: Self, rhs: Self) -> Self {
-            
             .allCharactersIn(String(lhs.characters.subtracting(rhs.characters)))
         }
     }
@@ -136,12 +128,10 @@ public extension String {
         fileprivate let contents: String
         
         public init(_ key: String, comment: String = "") {
-            
             contents = NSLocalizedString(key, comment: comment)
         }
         
         public init(stringLiteral value: StringLiteralType) {
-            
             self.init(value)
         }
     }

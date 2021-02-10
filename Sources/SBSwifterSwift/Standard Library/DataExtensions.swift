@@ -4,7 +4,6 @@ public extension Data {
     
     /// - Author: Scott Brenner | SBSwifterSwift
     init?(base64URLEncoded input: String) {
-        
         var base64 = input
         base64 = base64.replacingOccurrences(of: "-", with: "+")
         base64 = base64.replacingOccurrences(of: "_", with: "/")
@@ -18,7 +17,6 @@ public extension Data {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Returns: The Base-64 URL encoded string.
     func base64URLEncodedString() -> String {
-        
         var result = self.base64EncodedString()
         result = result.replacingOccurrences(of: "+", with: "-")
         result = result.replacingOccurrences(of: "/", with: "_")
@@ -28,7 +26,6 @@ public extension Data {
      
     /// - Author: Scott Brenner | SBSwifterSwift
     var prettyPrintedJSONString: String {
-        
         guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
             let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
             let string = String(data: data, encoding: .utf8) else {
@@ -38,7 +35,6 @@ public extension Data {
     }
     
     func string(encoding: String.Encoding = .utf8) -> String? {
-        
         String(data: self, encoding: encoding)
     }
 }

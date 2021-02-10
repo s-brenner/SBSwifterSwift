@@ -1,23 +1,23 @@
 import Foundation
 
-extension Comparable {
+public extension Comparable {
     
     /// Moves the value to a range of allowed values.
     /// - Parameter range: The range of allowed values.
-    public func clamped(to range: ClosedRange<Self>) -> Self {
+    func clamped(to range: ClosedRange<Self>) -> Self {
         return max(min(self, range.upperBound), range.lowerBound)
     }
 }
 
 
-extension Comparable where Self: SignedNumeric {
+public extension Comparable where Self: SignedNumeric {
     
     /// Check if a number is negative.
-    public var isNegative: Bool { self < 0 }
+    var isNegative: Bool { self < 0 }
     
     /// Check if a number is positive.
-    public var isPositive: Bool { self > 0 }
+    var isPositive: Bool { self > 0 }
     
     /// The absolute value of a number.
-    public var abs: Self { return Swift.abs(self) }
+    var abs: Self { return Swift.abs(self) }
 }

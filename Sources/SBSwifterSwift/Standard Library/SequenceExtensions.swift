@@ -8,7 +8,6 @@ public extension Sequence {
     /// - Parameter keyPath: The numeric property to sum.
     /// - Returns: The sum of the values of a given numeric property within this sequence.
     func sum<T: Numeric>(for keyPath: KeyPath<Element, T>) -> T {
-        
         reduce(0) { sum, element in
             sum + element[keyPath: keyPath]
         }
@@ -20,7 +19,6 @@ public extension Sequence {
     /// - Parameter keyPath: The property to map.
     /// - Returns: An array of the results of mapping the given property over the this sequence's elements.
     func map<T>(_ keyPath: KeyPath<Element, T>) -> [T] {
-        
         map { $0[keyPath: keyPath] }
     }
     
@@ -31,7 +29,6 @@ public extension Sequence {
     /// - Parameter ascending: The order in which to sort the sequence.
     /// - Returns: An array of sorted elements.
     func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>, ascending: Bool = true) -> [Element] {
-        
         sorted { a, b in
             let aa = a[keyPath: keyPath]
             let bb = b[keyPath: keyPath]
@@ -47,8 +44,10 @@ public extension Sequence {
     /// - Parameter element: An element of the receiver sequence.
     /// - Parameter valuesElement: An element of the provided sequence.
     /// - Returns: `true` if the sequence contains only elements matched by the matcher; otherwise, `false`.
-    func contains<T: Sequence>(_ values: T, matchedBy matcher: (_ element: Element, _ valuesElement: T.Element) -> Bool) -> Bool {
-
+    func contains<T: Sequence>(
+        _ values: T,
+        matchedBy matcher: (_ element: Element, _ valuesElement: T.Element) -> Bool
+    ) -> Bool {
         values.allSatisfy { value in
             contains(where: { matcher($0, value) })
         }

@@ -1,10 +1,8 @@
 import Foundation
 
-extension DateComponents {
+public extension DateComponents {
     
-    // MARK: - Types
-    
-    public enum Error: LocalizedError {
+    enum Error: LocalizedError {
         case yearIsUndefined
         case yearIsNegative
         
@@ -16,11 +14,8 @@ extension DateComponents {
         }
     }
     
-    
-    // MARK: - Properties
-    
     /// Set of components.
-    public static let allComponentsSet: Set<Calendar.Component> = [
+    static let allComponentsSet: Set<Calendar.Component> = [
         .era,
         .year,
         .month,
@@ -39,25 +34,8 @@ extension DateComponents {
         .timeZone
     ]
     
-    /// Array of components in ascending order.
-    static let allComponents: [Calendar.Component] =  [
-        .nanosecond,
-        .second,
-        .minute,
-        .hour,
-        .day,
-        .month,
-        .year,
-        .yearForWeekOfYear,
-        .weekOfYear,
-        .weekday,
-        .quarter,
-        .weekdayOrdinal,
-        .weekOfMonth
-    ]
-    
     /// A dictionary containing only those components that are not `nil`.
-    public var componentDictionary: [Calendar.Component: Int] {
+    var componentDictionary: [Calendar.Component: Int] {
         var list: [Calendar.Component : Int] = [:]
         DateComponents.allComponents.forEach { component in
             let value = self.value(for: component)
@@ -71,7 +49,7 @@ extension DateComponents {
     /// Nanoseconds, seconds, minutes, hours, and days converted to seconds.
     ///
     /// Will return `nil` if all of the relevant fields are `nil`.
-    public var duration: TimeInterval? {
+    var duration: TimeInterval? {
         if nanosecond == nil && second == nil && minute == nil && hour == nil && day == nil { return nil }
         var timeInterval: TimeInterval = 0
         if let nanosecond = nanosecond { timeInterval += TimeInterval(nanosecond) / 1_000_000_000 }
@@ -82,11 +60,8 @@ extension DateComponents {
         return timeInterval
     }
     
-    
-    // MARK: - Public methods
-    
     /// Returns whether or not the year is a leap year.
-    public func isLeapYear() throws -> Bool {
+    func isLeapYear() throws -> Bool {
         guard let year = year else { throw Error.yearIsUndefined }
         guard year >= 0 else { throw Error.yearIsNegative }
         if year % 400 == 0 { return true }
@@ -96,7 +71,7 @@ extension DateComponents {
     }
     
     /// Negates all values that are not `NSDateComponentUndefined`.
-    public static prefix func - (rhs: DateComponents) -> DateComponents {
+    static prefix func - (rhs: DateComponents) -> DateComponents {
         var components = DateComponents()
         components.era = rhs.era.map(-)
         components.year = rhs.year.map(-)
@@ -116,12 +91,12 @@ extension DateComponents {
     }
     
     /// Adds two DateComponents and returns their combined individual components.
-    public static func + (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
+    static func + (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
         combine(lhs, rhs: rhs, transform: +)
     }
     
     /// Subtracts two DateComponents and returns the relative difference between them.
-    public static func - (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
+    static func - (lhs: DateComponents, rhs: DateComponents) -> DateComponents {
         lhs + (-rhs)
     }
     
@@ -133,7 +108,7 @@ extension DateComponents {
     /// ````
     /// - Important: This does not take into account any built-in errors, `Int.max` returned instead of `nil`.
     /// - Parameter component: Component to get.
-    public subscript(component: Calendar.Component) -> Int? {
+    subscript(component: Calendar.Component) -> Int? {
         switch component {
         case .era:                  return era
         case .year:                 return year
@@ -153,9 +128,29 @@ extension DateComponents {
         @unknown default:           return nil
         }
     }
+}
+
+extension DateComponents {
     
-    
-    // MARK: - Helper methods
+    /// Array of components in ascending order.
+    static let allComponents: [Calendar.Component] =  [
+        .nanosecond,
+        .second,
+        .minute,
+        .hour,
+        .day,
+        .month,
+        .year,
+        .yearForWeekOfYear,
+        .weekOfYear,
+        .weekday,
+        .quarter,
+        .weekdayOrdinal,
+        .weekOfMonth
+    ]
+}
+
+private extension DateComponents {
     
     /// Applies the `transform` to both `T` values provided, defaulting either of them if `nil`.
     /// - Parameter a: Optional value.
@@ -163,13 +158,17 @@ extension DateComponents {
     /// - Parameter default: The default value to use in the event `a` or `b` are `nil`.
     /// - Parameter transform: The transform to use.
     /// - Returns: The transformed value. If both `T` values are `nil`, returns `nil`.
-    private static func bimap<T>(_ a: T?, _ b: T?, default: T, _ transform: (T, T) -> T) -> T? {
+    static func bimap<T>(_ a: T?, _ b: T?, default: T, _ transform: (T, T) -> T) -> T? {
         if a == nil && b == nil { return nil }
         return transform(a ?? `default`, b ?? `default`)
     }
     
     /// Combines two date components using the provided `transform` on all values within the components that are not `NSDateComponentUndefined`.
-    private static func combine(_ lhs: DateComponents, rhs: DateComponents, transform: (Int, Int) -> Int) -> DateComponents {
+    static func combine(
+        _ lhs: DateComponents,
+        rhs: DateComponents,
+        transform: (Int, Int) -> Int
+    ) -> DateComponents {
         var components = DateComponents()
         components.era = bimap(lhs.era, rhs.era, default: 0, transform)
         components.year = bimap(lhs.year, rhs.year, default: 0, transform)

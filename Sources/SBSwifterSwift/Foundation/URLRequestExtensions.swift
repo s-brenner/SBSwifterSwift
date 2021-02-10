@@ -1,8 +1,8 @@
 import Foundation
 
-extension URLRequest {
+public extension URLRequest {
     
-    public class Builder {
+    class Builder {
     
         private var method = HTTPMethod.get
         
