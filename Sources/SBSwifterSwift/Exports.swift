@@ -42,6 +42,6 @@
 @_exported import class    MapKit.MKPolyline
 #endif
 
-#if !os(macOS)
+#if canImport(UIKit)
 @_exported import class    UIKit.UIScreen
 #endif
