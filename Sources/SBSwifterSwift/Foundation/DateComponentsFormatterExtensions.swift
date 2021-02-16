@@ -25,13 +25,26 @@ public extension DateComponentsFormatter {
     
     /// Returns the local thread shared date components formatter configured as needed.
     /// - Parameter configuration: An optional configuration for the formatter.
+    ///- Author: Scott Brenner | SBSwifterSwift
     static func sharedFormatter(
         withConfiguration configuration: Configuration? = nil
     ) -> DateComponentsFormatter {
         let name = "SBSwifterSwift.\(String(describing: DateComponentsFormatter.self))"
-        let formatter: DateComponentsFormatter = threadSharedObject(key: name, create: { return DateComponentsFormatter() })
+        let formatter: DateComponentsFormatter = threadSharedObject(
+            key: name,
+            create: { DateComponentsFormatter() }
+        )
         configuration?.apply(to: formatter)
         return formatter
+    }
+    
+    /// Returns the local thread shared date components formatter configured as needed.
+    /// - Parameter configurator: A function that modifies the local thread shared date components formatter.
+    ///- Author: Scott Brenner | SBSwifterSwift
+    static func sharedFormatter(
+        configurator: @escaping ((_ formatter: DateComponentsFormatter) -> Void)
+    ) -> DateComponentsFormatter {
+        sharedFormatter(withConfiguration: .init(configurator))
     }
 }
 #endif

@@ -52,4 +52,18 @@ public extension Sequence {
             contains(where: { matcher($0, value) })
         }
     }
+    
+    /// Returns the count of elements that should be counted based on the given closure.
+    /// - Author: Scott Brenner | SBSwifterSwift
+    /// - Parameter shouldBeCounted: A closure that determines if a given element should be counted.
+    /// - Parameter element: The element of the sequence.
+    /// - Returns: The count of elements that satisfy the given closure.
+    /// - Complexity: O(n), where n is the length of the sequence.
+    /// - Note: Based on `reduce(_:_:)`.
+    func count(where shouldBeCounted: (_ element: Element) throws -> Bool) rethrows -> Int {
+        try reduce(0) {
+            let additive = try shouldBeCounted($1) ? 1 : 0
+            return $0 + additive
+        }
+    }
 }
