@@ -15,8 +15,11 @@ public extension Measurement where UnitType: Dimension {
         Swift.abs(rhs.converted(to: unit).value - value) <= tolerance
     }
     
-    func rounded(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> Measurement<UnitType> {
-        Measurement(value: value.rounded(rule), unit: unit)
+    func rounded(
+        places: Int = 0,
+        rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero
+    ) -> Measurement<UnitType> {
+        .init(value: value.roundedTo(places: places, rule: rule), unit: unit)
     }
     
     static func / (lhs: Self, rhs: Self) -> Double {
