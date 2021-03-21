@@ -15,46 +15,50 @@ public struct UserDefault<T: Codable> {
     
     /// The wrapped value.
     public var wrappedValue: T {
-        get { defaults.object(T.self, forKey: key) ?? defaultValue() }
+        get { defaults.object(T.self, forKey: key, usingDecoder: JSONDecoder()) ?? defaultValue() }
         set {
-            defaults.set(object: newValue, forKey: key)
+            defaults.set(object: newValue, forKey: key, usingEncoder: JSONEncoder())
             subject.send(newValue)
         }
     }
     
     private let subject = PassthroughSubject<T, Never>()
     
-    /// A publisher that fires when the wrapped value is modified.
-    public var publisher: AnyPublisher<T, Never> {
-        subject.eraseToAnyPublisher()
-    }
-    
-    /// The projected value.
-    public var projectedValue: UserDefault<T> { self }
-    
     /// - Parameter key: The key with which to associate the value.
     /// - Parameter defaultValue: The default value.
     /// - Parameter defaults: The defaults database.
-    public init(key: String,
-         defaultValue: @autoclosure @escaping DefaultValue,
-         defaults: UserDefaults = .standard) {
-        
+    public init(
+        key: String,
+        defaultValue: @autoclosure @escaping DefaultValue,
+        defaults: UserDefaults = .standard
+    ) {
         self.key = "\(Bundle.main.bundleIdentifier!).\(key)"
         self.defaultValue = defaultValue
         self.defaults = defaults
     }
+}
+
+public extension UserDefault {
+    
+    /// A publisher that fires when the wrapped value is modified.
+    var publisher: AnyPublisher<T, Never> {
+        subject.eraseToAnyPublisher()
+    }
     
     /// Reset the receiver to the default value.
-    public mutating func reset() {
+    mutating func reset() {
         wrappedValue = defaultValue()
     }
+    
+    /// The projected value.
+    var projectedValue: UserDefault<T> { self }
 }
 
 
-extension UserDefault where T: Equatable {
+public extension UserDefault where T: Equatable {
     
     /// A Boolean value that describes whether the wrapped value is equal to the default value.
-    public var isDefault: Bool { wrappedValue == defaultValue() }
+    var isDefault: Bool { wrappedValue == defaultValue() }
 }
 
 

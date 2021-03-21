@@ -29,13 +29,14 @@ public extension UserDefaults {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter type: Object that conforms to the Codable protocol.
     /// - Parameter key: A key in the current user's defaults database.
-    /// - Parameter decoder: JSONDecoder used to decode the data in the user's defaults database.
+    /// - Parameter decoder: TopLevelDecoder used to decode the data in the user's defaults database.
     /// - Returns: The codable object associated with the specified key, or `nil` if the key was not found.
-    func object<T: Codable>(
-        _ type: T.Type,
+    func object<Item, Coder>(
+        _ type: Item.Type,
         forKey key: String,
-        usingDecoder decoder: JSONDecoder = .init()
-    ) -> T? {
+        usingDecoder decoder: Coder
+    ) -> Item?
+    where Item: Decodable, Coder: TopLevelDecoder, Coder.Input == Data {
         guard let data = value(forKey: key) as? Data else { return nil }
         return try? decoder.decode(type.self, from: data)
     }
@@ -44,12 +45,13 @@ public extension UserDefaults {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter object: The object to store in the defaults database.
     /// - Parameter key: The key with which to associate the value.
-    /// - Parameter encoder: JSONEncoder used to encode the object.
-    func set<T: Codable>(
-        object: T,
+    /// - Parameter encoder: TopLevelEncoder used to encode the object.
+    func set<Item, Coder>(
+        object: Item,
         forKey key: String,
-        usingEncoder encoder: JSONEncoder = .init()
-    ) {
+        usingEncoder encoder: Coder
+    )
+    where Item: Encodable, Coder: TopLevelEncoder, Coder.Output == Data {
         self[key] = try? encoder.encode(object)
     }
 }

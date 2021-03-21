@@ -7,8 +7,6 @@ final class UserDefaultTests: XCTestCase {
         
         enum Settings {
             
-            // MARK: - Properties
-            
             private static let prefix = "\(UserDefaultsManager.self).\(Self.self)"
             
             @UserDefault(key: "\(prefix).isEnabled", defaultValue: false)
@@ -23,14 +21,15 @@ final class UserDefaultTests: XCTestCase {
             @UserDefault(key: "\(prefix).duration", defaultValue: DateComponents(hour: 4))
             static var duration: DateComponents
             
-            
-            // MARK: - Methods
+            @UserDefault(key: "\(prefix).speed", defaultValue: Speed(10, .knots))
+            static var speed: Speed
             
             static func reset() {
                 _isEnabled.reset()
                 _username.reset()
                 _duration.reset()
                 _soloNumber.reset()
+                _speed.reset()
             }
             
             static var soloNumberIsDefault: Bool { _soloNumber.isDefault }
@@ -44,14 +43,12 @@ final class UserDefaultTests: XCTestCase {
     
     
     func testDefaultValue() {
-        
         XCTAssertFalse(UserDefaultsManager.Settings.isEnabled)
         XCTAssertEqual(UserDefaultsManager.Settings.soloNumber, 980)
         XCTAssertEqual(UserDefaultsManager.Settings.duration, DateComponents(hour: 4))
     }
     
     func testIsDefault() {
-        
         XCTAssertTrue(UserDefaultsManager.Settings.soloNumberIsDefault)
         UserDefaultsManager.Settings.soloNumber = 1000
         XCTAssertFalse(UserDefaultsManager.Settings.soloNumberIsDefault)
@@ -60,7 +57,6 @@ final class UserDefaultTests: XCTestCase {
     }
     
     func testSetter() {
-        
         XCTAssertEqual(UserDefaultsManager.Settings.username, "Steve")
         UserDefaultsManager.Settings.username = "Jim"
         XCTAssertEqual(UserDefaultsManager.Settings.username, "Jim")
@@ -68,6 +64,10 @@ final class UserDefaultTests: XCTestCase {
         XCTAssertEqual(UserDefaultsManager.Settings.duration, DateComponents(hour: 4))
         UserDefaultsManager.Settings.duration = DateComponents(minute: 15)
         XCTAssertEqual(UserDefaultsManager.Settings.duration, DateComponents(minute: 15))
+        
+        XCTAssertEqual(UserDefaultsManager.Settings.speed, Speed(10, .knots))
+        UserDefaultsManager.Settings.speed = Speed(25, .metersPerSecond)
+        XCTAssertEqual(UserDefaultsManager.Settings.speed, Speed(25, .metersPerSecond).converted(to: .knots))
         
         UserDefaultsManager.Settings.reset()
     }
