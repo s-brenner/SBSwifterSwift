@@ -22,6 +22,9 @@ public struct UserDefault<T: Codable> {
         }
     }
     
+    /// The projected value.
+    public var projectedValue: UserDefault<T> { self }
+    
     private let subject = PassthroughSubject<T, Never>()
     
     /// - Parameter key: The key with which to associate the value.
@@ -49,9 +52,6 @@ public extension UserDefault {
     mutating func reset() {
         wrappedValue = defaultValue()
     }
-    
-    /// The projected value.
-    var projectedValue: UserDefault<T> { self }
 }
 
 
