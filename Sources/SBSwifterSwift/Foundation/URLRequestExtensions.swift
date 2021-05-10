@@ -1,6 +1,7 @@
 #if os(iOS) || os(macOS) || os(watchOS)
 public extension URLRequest {
     
+    @available(*, deprecated, message: "Use SBNetworking instead")
     class Builder {
     
         private var method = HTTPMethod.get
