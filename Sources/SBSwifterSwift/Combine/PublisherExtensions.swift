@@ -15,6 +15,21 @@ public extension Publisher where Self.Failure == Never {
 
 public extension Publisher {
     
+    func weakAssign<Root: AnyObject>(
+        valueTo valueKeyPath: ReferenceWritableKeyPath<Root, Output>,
+        errorTo errorKeyPath: ReferenceWritableKeyPath<Root, Failure>? = nil,
+        on object: Root
+    ) -> AnyCancellable {
+        sink { [weak object] completion in
+            guard let errorKeyPath = errorKeyPath else { return }
+            if case .failure(let error) = completion {
+                object?[keyPath: errorKeyPath] = error
+            }
+        } receiveValue: { [weak object] value in
+            object?[keyPath: valueKeyPath] = value
+        }
+    }
+    
     func convertToResult() -> AnyPublisher<Result<Output, Failure>, Never> {
         map(Result.success)
             .catch { Just(.failure($0)) }
