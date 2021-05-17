@@ -4,7 +4,7 @@ import Combine
 public extension Publisher {
     
     func weakAssign<Root: AnyObject>(
-        valueTo valueKeyPath: ReferenceWritableKeyPath<Root, Output?>,
+        valueTo valueKeyPath: ReferenceWritableKeyPath<Root, Output>,
         errorTo errorKeyPath: ReferenceWritableKeyPath<Root, Failure?>? = nil,
         on object: Root
     ) -> AnyCancellable {
