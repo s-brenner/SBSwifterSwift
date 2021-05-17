@@ -1,18 +1,6 @@
 #if canImport(Combine)
 import Combine
 
-public extension Publisher where Self.Failure == Never {
-    
-    func assignWithoutRetain<Root: AnyObject>(
-        to keyPath: ReferenceWritableKeyPath<Root, Self.Output>,
-        on object: Root
-    ) -> AnyCancellable {
-        sink { [weak object] value in
-            object?[keyPath: keyPath] = value
-        }
-    }
-}
-
 public extension Publisher {
     
     func weakAssign<Root: AnyObject>(
@@ -85,13 +73,51 @@ public extension Publisher where Output: Collection {
     }
 }
 
-//public extension Publisher where Output == Data {
-//
-//    func decode<T: Decodable>(
-//        as type: T.Type = T.self,
-//        using decoder: JSONDecoder = .init()
-//    ) -> Publishers.Decode<Self, T, JSONDecoder> {
-//        decode(type: type, decoder: decoder)
-//    }
-//}
+public extension Publisher where Output == Data {
+    
+    func decode<Item>(
+        as type: Item.Type = Item.self,
+        using decoder: JSONDecoder = .init()
+    ) -> Publishers.Decode<Self, Item, JSONDecoder> {
+        decode(type: type, decoder: decoder)
+    }
+}
+
+public extension Publisher {
+    
+    /// Decodes the output from the upstream as either a given type or a given error using a specified decoder.
+    ///
+    /// A use case for this method is when a server returns data that can be decoded as either an expected type or a server specific error message. If the error message is present, it will be decoded and the publisher will fail with the decoded error.
+    /// - Author: - Scott Brenner | SBSwifterSwift
+    /// - Parameters:
+    ///   - type: The encoded data to decode into a struct that conforms to the Decodable protocol.
+    ///   - error: The encoded data to decode into a struct that conforms to the Decodable and Error protocols.
+    ///   - decoder: A decoder that implements the TopLevelDecoder protocol.
+    /// - Returns: A publisher that decodes a given type using a specified decoder and publishes the result.
+    func decode<Item, DecodableError, Coder>(
+        as type: Item.Type,
+        or error: DecodableError.Type,
+        using decoder: Coder
+    ) -> AnyPublisher<Item, Error>
+    where Item: Decodable,
+          DecodableError: Decodable, DecodableError: Error,
+          Coder: TopLevelDecoder, Coder.Input == Output {
+        tryMap { try DecodableResult<Item, DecodableError>(input: $0, decoder: decoder).get() }
+            .eraseToAnyPublisher()
+    }
+}
+
+fileprivate typealias DecodableResult<T, E> = Result<T, E> where T: Decodable, E: Error, E: Decodable
+
+fileprivate extension DecodableResult {
+    init<D>(input: D.Input, decoder: D) throws where D: TopLevelDecoder {
+        do {
+            let response = try decoder.decode(Success.self, from: input)
+            self = .success(response)
+        } catch {
+            let error = try decoder.decode(Failure.self, from: input)
+            self = .failure(error)
+        }
+    }
+}
 #endif
