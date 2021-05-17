@@ -4,7 +4,7 @@ import Combine
 public extension Publisher {
     
     func weakAssign<Root: AnyObject>(
-        valueTo valueKeyPath: ReferenceWritableKeyPath<Root, Output>,
+        valueTo valueKeyPath: ReferenceWritableKeyPath<Root, Output?>,
         errorTo errorKeyPath: ReferenceWritableKeyPath<Root, Failure?>? = nil,
         on object: Root
     ) -> AnyCancellable {
@@ -110,6 +110,7 @@ public extension Publisher {
 fileprivate typealias DecodableResult<T, E> = Result<T, E> where T: Decodable, E: Error, E: Decodable
 
 fileprivate extension DecodableResult {
+    
     init<D>(input: D.Input, decoder: D) throws where D: TopLevelDecoder {
         do {
             let response = try decoder.decode(Success.self, from: input)
