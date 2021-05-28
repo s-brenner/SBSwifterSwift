@@ -19,7 +19,7 @@ public extension Publisher {
     }
     
     func updatePublished<Root: AnyObject, T>(
-        to keyPath: ReferenceWritableKeyPath<Root, T>,
+        _ keyPath: ReferenceWritableKeyPath<Root, T>,
         on object: Root,
         transform: @escaping (Output) -> T
     ) -> AnyPublisher<Output, Failure> {
