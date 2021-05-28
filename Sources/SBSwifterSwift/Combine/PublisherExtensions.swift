@@ -18,6 +18,19 @@ public extension Publisher {
         }
     }
     
+    func updatePublished<Root: AnyObject, T>(
+        to keyPath: ReferenceWritableKeyPath<Root, T>,
+        on object: Root,
+        transform: @escaping (Output) -> T
+    ) -> AnyPublisher<Output, Failure> {
+        receive(on: OperationQueue.main)
+            .map { [weak object] value in
+                object?[keyPath: keyPath] = transform(value)
+                return value
+            }
+            .eraseToAnyPublisher()
+    }
+    
     func convertToResult() -> AnyPublisher<Result<Output, Failure>, Never> {
         map(Result.success)
             .catch { Just(.failure($0)) }
@@ -44,6 +57,29 @@ public extension Publisher {
             try validator(output)
             return output
         }
+    }
+}
+
+public extension Publisher where Output == Bool {
+    
+    func ifTrue(perform action: @escaping () -> Void) -> AnyPublisher<Output, Failure> {
+        map { boolean in
+            if boolean {
+                action()
+            }
+            return boolean
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func ifFalse(perform action: @escaping () -> Void) -> AnyPublisher<Output, Failure> {
+        map { boolean in
+            if !boolean {
+                action()
+            }
+            return boolean
+        }
+        .eraseToAnyPublisher()
     }
 }
 
@@ -88,7 +124,7 @@ public extension Publisher {
     /// Decodes the output from the upstream as either a given type or a given error using a specified decoder.
     ///
     /// A use case for this method is when a server returns data that can be decoded as either an expected type or a server specific error message. If the error message is present, it will be decoded and the publisher will fail with the decoded error.
-    /// - Author: - Scott Brenner | SBSwifterSwift
+    /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameters:
     ///   - type: The encoded data to decode into a struct that conforms to the Decodable protocol.
     ///   - error: The encoded data to decode into a struct that conforms to the Decodable and Error protocols.
