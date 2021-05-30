@@ -6,10 +6,6 @@
 @_exported import Foundation
 #endif
 
-#if canImport(os)
-@_exported import os
-#endif
-
 #if canImport(CoreData)
 @_exported import class    CoreData.NSManagedObjectContext
 #endif
@@ -40,6 +36,10 @@
 @_exported import class    MapKit.MKMapView
 @_exported import class    MapKit.MKPointOfInterestFilter
 @_exported import class    MapKit.MKPolyline
+#endif
+
+#if canImport(SBLogging)
+@_exported import           SBLogging
 #endif
 
 #if canImport(UIKit)

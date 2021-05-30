@@ -1,5 +1,6 @@
-#if canImport(CoreData)
+#if canImport(CoreData) && canImport(SBLogging)
 import CoreData
+import SBLogging
 
 public extension NSManagedObjectContext {
     
