@@ -82,7 +82,7 @@ public extension Publisher where Output == Bool {
     
     func flatMapIfTrue<P>(
         maxPublishers: Subscribers.Demand = .unlimited,
-        transform: @autoclosure @escaping () -> P
+        transform: @escaping () -> P
     ) -> Publishers.FlatMap<P, Self>
     where P: Publisher, P.Output == Output, P.Failure == Failure {
         flatMap(maxPublishers: maxPublishers) { boolean in
@@ -92,7 +92,7 @@ public extension Publisher where Output == Bool {
     
     func flatMapIfFalse<P>(
         maxPublishers: Subscribers.Demand = .unlimited,
-        transform: @autoclosure @escaping () -> P
+        transform: @escaping () -> P
     ) -> Publishers.FlatMap<P, Self>
     where P: Publisher, P.Output == Output, P.Failure == Failure {
         flatMap(maxPublishers: maxPublishers) { boolean in
