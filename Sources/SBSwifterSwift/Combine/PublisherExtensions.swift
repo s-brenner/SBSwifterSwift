@@ -62,24 +62,42 @@ public extension Publisher {
 
 public extension Publisher where Output == Bool {
     
-    func ifTrue(perform action: @escaping () -> Void) -> AnyPublisher<Output, Failure> {
+    func ifTrue(perform action: @autoclosure @escaping () -> Void) -> Publishers.Map<Self, Output> {
         map { boolean in
             if boolean {
                 action()
             }
             return boolean
         }
-        .eraseToAnyPublisher()
     }
     
-    func ifFalse(perform action: @escaping () -> Void) -> AnyPublisher<Output, Failure> {
+    func ifFalse(perform action: @autoclosure @escaping () -> Void) -> Publishers.Map<Self, Output> {
         map { boolean in
             if !boolean {
                 action()
             }
             return boolean
         }
-        .eraseToAnyPublisher()
+    }
+    
+    func flatMapIfTrue<P>(
+        maxPublishers: Subscribers.Demand = .unlimited,
+        transform: @autoclosure @escaping () -> P
+    ) -> Publishers.FlatMap<P, Self>
+    where P: Publisher, P.Output == Output, P.Failure == Failure {
+        flatMap(maxPublishers: maxPublishers) { boolean in
+            boolean ? transform() : self as! P
+        }
+    }
+    
+    func flatMapIfFalse<P>(
+        maxPublishers: Subscribers.Demand = .unlimited,
+        transform: @autoclosure @escaping () -> P
+    ) -> Publishers.FlatMap<P, Self>
+    where P: Publisher, P.Output == Output, P.Failure == Failure {
+        flatMap(maxPublishers: maxPublishers) { boolean in
+            boolean ? self as! P : transform()
+        }
     }
 }
 
