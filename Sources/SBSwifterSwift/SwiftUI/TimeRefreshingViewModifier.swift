@@ -1,6 +1,8 @@
+#if canImport(Combine) && canImport(SwiftUI) && os(iOS)
 import Combine
 import SwiftUI
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 fileprivate struct TimeRefreshingModifier: ViewModifier {
     
     @Binding private var currentDate: Date
@@ -43,6 +45,7 @@ fileprivate struct TimeRefreshingModifier: ViewModifier {
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension View {
     
     /// Refreshes the current date binding on the interval you prescribe.
@@ -71,3 +74,4 @@ public extension View {
         )
     }
 }
+#endif
