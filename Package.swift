@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "SBSwifterSwift", targets: ["SBSwifterSwift"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/s-brenner/SBLogging", from: "1.0.1"),
+        .package(url: "https://github.com/s-brenner/SBLogging", from: "1.0.2"),
     ],
     targets: [
         .target(name: "SBSwifterSwift", dependencies: ["SBLogging",]),
