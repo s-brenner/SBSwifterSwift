@@ -831,6 +831,8 @@ public extension TimeZone {
     static let pacificHonolulu = TimeZone(identifier: "Pacific/Honolulu")!
 
     static let pacificJohnston = TimeZone(identifier: "Pacific/Johnston")!
+    
+    static let pacificKanton = TimeZone(identifier: "Pacific/Kanton")!
 
     static let pacificKiritimati = TimeZone(identifier: "Pacific/Kiritimati")!
 
@@ -1751,6 +1753,7 @@ extension TimeZone: CaseIterable {
             .pacificGuam,
             .pacificHonolulu,
             .pacificJohnston,
+            .pacificKanton,
             .pacificKiritimati,
             .pacificKosrae,
             .pacificKwajalein,

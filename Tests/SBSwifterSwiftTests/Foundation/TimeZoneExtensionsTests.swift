@@ -10,8 +10,8 @@ final class TimeZoneExtensionsTests: XCTestCase {
     func testKnownTimeZoneIdentifiersCount() {
 //        print(TimeZone.staticTimeZones.joined(separator: "\n\n"))
         print(TimeZone.staticTimeZoneTests.joined(separator: "\n\n"))
-        XCTAssertEqual(TimeZone.staticTimeZones.count, 439)
-        XCTAssertEqual(TimeZone.staticTimeZoneTests.count, 439)
+        XCTAssertEqual(TimeZone.staticTimeZones.count, 440)
+        XCTAssertEqual(TimeZone.staticTimeZoneTests.count, 440)
         
 //        print(TimeZone.allCasesBuilder.joined(separator: "\n"))
         XCTAssertEqual(TimeZone.knownTimeZoneIdentifiers.count, TimeZone.allCases.count)
@@ -848,6 +848,8 @@ final class TimeZoneExtensionsTests: XCTestCase {
         XCTAssertEqual(TimeZone.pacificHonolulu.identifier, "Pacific/Honolulu")
 
         XCTAssertEqual(TimeZone.pacificJohnston.identifier, "Pacific/Johnston")
+
+        XCTAssertEqual(TimeZone.pacificKanton.identifier, "Pacific/Kanton")
 
         XCTAssertEqual(TimeZone.pacificKiritimati.identifier, "Pacific/Kiritimati")
 
