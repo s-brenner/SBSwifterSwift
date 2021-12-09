@@ -58,6 +58,57 @@ public extension Publisher {
             return output
         }
     }
+        
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, *)
+    func asyncMap<T>(
+        _ transform: @escaping (Output) async -> T
+    ) -> Publishers.FlatMap<Future<T, Never>, Self> {
+        flatMap { value in
+            Future { promise in
+                Task {
+                    let output = await transform(value)
+                    promise(.success(output))
+                }
+            }
+        }
+    }
+    
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, *)
+    func asyncMap<T>(
+        _ transform: @escaping (Output) async throws -> T
+    ) -> Publishers.FlatMap<Future<T, Error>, Self> {
+        flatMap { value in
+            Future { promise in
+                Task {
+                    do {
+                        let output = try await transform(value)
+                        promise(.success(output))
+                    }
+                    catch {
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+    
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, *)
+    func asyncMap<T>(
+        _ transform: @escaping (Output) async throws -> T
+    ) -> Publishers.FlatMap<Future<T, Error>, Publishers.SetFailureType<Self, Error>> {
+        flatMap { value in
+            Future { promise in
+                Task {
+                    do {
+                        let output = try await transform(value)
+                        promise(.success(output))
+                    } catch {
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }
+    }
 }
 
 public extension Publisher where Output == Bool {
