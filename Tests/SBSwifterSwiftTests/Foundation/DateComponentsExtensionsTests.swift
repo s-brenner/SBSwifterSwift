@@ -10,7 +10,7 @@ final class DateComponentsExtensionsTests: XCTestCase {
     }
     
     func testDuration() {
-        XCTAssertNil(DateComponents().duration)
+        XCTAssertEqual(DateComponents().duration, 0)
         XCTAssertEqual(DateComponents(nanosecond: 1).duration, 0.000000001)
         XCTAssertEqual(DateComponents(second: 1).duration, 1)
         XCTAssertEqual(DateComponents(minute: 1).duration, 60)

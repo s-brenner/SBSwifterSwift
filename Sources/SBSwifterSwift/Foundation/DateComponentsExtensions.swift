@@ -13,25 +13,25 @@ public extension DateComponents {
         }
     }
     
-    /// Set of components.
-    static let allComponentsSet: Set<Calendar.Component> = [
-        .era,
-        .year,
-        .month,
-        .day,
-        .hour,
-        .minute,
-        .second,
-        .weekday,
-        .weekdayOrdinal,
-        .quarter,
-        .weekOfMonth,
-        .weekOfYear,
-        .yearForWeekOfYear,
-        .nanosecond,
-        .calendar,
-        .timeZone
-    ]
+//    /// Set of components.
+//    static let allComponentsSet: Set<Calendar.Component> = [
+//        .era,
+//        .year,
+//        .month,
+//        .day,
+//        .hour,
+//        .minute,
+//        .second,
+//        .weekday,
+//        .weekdayOrdinal,
+//        .quarter,
+//        .weekOfMonth,
+//        .weekOfYear,
+//        .yearForWeekOfYear,
+//        .nanosecond,
+//        .calendar,
+//        .timeZone
+//    ]
     
     /// A dictionary containing only those components that are not `nil`.
     var componentDictionary: [Calendar.Component: Int] {
@@ -46,16 +46,13 @@ public extension DateComponents {
     }
     
     /// Nanoseconds, seconds, minutes, hours, and days converted to seconds.
-    ///
-    /// Will return `nil` if all of the relevant fields are `nil`.
-    var duration: TimeInterval? {
-        if nanosecond == nil && second == nil && minute == nil && hour == nil && day == nil { return nil }
+    var duration: TimeInterval {
         var timeInterval: TimeInterval = 0
-        if let nanosecond = nanosecond { timeInterval += TimeInterval(nanosecond) / 1_000_000_000 }
-        if let second = second { timeInterval += TimeInterval(second) }
-        if let minute = minute { timeInterval += TimeInterval(minute) * 60 }
-        if let hour = hour { timeInterval += TimeInterval(hour) * 3600 }
-        if let day = day { timeInterval += TimeInterval(day) * 86400 }
+        timeInterval += TimeInterval(nanosecond ?? 0) / 1_000_000_000
+        timeInterval += TimeInterval(second ?? 0)
+        timeInterval += TimeInterval(minute ?? 0) * 60
+        timeInterval += TimeInterval(hour ?? 0) * 3600
+        timeInterval += TimeInterval(day ?? 0) * 86400
         return timeInterval
     }
     
@@ -130,7 +127,7 @@ public extension DateComponents {
 }
 
 extension DateComponents {
-    
+
     /// Array of components in ascending order.
     static let allComponents: [Calendar.Component] =  [
         .nanosecond,
@@ -191,10 +188,7 @@ private extension DateComponents {
 extension DateComponents: Comparable {
     
     public static func < (lhs: DateComponents, rhs: DateComponents) -> Bool {
-        guard let lhsDuration = lhs.duration,
-            let rhsDuration = rhs.duration
-            else { fatalError("Unable to compare \(lhs) to \(rhs)") }
-        return lhsDuration < rhsDuration
+        lhs.duration < rhs.duration
     }
 }
 #endif
