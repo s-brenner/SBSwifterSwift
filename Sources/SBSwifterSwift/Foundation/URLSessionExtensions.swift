@@ -1,65 +1,54 @@
-#if os(iOS) || os(macOS) || os(watchOS)
+import Foundation
+#if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
 public extension URLSession {
     
-    func dataTask(
-        with url: URL,
-        completionHandler: @escaping (_ result: Result<Data, Error>, _ response: URLResponse?) -> Void
-    ) -> URLSessionDataTask {
-        dataTask(with: url) { data, response, error in
-            
-            if let error = error {
-                completionHandler(.failure(error), response)
-            }
-            else {
-                completionHandler(.success(data ?? Data()), response)
-            }
-        }
+    @available(iOS 14.0, tvOS 14.0, macOS 12.0, watchOS 8.0, *)
+    enum DownloadStatus {
+        case response(HTTPURLResponse)
+        case downloading(Double)
+        case finished(Data)
     }
     
-    func dataTask(
-        with request: URLRequest,
-        completionHandler: @escaping (_ result: Result<Data, Error>, _ response: URLResponse?) -> Void
-    ) -> URLSessionDataTask {
-        dataTask(with: request) { data, response, error in
-            
-            if let error = error {
-                completionHandler(.failure(error), response)
-            }
-            else {
-                completionHandler(.success(data ?? Data()), response)
-            }
-        }
+    @available(iOS 14.0, tvOS 14.0, macOS 12.0, watchOS 8.0, *)
+    func downloadStatus(from url: URL) -> AsyncThrowingStream<DownloadStatus, Error> {
+        let request = URLRequest(url: url)
+        return downloadStatus(for: request)
     }
     
-    
-    /// Creates a task that retrieves the contents of a URL based on the specified URL request object, decodes the JSON payload, and calls a handler upon completion.
-    /// - Author: Scott Brenner | SBSwifterSwift
-    /// - Parameter request: A URL request object that provides the URL, cache policy, request type, body data or body stream, and so on.
-    /// - Parameter type: The type of object into which the decoder will decode the server data.
-    /// - Parameter decoder: The decoder to use.
-    /// - Parameter completionHandler: The completion handler to call when the load request is complete. This handler is executed on the delegate queue.
-    /// - Parameter result: The decoded object returned by the server or an error object that indicates why the request failed.
-    /// - Parameter response: An object that provides response metadata, such as HTTP headers and status code.
-    /// - Returns: The new session data task.
-    func dataTask<T: Decodable>(
-        with request: URLRequest,
-        decodedAs type: T.Type,
-        usingDecoder decoder: JSONDecoder = .init(),
-        completionHandler: @escaping (_ result: Result<T, Error>, _ response: URLResponse?) -> Void
-    ) -> URLSessionDataTask {
-        dataTask(with: request) { result, response in
-            switch result {
-            case .success(let data):
+    @available(iOS 14.0, tvOS 14.0, macOS 12.0, watchOS 8.0, *)
+    func downloadStatus(for request: URLRequest) -> AsyncThrowingStream<DownloadStatus, Error> {
+        AsyncThrowingStream { continuation in
+            Task {
                 do {
-                    let decoded = try decoder.decode(T.self, from: data)
-                    completionHandler(.success(decoded), response)
+                    let (bytes, response) = try await self.bytes(for: request)
+                    let length = Int(response.expectedContentLength)
+                    if let response = response as? HTTPURLResponse {
+                        continuation.yield(.response(response))
+                    }
+                    var data = Data()
+                    if length.isPositive {
+                        data.reserveCapacity(length)
+                    }
+                    var progress: Double = 0
+                    continuation.yield(.downloading(progress))
+                    for try await byte in bytes {
+                        data.append(byte)
+                        guard length.isPositive else { continue }
+                        let currentProgress = (data.count.double / length.double).roundedTo(places: 2, rule: .toNearestOrAwayFromZero)
+                        if progress != currentProgress {
+                            progress = currentProgress
+                            continuation.yield(.downloading(progress))
+                        }
+                    }
+                    if progress != 1 {
+                        continuation.yield(.downloading(1))
+                    }
+                    continuation.yield(.finished(data))
+                    continuation.finish()
                 }
                 catch {
-                    print(data.prettyPrintedJSONString)
-                    completionHandler(.failure(error), response)
+                    continuation.finish(throwing: error)
                 }
-            case .failure(let error):
-                completionHandler(.failure(error), response)
             }
         }
     }
