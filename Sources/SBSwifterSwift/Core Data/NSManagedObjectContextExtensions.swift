@@ -80,7 +80,6 @@ extension NSManagedObjectContext.ChangesPublisher {
         
         private var demand: Subscribers.Demand = .none
         
-        @available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
         private lazy var logger = Logger(category: "NSManagedObjectContext.ChangesPublisher")
         
         init(downstream: Downstream, fetchRequest: NSFetchRequest<Object>, context: NSManagedObjectContext) {
@@ -103,7 +102,6 @@ extension NSManagedObjectContext.ChangesPublisher {
         }
         
         private func log(_ message: String, isError: Bool = false) {
-            guard #available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *) else { return }
             isError ? logger.error("\(message)") : logger.info("\(message)")
         }
         

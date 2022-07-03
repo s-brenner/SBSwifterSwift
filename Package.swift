@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,13 +6,13 @@ import PackageDescription
 let package = Package(
     name: "SBSwifterSwift",
     platforms: [
-        .iOS(.v13), .tvOS(.v13), .macOS(.v10_15)
+        .iOS(.v14), .tvOS(.v14), .macOS(.v11), .watchOS(.v7),
     ],
     products: [
         .library(name: "SBSwifterSwift", targets: ["SBSwifterSwift"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/s-brenner/SBLogging", from: "1.0.2"),
+        .package(url: "https://github.com/s-brenner/SBLogging", from: "2.0.0"),
     ],
     targets: [
         .target(name: "SBSwifterSwift", dependencies: ["SBLogging",]),
