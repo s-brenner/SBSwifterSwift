@@ -2,20 +2,20 @@ import Foundation
 #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
 public extension URLSession {
     
-    @available(iOS 14.0, tvOS 14.0, macOS 12.0, watchOS 8.0, *)
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     enum DownloadStatus {
         case response(HTTPURLResponse)
         case downloading(Double)
         case finished(Data)
     }
     
-    @available(iOS 14.0, tvOS 14.0, macOS 12.0, watchOS 8.0, *)
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     func downloadStatus(from url: URL) -> AsyncThrowingStream<DownloadStatus, Error> {
         let request = URLRequest(url: url)
         return downloadStatus(for: request)
     }
     
-    @available(iOS 14.0, tvOS 14.0, macOS 12.0, watchOS 8.0, *)
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     func downloadStatus(for request: URLRequest) -> AsyncThrowingStream<DownloadStatus, Error> {
         AsyncThrowingStream { continuation in
             Task {
