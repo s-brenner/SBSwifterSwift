@@ -1,4 +1,4 @@
-#if canImport(SwiftUI) && os(iOS)
+#if canImport(SwiftUI)
 import SwiftUI
 
 public extension View {

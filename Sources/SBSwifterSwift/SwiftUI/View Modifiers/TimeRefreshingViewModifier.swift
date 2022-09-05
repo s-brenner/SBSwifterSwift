@@ -1,9 +1,9 @@
-#if canImport(Combine) && canImport(SwiftUI) && os(iOS)
+#if canImport(Combine) && canImport(SwiftUI)
 import Combine
 import SwiftUI
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-fileprivate struct TimeRefreshingModifier: ViewModifier {
+fileprivate struct TimeRefreshingViewModifier: ViewModifier {
     
     @Binding private var currentDate: Date
     
@@ -45,7 +45,6 @@ fileprivate struct TimeRefreshingModifier: ViewModifier {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension View {
     
     /// Refreshes the current date binding on the interval you prescribe.
@@ -56,6 +55,7 @@ extension View {
     ///   - whileActive: A boolean indicating whether to update the date binding only when the scene phase is active. Defaults to `true`.
     ///   - updateCount: The maximum number of times the current date binding will be updated.
     ///   - currentDate: The date binding that will be updated.
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     public func timeRefreshing(
         every interval: TimeInterval,
         tolerance: TimeInterval? = nil,
@@ -64,7 +64,7 @@ extension View {
         currentDate: Binding<Date>
     ) -> some View {
         modifier(
-            TimeRefreshingModifier(
+            TimeRefreshingViewModifier(
                 every: interval,
                 tolerance: tolerance,
                 whileActive: whileActive,
