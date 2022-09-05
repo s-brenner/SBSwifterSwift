@@ -46,7 +46,7 @@ fileprivate struct TimeRefreshingModifier: ViewModifier {
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public extension View {
+extension View {
     
     /// Refreshes the current date binding on the interval you prescribe.
     /// - Author: Scott Brenner | SBSwifterSwift
@@ -56,7 +56,7 @@ public extension View {
     ///   - whileActive: A boolean indicating whether to update the date binding only when the scene phase is active. Defaults to `true`.
     ///   - updateCount: The maximum number of times the current date binding will be updated.
     ///   - currentDate: The date binding that will be updated.
-    func timeRefreshing(
+    public func timeRefreshing(
         every interval: TimeInterval,
         tolerance: TimeInterval? = nil,
         whileActive: Bool = true,

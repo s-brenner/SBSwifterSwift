@@ -6,13 +6,13 @@ import PackageDescription
 let package = Package(
     name: "SBSwifterSwift",
     platforms: [
-        .iOS(.v14), .tvOS(.v14), .macOS(.v11), .watchOS(.v7),
+        .iOS(.v13), .tvOS(.v13), .macOS(.v10_15), .watchOS(.v6),
     ],
     products: [
         .library(name: "SBSwifterSwift", targets: ["SBSwifterSwift"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/s-brenner/SBLogging", from: "2.0.0"),
+        .package(url: "https://github.com/s-brenner/SBLogging", from: "2.0.1"),
     ],
     targets: [
         .target(name: "SBSwifterSwift", dependencies: ["SBLogging",]),

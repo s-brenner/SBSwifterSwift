@@ -1,12 +1,12 @@
 #if canImport(SwiftUI) && os(iOS)
 import SwiftUI
 
-public extension Picker where
+extension Picker where
     Label == Text,
     SelectionValue: CaseIterable & CustomStringConvertible & Hashable,
     SelectionValue.AllCases: RandomAccessCollection {
     
-    init(
+    public init(
         _ titleKey: LocalizedStringKey,
         selection: Binding<SelectionValue>
     ) where Content == AnyView {
@@ -19,7 +19,7 @@ public extension Picker where
         }
     }
     
-    init<S: StringProtocol>(
+    public init<S: StringProtocol>(
         _ title: S,
         selection: Binding<SelectionValue>
     ) where Content == AnyView {

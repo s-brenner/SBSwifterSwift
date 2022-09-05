@@ -1,9 +1,10 @@
 #if canImport(SwiftUI) && os(iOS)
 import SwiftUI
 
-public extension DynamicViewContent {
+extension DynamicViewContent {
     
-    func onConfirmedDelete(
+    @available(iOS, introduced: 13, deprecated: 15, message: "Use swipeActions instead")
+    public func onConfirmedDelete(
         title: @escaping (IndexSet) -> String,
         message: String? = nil,
         deleteTitle: @escaping (IndexSet) -> String = { _ in "Delete"},
@@ -18,7 +19,8 @@ public extension DynamicViewContent {
         )
     }
     
-    func onConfirmedDelete(
+    @available(iOS, introduced: 13, deprecated: 15, message: "Use swipeActions instead")
+    public func onConfirmedDelete(
         item: @escaping (IndexSet) -> String,
         action: @escaping (IndexSet) -> Void
     ) -> some View {
@@ -31,6 +33,7 @@ public extension DynamicViewContent {
         )
     }
 }
+
 
 struct DeleteConfirmation<Source>: View where Source: DynamicViewContent {
     

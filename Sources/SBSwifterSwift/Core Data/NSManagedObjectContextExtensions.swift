@@ -2,16 +2,19 @@
 import CoreData
 import SBLogging
 
-public extension NSManagedObjectContext {
+extension NSManagedObjectContext {
     
-    struct ChangeCount {
+    public struct ChangeCount {
+        
         public let inserted: Int
+        
         public let updated: Int
+        
         public let deleted: Int
     }
     
     @discardableResult
-    func saveOrRollback() -> Result<ChangeCount, Error> {
+    public func saveOrRollback() -> Result<ChangeCount, Error> {
         do {
             let inserted = insertedObjects.count
             let updated = updatedObjects.count
@@ -28,20 +31,19 @@ public extension NSManagedObjectContext {
     /// - Throws: errors encountered as a result of `save()`.
     /// - Returns: `true` if a save occurred.
     @discardableResult
-    func saveIfNeeded() throws -> Bool {
+    public func saveIfNeeded() throws -> Bool {
         guard hasChanges else { return false }
         try save()
         return true
     }
-}
-
-public extension NSManagedObjectContext {
     
-    func changesPublisher<Object>(for fetchRequest: NSFetchRequest<Object>) -> ChangesPublisher<Object> {
+    @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
+    public func changesPublisher<Object>(for fetchRequest: NSFetchRequest<Object>) -> ChangesPublisher<Object> {
         ChangesPublisher(fetchRequest: fetchRequest, context: self)
     }
-
-    struct ChangesPublisher<Object: NSManagedObject>: Publisher {
+    
+    @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
+    public struct ChangesPublisher<Object: NSManagedObject>: Publisher {
         
         public typealias Output = [Object]
         
@@ -69,8 +71,10 @@ public extension NSManagedObjectContext {
     }
 }
 
+@available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
 extension NSManagedObjectContext.ChangesPublisher {
     
+    @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
     class Inner<Downstream: Subscriber>: NSObject, Subscription, NSFetchedResultsControllerDelegate
     where Downstream.Input == [Object], Downstream.Failure == Error {
         

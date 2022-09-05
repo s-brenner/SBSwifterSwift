@@ -699,6 +699,8 @@ public extension TimeZone {
     static let europeKiev = TimeZone(identifier: "Europe/Kiev")!
 
     static let europeKirov = TimeZone(identifier: "Europe/Kirov")!
+    
+    static let europeKyiv = TimeZone(identifier: "Europe/Kyiv")!
 
     static let europeLisbon = TimeZone(identifier: "Europe/Lisbon")!
 
@@ -1687,6 +1689,7 @@ extension TimeZone: CaseIterable {
             .europeKaliningrad,
             .europeKiev,
             .europeKirov,
+            .europeKyiv,
             .europeLisbon,
             .europeLjubljana,
             .europeLondon,
