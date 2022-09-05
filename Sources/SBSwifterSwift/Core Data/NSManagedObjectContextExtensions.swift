@@ -37,6 +37,52 @@ extension NSManagedObjectContext {
         return true
     }
     
+    public enum ChangeType: CaseIterable {
+        case inserted, deleted, updated
+        
+        var userInfoKey: String {
+            switch self {
+            case .inserted: return NSInsertedObjectIDsKey
+            case .deleted: return NSDeletedObjectIDsKey
+            case .updated: return NSUpdatedObjectIDsKey
+            }
+        }
+    }
+    
+    public struct Change<T: NSManagedObject>: Equatable {
+        
+        public let objects: [T]
+        
+        public let changeType: ChangeType
+    }
+    
+    /// Listen for insertion, updating, and deleting of any object that matches a specific managed object subclass.
+    public func publisher<T: NSManagedObject>(
+        for type: T.Type,
+        changeTypes: [ChangeType] = ChangeType.allCases
+    ) -> AnyPublisher<[Change<T>], Never> {
+        let notification = NSManagedObjectContext.didSaveObjectIDsNotification
+        return NotificationCenter.default
+            .publisher(for: notification, object: self)
+            .compactMap { notification in
+                let changes = changeTypes.compactMap { changeType -> Change<T>? in
+                    guard let changes = notification.userInfo![changeType.userInfoKey] as? Set<NSManagedObjectID> else {
+                        return nil
+                    }
+                    let objects = changes
+                        .filter { objectID in objectID.entity == T.entity() }
+                        .compactMap { [weak self] objectID in self?.object(with: objectID) as? T }
+                    guard !objects.isEmpty else { return nil }
+                    return Change(objects: objects, changeType: changeType)
+                }
+                guard !changes.isEmpty else { return nil }
+                return changes
+            }
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+    
     @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
     public func changesPublisher<Object>(for fetchRequest: NSFetchRequest<Object>) -> ChangesPublisher<Object> {
         ChangesPublisher(fetchRequest: fetchRequest, context: self)
