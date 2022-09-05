@@ -37,6 +37,7 @@ extension NSManagedObjectContext {
         return true
     }
     
+    @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
     public enum ChangeType: CaseIterable {
         case inserted, deleted, updated
         
@@ -49,6 +50,7 @@ extension NSManagedObjectContext {
         }
     }
     
+    @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
     public struct Change<T: NSManagedObject>: Equatable {
         
         public let objects: [T]
@@ -57,6 +59,7 @@ extension NSManagedObjectContext {
     }
     
     /// Listen for insertion, updating, and deleting of any object that matches a specific managed object subclass.
+    @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
     public func publisher<T: NSManagedObject>(
         for type: T.Type,
         changeTypes: [ChangeType] = ChangeType.allCases
