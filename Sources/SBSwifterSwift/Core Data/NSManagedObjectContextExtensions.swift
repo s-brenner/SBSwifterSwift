@@ -51,7 +51,7 @@ extension NSManagedObjectContext {
     }
     
     @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
-    public struct Change<T: NSManagedObject>: Equatable {
+    public struct Change<T: Equatable>: Equatable {
         
         public let objects: [T]
         
