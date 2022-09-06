@@ -56,6 +56,11 @@ extension NSManagedObjectContext {
         public let objects: [T]
         
         public let changeType: ChangeType
+        
+        public init(objects: [T], changeType: ChangeType) {
+            self.objects = objects
+            self.changeType = changeType
+        }
     }
     
     /// Listen for insertion, updating, and deleting of any object that matches a specific managed object subclass.
