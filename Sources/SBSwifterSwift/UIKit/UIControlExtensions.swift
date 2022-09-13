@@ -1,14 +1,13 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && os(iOS)
 import UIKit
 
-public extension UIControl {
+extension UIControl {
     
-    func publisher(for event: Event) -> EventPublisher {
-        
+    public func publisher(for event: Event) -> EventPublisher {
         EventPublisher(control: self, event: event)
     }
     
-    struct EventPublisher: Publisher {
+    public struct EventPublisher: Publisher {
         
         public typealias Output = Void
         

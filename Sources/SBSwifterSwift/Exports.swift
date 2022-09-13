@@ -28,20 +28,23 @@
 
 #if canImport(MapKit)
 @_exported import protocol MapKit.MKAnnotation
-@_exported import class    MapKit.MKAnnotationView
 @_exported import struct   MapKit.MKCoordinateRegion
 @_exported import struct   MapKit.MKCoordinateSpan
 @_exported import class    MapKit.MKMapSnapshotter
 @_exported import enum     MapKit.MKMapType
-@_exported import class    MapKit.MKMapView
 @_exported import class    MapKit.MKPointOfInterestFilter
 @_exported import class    MapKit.MKPolyline
+#endif
+
+#if canImport(MapKit) && !os(watchOS)
+@_exported import class    MapKit.MKAnnotationView
+@_exported import class    MapKit.MKMapView
 #endif
 
 #if canImport(SBLogging)
 @_exported import           SBLogging
 #endif
 
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
 @_exported import class    UIKit.UIScreen
 #endif

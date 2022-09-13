@@ -1,4 +1,4 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && os(iOS)
 import UIKit
 
 @available(iOS 13.0, *)

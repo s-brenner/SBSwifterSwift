@@ -1,9 +1,9 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && os(iOS)
 import UIKit
 
-public extension UITextField {
+extension UITextField {
     
-    var textPublisher: AnyPublisher<String, Never> {
+    public var textPublisher: AnyPublisher<String, Never> {
         publisher(for: .editingChanged)
             .map { self.text ?? "" }
             .eraseToAnyPublisher()

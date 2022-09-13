@@ -1,4 +1,4 @@
-#if canImport(MapKit)
+#if canImport(MapKit) && os(iOS)
 import struct CoreGraphics.CGFloat
 import struct CoreGraphics.CGSize
 import struct CoreLocation.CLLocationCoordinate2D
@@ -6,13 +6,10 @@ import struct MapKit.MKCoordinateRegion
 import class  MapKit.MKMapSnapshotter
 import enum   MapKit.MKMapType
 import class  MapKit.MKPointOfInterestFilter
-#if !os(macOS)
 import class  UIKit.UIScreen
-#endif
 
 extension MKMapSnapshotter.Options {
     
-    #if os(iOS)
     @available(iOS 13.0, *)
     public convenience init(
         coordinates: [CLLocationCoordinate2D],
@@ -36,6 +33,5 @@ extension MKMapSnapshotter.Options {
         self.size = size
         self.scale = scale
     }
-    #endif
 }
 #endif

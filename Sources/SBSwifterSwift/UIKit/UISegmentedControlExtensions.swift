@@ -1,10 +1,10 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && os(iOS)
 
 import UIKit
 
-public extension UISegmentedControl {
+extension UISegmentedControl {
     
-    var segmentIndexPublisher: AnyPublisher<Int, Never> {
+    public var segmentIndexPublisher: AnyPublisher<Int, Never> {
         publisher(for: .valueChanged)
             .map { self.selectedSegmentIndex }
             .eraseToAnyPublisher()

@@ -1,4 +1,4 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && os(iOS)
 import UIKit
 
 public extension UIResponder {
@@ -25,7 +25,6 @@ public extension UIResponder {
             }
             
             public init?(_ name: Notification.Name) {
-                
                 switch name {
                 case keyboardWillShowNotification: self = .willShow
                 case keyboardDidShowNotification: self = .didShow

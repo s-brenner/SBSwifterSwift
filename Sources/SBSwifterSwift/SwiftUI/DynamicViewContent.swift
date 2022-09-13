@@ -34,7 +34,6 @@ extension DynamicViewContent {
     }
 }
 
-
 struct DeleteConfirmation<Source>: View where Source: DynamicViewContent {
     
     let source: Source

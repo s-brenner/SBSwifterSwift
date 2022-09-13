@@ -1,4 +1,4 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && os(iOS)
 import UIKit
 
 @available(iOS 13.0, *)
@@ -12,8 +12,8 @@ extension UIActivityIndicatorView {
     public static func add(
         to view: UIView,
         style: Style = .medium,
-        hidesWhenStopped: Bool = true) -> UIActivityIndicatorView {
-        
+        hidesWhenStopped: Bool = true
+    ) -> UIActivityIndicatorView {
         let s = UIActivityIndicatorView(style: style)
         s.hidesWhenStopped = hidesWhenStopped
         view.addSubview(s)

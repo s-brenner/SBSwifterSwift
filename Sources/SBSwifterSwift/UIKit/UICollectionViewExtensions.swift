@@ -1,31 +1,37 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && os(iOS)
 import UIKit
 
-@available(iOS 14.0, *)
-public extension UICollectionView {
+extension UICollectionView {
     
-    enum SupplementaryViews { }
+    @available(iOS 14.0, *)
+    public enum SupplementaryViews { }
     
-    enum Cells { }
+    @available(iOS 14.0, *)
+    public enum Cells { }
     
-    typealias ListHeaderFooterConfiguration = SupplementaryViews.ListHeaderFooterView.View.ContentConfiguration
+    @available(iOS 14.0, *)
+    public typealias ListHeaderFooterConfiguration = SupplementaryViews.ListHeaderFooterView.View.ContentConfiguration
     
-    typealias ListHeaderFooterRegistration = SupplementaryRegistration<SupplementaryViews.ListHeaderFooterView>
+    @available(iOS 14.0, *)
+    public typealias ListHeaderFooterRegistration = SupplementaryRegistration<SupplementaryViews.ListHeaderFooterView>
     
-    typealias ListCellRegistration<Item> = CellRegistration<UICollectionViewListCell, Item>
+    @available(iOS 14.0, *)
+    public typealias ListCellRegistration<Item> = CellRegistration<UICollectionViewListCell, Item>
     
-    typealias TextFieldCellRegistration<Item> = CellRegistration<Cells.TextFieldCell, Item>
+    @available(iOS 14.0, *)
+    public typealias TextFieldCellRegistration<Item> = CellRegistration<Cells.TextFieldCell, Item>
 }
 
 
 // MARK: - List Header / Footer
 
 @available(iOS 14.0, *)
-public extension UICollectionView.ListHeaderFooterRegistration {
+extension UICollectionView.ListHeaderFooterRegistration {
     
-    typealias Style = UICollectionView.SupplementaryViews.ListHeaderFooterView.View.ContentConfiguration.Style
     
-    typealias ConfigurationHandler =
+    public typealias Style = UICollectionView.SupplementaryViews.ListHeaderFooterView.View.ContentConfiguration.Style
+    
+    public typealias ConfigurationHandler =
         (_ configuration: inout UICollectionView.ListHeaderFooterConfiguration, _ section: Int) -> Void
     
     /// Makes a supplementary registration for a list header or footer.
@@ -33,7 +39,7 @@ public extension UICollectionView.ListHeaderFooterRegistration {
     ///   - style: The style of header or footer that you desire.
     ///   - elementKind: If set to `nil` the element kind will be either `UICollectionView.elementKindSectionHeader` or `UICollectionView.elementKindSectionFooter` as determined by the selected style.
     ///   - configurationHandler: A handler that enables you to adjust the default content configuration for a given section.
-    init(style: Style, elementKind: String? = nil, configurationHandler: @escaping ConfigurationHandler) {
+    public init(style: Style, elementKind: String? = nil, configurationHandler: @escaping ConfigurationHandler) {
         self.init(elementKind: elementKind ?? style.elementKind) { view, _, indexPath in
             var contentConfiguration = UICollectionView.ListHeaderFooterConfiguration(style: style)
             configurationHandler(&contentConfiguration, indexPath.section)
@@ -41,13 +47,13 @@ public extension UICollectionView.ListHeaderFooterRegistration {
         }
     }
     
-    typealias TextHandler = (_ section: Int) -> String?
+    public typealias TextHandler = (_ section: Int) -> String?
     
     /// Makes a supplementary registration for a list header or footer.
     /// - Parameters:
     ///   - style: The style of header or footer that you desire.
     ///   - textHandler: A handler that asks for the text for a given section.
-    init(style: Style, textHandler: @escaping TextHandler) {
+    public init(style: Style, textHandler: @escaping TextHandler) {
         self.init(elementKind: style.elementKind) { view, _, indexPath in
             view.contentConfiguration = configure(UICollectionView.ListHeaderFooterConfiguration(style: style)) {
                 $0.text = textHandler(indexPath.section)
@@ -56,11 +62,10 @@ public extension UICollectionView.ListHeaderFooterRegistration {
     }
 }
 
-
 @available(iOS 14.0, *)
-public extension UICollectionView.SupplementaryViews {
+extension UICollectionView.SupplementaryViews {
     
-    class ListHeaderFooterView: UICollectionViewListCell {
+    public class ListHeaderFooterView: UICollectionViewListCell {
         
         public class View: UIView, UIContentView {
             
@@ -152,9 +157,9 @@ public extension UICollectionView.SupplementaryViews {
 }
 
 @available(iOS 14.0, *)
-public extension UIListContentConfiguration.TextProperties {
+extension UIListContentConfiguration.TextProperties {
     
-    func transform(text: String?) -> String? {
+    public func transform(text: String?) -> String? {
         switch transform {
         case .none: return text
         case .capitalized: return text?.capitalized
@@ -166,9 +171,9 @@ public extension UIListContentConfiguration.TextProperties {
 }
 
 @available(iOS 14.0, *)
-public extension UIListContentConfiguration.TextProperties.TextAlignment {
+extension UIListContentConfiguration.TextProperties.TextAlignment {
     
-    var textAlignment: NSTextAlignment {
+    public var textAlignment: NSTextAlignment {
         switch self {
         case .center: return .center
         case .justified: return .justified
@@ -185,9 +190,9 @@ public extension UIListContentConfiguration.TextProperties.TextAlignment {
 private typealias TextFieldCell = UICollectionView.Cells.TextFieldCell
 
 @available(iOS 14.0, *)
-public extension UICollectionView.Cells {
+extension UICollectionView.Cells {
     
-    class TextFieldCell: UICollectionViewListCell {
+    public class TextFieldCell: UICollectionViewListCell {
         
         private var text = ""
         
@@ -380,9 +385,9 @@ private extension TextFieldCell {
 }
 
 @available(iOS 14.0, *)
-public extension UIListContentConfiguration {
+extension UIListContentConfiguration {
     
-    struct TextFieldProperties: Hashable {
+    public struct TextFieldProperties: Hashable {
         public var textColor: UIColor
         public var font: UIFont
         public var textAlignment: NSTextAlignment

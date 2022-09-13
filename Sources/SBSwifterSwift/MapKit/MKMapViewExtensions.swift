@@ -1,4 +1,4 @@
-#if canImport(MapKit)
+#if canImport(MapKit) && !os(watchOS)
 import protocol MapKit.MKAnnotation
 import class    MapKit.MKAnnotationView
 import class    MapKit.MKMapView

@@ -1,4 +1,4 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && os(iOS)
 import UIKit
 
 extension UIColor {
@@ -10,13 +10,14 @@ extension UIColor {
         public var dark: UIColor?
         
         public init(light: UIColor?, dark: UIColor?) {
-            
             self.light = light
             self.dark = dark
         }
         
         @available(iOS 13.0, *)
-        public var color: UIColor? { UIColor.colorPair(light: light, dark: dark) }
+        public var color: UIColor? {
+            UIColor.colorPair(light: light, dark: dark)
+        }
     }
     
     @available(iOS 13.0, *)

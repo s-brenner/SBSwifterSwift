@@ -1,3 +1,4 @@
+#if !os(watchOS)
 import XCTest
 import MapKit
 @testable import SBSwifterSwift
@@ -22,5 +23,5 @@ final class MKMapViewTests: XCTestCase {
         let annotationViewWithAnnotation = mapView.dequeueReusableAnnotationView(withClass: MKPinAnnotationView.self, for: annotation)
         XCTAssertNotNil(annotationViewWithAnnotation)
     }
-    
 }
+#endif

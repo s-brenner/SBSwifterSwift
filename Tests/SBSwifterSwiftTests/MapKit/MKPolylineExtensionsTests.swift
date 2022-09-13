@@ -1,3 +1,4 @@
+#if !os(watchOS)
 import XCTest
 import MapKit
 @testable import SBSwifterSwift
@@ -35,3 +36,4 @@ final class MKPolylineExtensionsTests: XCTestCase {
         }
     }
 }
+#endif

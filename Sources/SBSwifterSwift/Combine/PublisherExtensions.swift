@@ -92,7 +92,7 @@ public extension Publisher {
         }
     }
     
-    @available(iOS 15.0, tvOS 15.0, macOS 12.0, *)
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 7.0, *)
     func asyncMap<T>(
         _ transform: @escaping (Output) async throws -> T
     ) -> Publishers.FlatMap<Future<T, Error>, Publishers.SetFailureType<Self, Error>> {

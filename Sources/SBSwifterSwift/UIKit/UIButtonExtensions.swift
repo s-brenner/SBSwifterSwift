@@ -1,13 +1,13 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && os(iOS)
 import UIKit
 
-public extension UIButton {
+extension UIButton {
     
     /// Sets the background color to use for the specified state.
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter color: The color to use for the background.
     /// - Parameter state: The state that uses the specified background color.
-    func setBackgroundColor(_ color: UIColor, forState state: UIControl.State) {
+    public func setBackgroundColor(_ color: UIColor, forState state: UIControl.State) {
 
       let minimumSize: CGSize = CGSize(width: 1.0, height: 1.0)
 
@@ -25,6 +25,6 @@ public extension UIButton {
       self.setBackgroundImage(colorImage, for: state)
     }
     
-    var tapPublisher: EventPublisher { publisher(for: .touchUpInside) }
+    public var tapPublisher: EventPublisher { publisher(for: .touchUpInside) }
 }
 #endif
