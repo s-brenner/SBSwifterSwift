@@ -40,8 +40,8 @@ public func setIfNeeded<R1, R2, V: Equatable>(
 /// Generic utility function that configures an object.
 public func configure<T>(
     _ value: T,
-    using closure: (inout T) throws -> Void) rethrows -> T {
-        
+    using closure: (inout T) throws -> Void
+) rethrows -> T {
         var value = value
         try closure(&value)
         return value
