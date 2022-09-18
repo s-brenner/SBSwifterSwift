@@ -1,31 +1,46 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
-@available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
+@available(iOS 15, tvOS 15, macOS 12, watchOS 8, *)
 fileprivate struct LoadingViewModifier: ViewModifier {
     
     @Binding var isPresented: Bool
     
+    var onCancel: (() -> Void)?
+    
     func body(content: Content) -> some View {
-        LoadingView(isPresented: $isPresented) {
+        LoadingView(isPresented: $isPresented, onCancel: onCancel) {
             content
         }
     }
 }
 
-@available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
+@available(iOS 15, tvOS 15, macOS 12, watchOS 8, *)
 fileprivate struct LoadingView<Content: View>: View {
     
     @Binding var isPresented: Bool
     
+    var onCancel: (() -> Void)?
+    
     @ViewBuilder let content: () -> Content
+    
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
-                content()
-                    .disabled(isPresented)
-                    .blur(radius: isPresented ? 3 : 0)
+                ZStack(alignment: .topTrailing) {
+                    content()
+                        .disabled(isPresented)
+                        .blur(radius: isPresented ? 3 : 0, opaque: colorScheme == .dark)
+                    if let onCancel {
+                        Button(action: onCancel) {
+                            Image(systemName: "xmark.circle.fill")
+                        }
+                        .tint(.gray)
+                        .padding()
+                    }
+                }
                 VStack {
                     Text("Loading...").font(.headline)
                     ProgressView()
@@ -46,11 +61,12 @@ fileprivate struct LoadingView<Content: View>: View {
 
 extension View {
     
-    @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
+    @available(iOS 15, tvOS 15, macOS 12, watchOS 8, *)
     public func loading(
-        isPresented: Binding<Bool>
+        isPresented: Binding<Bool>,
+        onCancel: (() -> Void)?
     ) -> some View {
-        modifier(LoadingViewModifier(isPresented: isPresented))
+        modifier(LoadingViewModifier(isPresented: isPresented, onCancel: onCancel))
     }
 }
 #endif
