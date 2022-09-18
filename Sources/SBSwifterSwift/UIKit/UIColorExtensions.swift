@@ -27,7 +27,8 @@ extension UIColor {
             red: .random(in: 0...1),
             green: .random(in: 0...1),
             blue: .random(in: 0...1),
-            alpha: .random(in: 0...1))
+            alpha: .random(in: 0...1)
+        )
         
         let desiredColor = UIColor { traitCollection -> UIColor in
             switch traitCollection.userInterfaceStyle {
@@ -60,6 +61,31 @@ extension UIColor {
       rhs.getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
         
       return r1 == r2 && g1 == g2 && b1 == b2 && a1 == a2
+    }
+    
+    public func lighter(by percentage: CGFloat = 30.0) -> UIColor {
+        adjust(by: abs(percentage))
+    }
+    
+    public func darker(by percentage: CGFloat = 30.0) -> UIColor {
+        adjust(by: -1 * abs(percentage))
+    }
+    
+    public func adjust(by percentage: CGFloat = 30.0) -> UIColor {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        if getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+            return UIColor(
+                red: min(red + percentage/100, 1.0),
+                green: min(green + percentage/100, 1.0),
+                blue: min(blue + percentage/100, 1.0),
+                alpha: alpha
+            )
+        } else {
+            return self
+        }
     }
 }
 #endif

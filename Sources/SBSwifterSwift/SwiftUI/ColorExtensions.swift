@@ -100,5 +100,20 @@ extension Color {
     public static var tertiarySystemGroupedBackground: Color {
         Color(uiColor: .tertiarySystemGroupedBackground)
     }
+    
+    @available(iOS 15.0, *)
+    public func lighter(by percentage: CGFloat = 30.0) -> Color {
+        adjust(by: abs(percentage))
+    }
+    
+    @available(iOS 15.0, *)
+    public func darker(by percentage: CGFloat = 30.0) -> Color {
+        adjust(by: -1 * abs(percentage))
+    }
+    
+    @available(iOS 15.0, *)
+    public func adjust(by percentage: CGFloat = 30.0) -> Color {
+        Color(uiColor: UIColor(self).adjust(by: percentage))
+    }
 }
 #endif

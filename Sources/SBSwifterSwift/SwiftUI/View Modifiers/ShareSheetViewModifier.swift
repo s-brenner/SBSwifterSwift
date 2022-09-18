@@ -1,6 +1,7 @@
 #if canImport(SwiftUI) && os(iOS)
 import SwiftUI
 
+@available(iOS, introduced: 13.0, obsoleted: 16.0, message: "Use ShareLink instead")
 fileprivate struct ShareSheetViewModifier: ViewModifier {
     
     @Binding var isPresented: Bool
@@ -26,6 +27,7 @@ fileprivate struct ShareSheetViewModifier: ViewModifier {
     }
 }
 
+@available(iOS, introduced: 13.0, obsoleted: 16.0, message: "Use ShareLink instead")
 fileprivate struct ShareSheetView: UIViewControllerRepresentable {
     
     let activityItems: [Any]
@@ -48,6 +50,7 @@ fileprivate struct ShareSheetView: UIViewControllerRepresentable {
 
 extension View {
     
+    @available(iOS, introduced: 13.0, obsoleted: 16.0, message: "Use ShareLink instead")
     public func shareSheet(
         isPresented: Binding<Bool>,
         activityItems: [Any],
