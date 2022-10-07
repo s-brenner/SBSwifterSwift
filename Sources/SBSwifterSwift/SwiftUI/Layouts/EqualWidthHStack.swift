@@ -4,6 +4,8 @@ import SwiftUI
 @available(iOS 16.0, tvOS 16.0, macOS 13.0, watchOS 9.0, *)
 public struct EqualWidthHStack: Layout {
     
+    public init() { }
+    
     /// Returns a size that the layout container needs to arrange its subviews
     /// horizontally.
     /// - Tag: sizeThatFitsHorizontal
