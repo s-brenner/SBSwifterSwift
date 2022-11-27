@@ -52,14 +52,13 @@ public enum Previews {
 public extension View {
     
     func previewAsScreen(
-        on devices: [PreviewDevice] = [.iPhone8, .iPhone11, .iPhone11ProMax, .iPhoneSE2ndGen],
-        withTitle title: String? = nil) -> some View {
-        
+        on devices: [PreviewDevice] = [.iPhone14, .iPhone14Plus, .iPhone14Pro, .iPhone14ProMax, .iPhoneSE3rdGen],
+        withTitle title: String? = nil
+    ) -> some View {
         Previews.ScreenPreview(screen: self, devices: devices, navigationBarTitle: title)
     }
     
     func previewAsComponent() -> some View {
-        
         Previews.ComponentPreview(component: self)
     }
 }
