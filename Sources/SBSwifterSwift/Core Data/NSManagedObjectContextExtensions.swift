@@ -50,7 +50,7 @@ extension NSManagedObjectContext {
     public enum ChangeType: CaseIterable {
         case inserted, deleted, updated
         
-        public var userInfoKey: String {
+        var userInfoKey: String {
             switch self {
             case .inserted: return NSInsertedObjectIDsKey
             case .deleted: return NSDeletedObjectIDsKey
@@ -72,15 +72,28 @@ extension NSManagedObjectContext {
         }
     }
     
+    @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
+    public enum ContextAction {
+        case didSave
+        case didMerge
+        
+        var notifcation: Notification.Name {
+            switch self {
+            case .didSave: return NSManagedObjectContext.didSaveObjectIDsNotification
+            case .didMerge: return NSManagedObjectContext.didMergeChangesObjectIDsNotification
+            }
+        }
+    }
+    
     /// Listen for insertion, updating, and deleting of any object that matches a specific managed object subclass.
     @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
     public func publisher<T: NSManagedObject>(
         for type: T.Type,
-        changeTypes: [ChangeType] = ChangeType.allCases
+        changeTypes: [ChangeType] = ChangeType.allCases,
+        action: ContextAction
     ) -> AnyPublisher<[Change<T>], Never> {
-        let notification = NSManagedObjectContext.didSaveObjectIDsNotification
-        return NotificationCenter.default
-            .publisher(for: notification, object: self)
+        NotificationCenter.default
+            .publisher(for: action.notifcation, object: self)
             .compactMap { notification in
                 let changes = changeTypes.compactMap { changeType -> Change<T>? in
                     guard let changes = notification.userInfo![changeType.userInfoKey] as? Set<NSManagedObjectID> else {
