@@ -37,6 +37,15 @@ extension NSManagedObjectContext {
         return true
     }
     
+    /// Executes a batch delete request on the persistent store and merges the changes into this context.
+    /// - Parameter batchDeleteRequest: The request that describes the records to be deleted.
+    public func executeAndMergeChanges(using batchDeleteRequest: NSBatchDeleteRequest) throws {
+        batchDeleteRequest.resultType = .resultTypeObjectIDs
+        let result = try execute(batchDeleteRequest) as? NSBatchDeleteResult
+        let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: result?.result as? [NSManagedObjectID] ?? []]
+        NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self])
+    }
+    
     @available(iOS 14, tvOS 14, macOS 11, watchOS 7, *)
     public enum ChangeType: CaseIterable {
         case inserted, deleted, updated
