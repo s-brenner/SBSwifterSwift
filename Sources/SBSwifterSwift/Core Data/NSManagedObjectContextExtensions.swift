@@ -50,7 +50,7 @@ extension NSManagedObjectContext {
     public enum ChangeType: CaseIterable {
         case inserted, deleted, updated
         
-        var userInfoKey: String {
+        public var userInfoKey: String {
             switch self {
             case .inserted: return NSInsertedObjectIDsKey
             case .deleted: return NSDeletedObjectIDsKey
