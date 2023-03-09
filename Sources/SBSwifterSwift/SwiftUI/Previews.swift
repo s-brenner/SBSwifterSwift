@@ -23,6 +23,7 @@ public enum Previews {
         }
     }
     
+    @available(iOS 16.0, *)
     public struct ScreenPreview<Screen: View>: View {
         
         let screen: Screen
@@ -34,7 +35,7 @@ public enum Previews {
         public var body: some View {
             ForEach(values: devices.map(\.rawValue)) { device in
                 ForEach(values: ColorScheme.allCases) { scheme in
-                    NavigationView {
+                    NavigationStack {
                         self.screen
                             .navigationBarTitle(self.navigationBarTitle ?? "")
                             .navigationBarHidden(self.navigationBarTitle == nil)
@@ -49,16 +50,17 @@ public enum Previews {
 }
 
 
-public extension View {
+extension View {
     
-    func previewAsScreen(
-        on devices: [PreviewDevice] = [.iPhone14, .iPhone14Plus, .iPhone14Pro, .iPhone14ProMax, .iPhoneSE3rdGen],
+    @available(iOS 16.0, *)
+    public func previewAsScreen(
+        on devices: [PreviewDevice] = .iPhones,
         withTitle title: String? = nil
     ) -> some View {
         Previews.ScreenPreview(screen: self, devices: devices, navigationBarTitle: title)
     }
     
-    func previewAsComponent() -> some View {
+    public func previewAsComponent() -> some View {
         Previews.ComponentPreview(component: self)
     }
 }

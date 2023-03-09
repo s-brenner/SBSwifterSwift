@@ -3,17 +3,25 @@ import XCTest
 
 final class TimeZoneExtensionsTests: XCTestCase {
     
-    func testCity() {
-//        TimeZone.knownTimeZoneIdentifiers.forEach() { print(TimeZone(identifier: $0)!.city ?? "nil") }
-    }
-    
     func testKnownTimeZoneIdentifiersCount() {
-//        print(TimeZone.staticTimeZones.joined(separator: "\n\n"))
-        print(TimeZone.staticTimeZoneTests.joined(separator: "\n\n"))
-        XCTAssertEqual(TimeZone.staticTimeZones.count, 441)
-        XCTAssertEqual(TimeZone.staticTimeZoneTests.count, 441)
-//        print(TimeZone.allCasesBuilder.joined(separator: "\n"))
+        // Test time zones
+        XCTAssertEqual(TimeZone.staticTimeZones.count, TimeZone.knownTimeZoneIdentifiers.count)
+        guard TimeZone.staticTimeZones.count == TimeZone.knownTimeZoneIdentifiers.count else {
+            print(TimeZone.staticTimeZones.joined(separator: "\n\n"))
+            return
+        }
+        // Test time zone tests
+        XCTAssertEqual(TimeZone.staticTimeZoneTests.count, TimeZone.knownTimeZoneIdentifiers.count)
+        guard TimeZone.staticTimeZoneTests.count == TimeZone.knownTimeZoneIdentifiers.count else {
+            print(TimeZone.staticTimeZoneTests.joined(separator: "\n\n"))
+            return
+        }
+        // Test time zone all cases
         XCTAssertEqual(TimeZone.knownTimeZoneIdentifiers.count, TimeZone.allCases.count)
+        guard TimeZone.knownTimeZoneIdentifiers.count == TimeZone.allCases.count else {
+            print(TimeZone.allCasesBuilder.joined(separator: "\n"))
+            return
+        }
     }
     
     func testTimeZoneIdentifiers() {
@@ -195,6 +203,8 @@ final class TimeZoneExtensionsTests: XCTestCase {
         XCTAssertEqual(TimeZone.americaChicago.identifier, "America/Chicago")
 
         XCTAssertEqual(TimeZone.americaChihuahua.identifier, "America/Chihuahua")
+
+        XCTAssertEqual(TimeZone.americaCiudadJuarez.identifier, "America/Ciudad_Juarez")
 
         XCTAssertEqual(TimeZone.americaCostaRica.identifier, "America/Costa_Rica")
 

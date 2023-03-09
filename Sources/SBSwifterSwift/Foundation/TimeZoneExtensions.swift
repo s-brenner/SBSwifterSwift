@@ -179,6 +179,8 @@ public extension TimeZone {
     static let americaChicago = TimeZone(identifier: "America/Chicago")!
 
     static let americaChihuahua = TimeZone(identifier: "America/Chihuahua")!
+    
+    static let americaCiudadJuarez = TimeZone(identifier: "America/Ciudad_Juarez")!
 
     static let americaCostaRica = TimeZone(identifier: "America/Costa_Rica")!
 
@@ -1429,6 +1431,7 @@ extension TimeZone: CaseIterable {
             .americaCayman,
             .americaChicago,
             .americaChihuahua,
+            .americaCiudadJuarez,
             .americaCostaRica,
             .americaCreston,
             .americaCuiaba,
@@ -1791,21 +1794,21 @@ extension TimeZone: CaseIterable {
 extension TimeZone {
     
     internal static var allCasesBuilder: [String] {
-        knownTimeZoneIdentifiers.map() {
+        knownTimeZoneIdentifiers.map {
             let name = $0.camelcased().removingAll(["/", "_", "-"])
             return ".\(name),"
         }
     }
     
     internal static var staticTimeZones: [String] {
-        knownTimeZoneIdentifiers.map() {
+        knownTimeZoneIdentifiers.map {
             let name = $0.camelcased().removingAll(["/", "_", "-"])
             return "static let \(name) = TimeZone(identifier: \"\($0)\")!"
         }
     }
     
     internal static var staticTimeZoneTests: [String] {
-        knownTimeZoneIdentifiers.map() {
+        knownTimeZoneIdentifiers.map {
             let name = $0.camelcased().removingAll(["/", "_", "-"])
             return "XCTAssertEqual(TimeZone.\(name).identifier, \"\($0)\")"
         }
