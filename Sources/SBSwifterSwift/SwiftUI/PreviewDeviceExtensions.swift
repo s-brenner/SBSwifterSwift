@@ -10,10 +10,10 @@ extension PreviewDevice {
     public static let iPadAir = PreviewDevice(rawValue: "iPad Air (5th generation)")
     
     /// iPad Pro (11-inch) (4th generation)
-    public static let iPadAirPro_11inch = PreviewDevice(rawValue: "iPad Pro (11-inch) (4th generation)")
+    public static let iPadPro_11inch = PreviewDevice(rawValue: "iPad Pro (11-inch) (4th generation)")
     
     /// iPad Pro (12.9-inch) (6th generation)
-    public static let iPadAirPro_129inch = PreviewDevice(rawValue: "iPad Pro (12.9-inch) (6th generation)")
+    public static let iPadPro_129inch = PreviewDevice(rawValue: "iPad Pro (12.9-inch) (6th generation)")
     
     /// iPad mini (6th generation)
     public static let iPadMini = PreviewDevice(rawValue: "iPad mini (6th generation)")
@@ -36,7 +36,7 @@ extension PreviewDevice {
 
 extension Collection where Element == PreviewDevice {
     
-    public static var iPads: [PreviewDevice] { [.iPad, .iPadAir, .iPadAirPro_11inch, .iPadAirPro_129inch, .iPadMini] }
+    public static var iPads: [PreviewDevice] { [.iPad, .iPadAir, .iPadPro_11inch, .iPadPro_129inch, .iPadMini] }
     
     public static var iPhones: [PreviewDevice] { [.iPhone14, .iPhone14Plus, .iPhone14Pro, .iPhone14ProMax, .iPhoneSE3rdGen] }
 }
