@@ -74,72 +74,83 @@ extension CNContactStore {
         }
     }
     
+    public struct CNContactKey {
+        
+        fileprivate let value: CNKeyDescriptor
+        
+        private init(key: String) {
+            value = key as CNKeyDescriptor
+        }
+        
+        public static let namePrefix = CNContactKey(key: CNContactNamePrefixKey)
+        
+        public static let givenName = CNContactKey(key: CNContactGivenNameKey)
+        
+        public static let middleName = CNContactKey(key: CNContactMiddleNameKey)
+        
+        public static let familyName = CNContactKey(key: CNContactFamilyNameKey)
+        
+        public static let previousFamilyName = CNContactKey(key: CNContactPreviousFamilyNameKey)
+        
+        public static let nameSuffix = CNContactKey(key: CNContactNameSuffixKey)
+        
+        public static let nickname = CNContactKey(key: CNContactNicknameKey)
+        
+        public static let organizationName = CNContactKey(key: CNContactOrganizationNameKey)
+        
+        public static let departmentName = CNContactKey(key: CNContactDepartmentNameKey)
+        
+        public static let jobTitle = CNContactKey(key: CNContactJobTitleKey)
+        
+        public static let phoneticGivenName = CNContactKey(key: CNContactPhoneticGivenNameKey)
+        
+        public static let phoneticMiddleNameKey = CNContactKey(key: CNContactPhoneticMiddleNameKey)
+        
+        public static let phoneticFamilyName = CNContactKey(key: CNContactPhoneticFamilyNameKey)
+
+        public static let phoneticOrganizationName = CNContactKey(key: CNContactPhoneticOrganizationNameKey)
+        
+        public static let birthday = CNContactKey(key: CNContactBirthdayKey)
+        
+        public static let nonGregorianBirthday = CNContactKey(key: CNContactNonGregorianBirthdayKey)
+        
+        public static let note = CNContactKey(key: CNContactNoteKey)
+        
+        public static let imageData = CNContactKey(key: CNContactImageDataKey)
+        
+        public static let thumbnailImageData = CNContactKey(key: CNContactThumbnailImageDataKey)
+        
+        public static let imageDataAvailable = CNContactKey(key: CNContactImageDataAvailableKey)
+
+        public static let contactType = CNContactKey(key: CNContactTypeKey)
+        
+        public static let phoneNumbers = CNContactKey(key: CNContactPhoneNumbersKey)
+        
+        public static let emailAddresses = CNContactKey(key: CNContactEmailAddressesKey)
+        
+        public static let postalAddresses = CNContactKey(key: CNContactPostalAddressesKey)
+        
+        public static let dates = CNContactKey(key: CNContactDatesKey)
+
+        public static let urlAddresses = CNContactKey(key: CNContactUrlAddressesKey)
+
+        public static let relations = CNContactKey(key: CNContactRelationsKey)
+        
+        public static let socialProfiles = CNContactKey(key: CNContactSocialProfilesKey)
+        
+        public static let instantMessageAddresses = CNContactKey(key: CNContactInstantMessageAddressesKey)
+    }
+    
     public func containers(matching predicate: CNContainerPredicate?) throws -> [CNContainer] {
         try containers(matching: predicate?.value)
     }
-    
-//    public func containers(matching predicate: CNContainerPredicate?) async throws -> [CNContainer] {
-//        try await withCheckedThrowingContinuation { continuation in
-//            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-//                do {
-//                    let containers = try containers(matching: predicate?.value)
-//                    continuation.resume(returning: containers)
-//                }
-//                catch {
-//                    continuation.resume(throwing: error)
-//                }
-//            }
-//        }
-//    }
     
     public func groups(matching predicate: CNGroupPredicate?) throws -> [CNGroup] {
         try groups(matching: predicate?.value)
     }
     
-//    public func groups(matching predicate: CNGroupPredicate?) async throws -> [CNGroup] {
-//        try await withCheckedThrowingContinuation { continuation in
-//            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-//                do {
-//                    let groups = try groups(matching: predicate?.value)
-//                    continuation.resume(returning: groups)
-//                }
-//                catch {
-//                    continuation.resume(throwing: error)
-//                }
-//            }
-//        }
-//    }
-    
-    public func unifiedContacts(matching predicate: CNContactPredicate, keysToFetch keys: [CNKeyDescriptor]) throws -> [CNContact] {
-        try unifiedContacts(matching: predicate.value, keysToFetch: keys)
+    public func unifiedContacts(matching predicate: CNContactPredicate, keysToFetch keys: [CNContactKey]) throws -> [CNContact] {
+        try unifiedContacts(matching: predicate.value, keysToFetch: keys.map(\.value))
     }
-    
-//    public func unifiedContacts(matching predicate: CNContactPredicate, keysToFetch keys: [CNKeyDescriptor]) async throws -> [CNContact] {
-//        try await withCheckedThrowingContinuation { continuation in
-//            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-//                do {
-//                    let contacts = try unifiedContacts(matching: predicate.value, keysToFetch: keys)
-//                    continuation.resume(returning: contacts)
-//                }
-//                catch {
-//                    continuation.resume(throwing: error)
-//                }
-//            }
-//        }
-//    }
-    
-//    public func execute(_ request: CNSaveRequest) async throws {
-//        try await withCheckedThrowingContinuation { continuation in
-//            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-//                do {
-//                    try execute(request)
-//                    continuation.resume()
-//                }
-//                catch {
-//                    continuation.resume(throwing: error)
-//                }
-//            }
-//        }
-//    }
 }
 #endif
