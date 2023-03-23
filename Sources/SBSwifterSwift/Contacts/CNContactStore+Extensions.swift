@@ -110,6 +110,10 @@ extension CNContactStore {
 //        }
 //    }
     
+    public func unifiedContacts(matching predicate: CNContactPredicate, keysToFetch keys: [CNKeyDescriptor]) throws -> [CNContact] {
+        try unifiedContacts(matching: predicate.value, keysToFetch: keys)
+    }
+    
 //    public func unifiedContacts(matching predicate: CNContactPredicate, keysToFetch keys: [CNKeyDescriptor]) async throws -> [CNContact] {
 //        try await withCheckedThrowingContinuation { continuation in
 //            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
