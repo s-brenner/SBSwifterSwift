@@ -74,60 +74,68 @@ extension CNContactStore {
         }
     }
     
-    public func containers(matching predicate: CNContainerPredicate?) async throws -> [CNContainer] {
-        try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-                do {
-                    let containers = try containers(matching: predicate?.value)
-                    continuation.resume(returning: containers)
-                }
-                catch {
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
+    public func containers(matching predicate: CNContainerPredicate?) throws -> [CNContainer] {
+        try containers(matching: predicate?.value)
     }
     
-    public func groups(matching predicate: CNGroupPredicate?) async throws -> [CNGroup] {
-        try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-                do {
-                    let groups = try groups(matching: predicate?.value)
-                    continuation.resume(returning: groups)
-                }
-                catch {
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
+//    public func containers(matching predicate: CNContainerPredicate?) async throws -> [CNContainer] {
+//        try await withCheckedThrowingContinuation { continuation in
+//            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+//                do {
+//                    let containers = try containers(matching: predicate?.value)
+//                    continuation.resume(returning: containers)
+//                }
+//                catch {
+//                    continuation.resume(throwing: error)
+//                }
+//            }
+//        }
+//    }
+    
+    public func groups(matching predicate: CNGroupPredicate?) throws -> [CNGroup] {
+        try groups(matching: predicate?.value)
     }
     
-    public func unifiedContacts(matching predicate: CNContactPredicate, keysToFetch keys: [CNKeyDescriptor]) async throws -> [CNContact] {
-        try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-                do {
-                    let contacts = try unifiedContacts(matching: predicate.value, keysToFetch: keys)
-                    continuation.resume(returning: contacts)
-                }
-                catch {
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
-    }
+//    public func groups(matching predicate: CNGroupPredicate?) async throws -> [CNGroup] {
+//        try await withCheckedThrowingContinuation { continuation in
+//            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+//                do {
+//                    let groups = try groups(matching: predicate?.value)
+//                    continuation.resume(returning: groups)
+//                }
+//                catch {
+//                    continuation.resume(throwing: error)
+//                }
+//            }
+//        }
+//    }
     
-    public func execute(_ request: CNSaveRequest) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-                do {
-                    try execute(request)
-                    continuation.resume()
-                }
-                catch {
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
-    }
+//    public func unifiedContacts(matching predicate: CNContactPredicate, keysToFetch keys: [CNKeyDescriptor]) async throws -> [CNContact] {
+//        try await withCheckedThrowingContinuation { continuation in
+//            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+//                do {
+//                    let contacts = try unifiedContacts(matching: predicate.value, keysToFetch: keys)
+//                    continuation.resume(returning: contacts)
+//                }
+//                catch {
+//                    continuation.resume(throwing: error)
+//                }
+//            }
+//        }
+//    }
+    
+//    public func execute(_ request: CNSaveRequest) async throws {
+//        try await withCheckedThrowingContinuation { continuation in
+//            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+//                do {
+//                    try execute(request)
+//                    continuation.resume()
+//                }
+//                catch {
+//                    continuation.resume(throwing: error)
+//                }
+//            }
+//        }
+//    }
 }
 #endif
