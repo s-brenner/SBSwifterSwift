@@ -18,6 +18,10 @@ public final class SBContactStore {
 
 extension SBContactStore {
     
+    public var defaultContainerIdentifier: String { store.defaultContainerIdentifier() }
+    
+    public var currentHistoryToken: Data? { store.currentHistoryToken }
+    
     @discardableResult
     public func requestAccess(for entityType: CNEntityType) async throws -> Bool {
         try await store.requestAccess(for: entityType)
