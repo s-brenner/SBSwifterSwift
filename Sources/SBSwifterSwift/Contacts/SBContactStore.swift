@@ -7,6 +7,8 @@ public final class SBContactStore {
     
     private let queue = OperationQueue.serialQueue(named: "SBContactStore_\(UUID().uuidString)")
     
+    public init() { }
+    
     public typealias ContactKey = CNContactStore.CNContactKey
     
     public typealias ContactPredicate = CNContactStore.CNContactPredicate
