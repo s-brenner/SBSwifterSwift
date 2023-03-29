@@ -57,7 +57,7 @@ extension SBContactStore {
         }
     }
     
-    public func unifiedContact(withIdentifier identifier: String, keysToFetch keys: [ContactKey]) async throws -> CNContact {
+    public func unifiedContact(withIdentifier identifier: String, keysToFetch keys: Set<ContactKey>) async throws -> CNContact {
         try await withCheckedThrowingContinuation { continuation in
             queue.addOperation { [unowned self] in
                 do {
@@ -71,7 +71,7 @@ extension SBContactStore {
         }
     }
     
-    public func unifiedContacts(matching predicate: ContactPredicate, keysToFetch keys: [ContactKey]) async throws -> [CNContact] {
+    public func unifiedContacts(matching predicate: ContactPredicate, keysToFetch keys: Set<ContactKey>) async throws -> [CNContact] {
         try await withCheckedThrowingContinuation { continuation in
             queue.addOperation { [unowned self] in
                 do {
