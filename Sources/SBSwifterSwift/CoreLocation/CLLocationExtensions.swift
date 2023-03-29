@@ -6,16 +6,9 @@ import struct CoreLocation.CLLocationDegrees
 
 extension CLLocation {
     
-    // MARK: - Types
-    
     private struct GreatCircle {
         
-        // MARK: - Types
-        
         private typealias Radians = Double
-        
-        
-        // MARK: - Properties
         
         private let lat1: Radians
         
@@ -30,9 +23,6 @@ extension CLLocation {
         private let lonDelta: Radians
         
         private let angularDistance: Radians
-        
-        
-        // MARK: - Public Initializers
         
         init(start: CLLocation, end: CLLocation) {
             let lat1 = start.coordinate.latitude.degreesToRadians
@@ -52,13 +42,9 @@ extension CLLocation {
             }()
         }
         
-        
-        // MARK: - Methods
-        
         /// Returns a location along the great circle route.
         /// - Parameter routeFraction: The fraction along the great circle route. 0 corresponds to the start location. 1 corresponds to the end location.
         func intermediatePoint(routeFraction: Double) -> CLLocation {
-            
             let f = routeFraction.clamped(to: 0...1)
             let a = sin((1 - f) * angularDistance) / sin(angularDistance)
             let b = sin(f * angularDistance) / sin(angularDistance)
@@ -67,7 +53,6 @@ extension CLLocation {
             let z = a * sin(lat1) + b * sin(lat2)
             let lat = atan2(z, sqrt(pow(x, 2) + pow(y, 2)))
             let lon = atan2(y, x)
-            
             return CLLocation(latitude: lat.radiansToDegrees, longitude: lon.radiansToDegrees)
         }
     }
@@ -83,7 +68,6 @@ extension CLLocation {
     /// - Parameter coordinate: A coordinate structure containing the latitude and longitude values.
     /// - Returns: A location object initialized with the specified geographical coordinate.
     public convenience init(coordinate: CLLocationCoordinate2D) {
-        
         self.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
     
@@ -94,7 +78,6 @@ extension CLLocation {
     /// - Parameter destination: Location to calculate the route.
     /// - Returns: Array of CLLocation values that describe the great circle route.
     public func greatCircleRoute(to destination: CLLocation) -> [CLLocation] {
-        
         // Handle the case of identical coordinates
         guard coordinate != destination.coordinate else { return [] }
         
@@ -104,20 +87,18 @@ extension CLLocation {
         let count = max((kilometers / kilometersPerPoint).ceil.int, 3)
         
         // Calculate the route fractions
-        let routeFractions = Array(0...count).map() { Double($0) / Double(count) }
+        let routeFractions = Array(0...count).map { Double($0) / Double(count) }
         
         // Calculate the route
         let greatCircle = GreatCircle(start: self, end: destination)
-        return routeFractions.map() { greatCircle.intermediatePoint(routeFraction: $0) }
+        return routeFractions.map { greatCircle.intermediatePoint(routeFraction: $0) }
     }
     
     /// Calculates the bearing to another CLLocation.
     /// - Parameter destination: Location to calculate bearing.
     /// - Returns: Calculated bearing degrees in the range 0° ... 360°.
     public func bearing(to destination: CLLocation) -> CLLocationDegrees {
-        
         // https://www.movable-type.co.uk/scripts/latlong.html
-        
         let lat1 = coordinate.latitude.degreesToRadians
         let lat2 = destination.coordinate.latitude.degreesToRadians
         let lon1 = coordinate.longitude.degreesToRadians

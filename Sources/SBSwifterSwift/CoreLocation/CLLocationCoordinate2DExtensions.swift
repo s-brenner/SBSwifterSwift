@@ -10,7 +10,6 @@ extension CLLocationCoordinate2D: Equatable {
     }
 }
 
-
 extension CLLocationCoordinate2D {
     
     public var location: CLLocation { CLLocation(coordinate: self) }

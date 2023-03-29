@@ -74,13 +74,15 @@ extension CNContactStore {
         }
     }
     
-    public struct CNContactKey: CaseIterable {
+    public struct CNContactKey: Hashable, CaseIterable {
         
-        fileprivate let value: CNKeyDescriptor
+        private let key: String
         
         private init(_ key: String) {
-            value = key as CNKeyDescriptor
+            self.key = key
         }
+        
+        fileprivate var value: CNKeyDescriptor { key as CNKeyDescriptor }
         
         public static let namePrefix = CNContactKey(CNContactNamePrefixKey)
         
@@ -181,11 +183,11 @@ extension CNContactStore {
         try groups(matching: predicate?.value)
     }
     
-    public func unifiedContact(withIdentifier identifier: String, keysToFetch keys: [CNContactKey]) throws -> CNContact {
+    public func unifiedContact(withIdentifier identifier: String, keysToFetch keys: Set<CNContactKey>) throws -> CNContact {
         try unifiedContact(withIdentifier: identifier, keysToFetch: keys.map(\.value))
     }
     
-    public func unifiedContacts(matching predicate: CNContactPredicate, keysToFetch keys: [CNContactKey]) throws -> [CNContact] {
+    public func unifiedContacts(matching predicate: CNContactPredicate, keysToFetch keys: Set<CNContactKey>) throws -> [CNContact] {
         try unifiedContacts(matching: predicate.value, keysToFetch: keys.map(\.value))
     }
 }

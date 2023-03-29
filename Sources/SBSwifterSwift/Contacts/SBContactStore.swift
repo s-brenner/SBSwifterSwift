@@ -1,6 +1,8 @@
 #if canImport(Contacts)
 import Contacts
 
+/// An asychronous version of CNContactStore.
+/// - Author: Scott Brenner | SBSwifterSwift
 public final class SBContactStore {
     
     private let store = CNContactStore()
