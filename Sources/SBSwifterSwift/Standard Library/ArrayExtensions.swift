@@ -24,7 +24,6 @@ extension Array {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Parameter newElement: Element to insert.
     public mutating func prepend(_ newElement: Element) {
-        
         insert(newElement, at: 0)
     }
     
@@ -35,7 +34,6 @@ extension Array {
     /// - Parameter ascending: If order must be ascending.
     /// - Returns: Sorted array based on keyPath.
     public func sorted<T: Comparable>(by path: KeyPath<Element, T?>, ascending: Bool = true) -> [Element] {
-        
         sorted(by: { (lhs, rhs) -> Bool in
             guard let lhsValue = lhs[keyPath: path], let rhsValue = rhs[keyPath: path] else { return false }
             return ascending ? (lhsValue < rhsValue) : (lhsValue > rhsValue)
@@ -49,7 +47,6 @@ extension Array {
     /// - Parameter ascending: If order must be ascending.
     /// - Returns: Sorted array based on keyPath.
     func sorted<T: Comparable>(by path: KeyPath<Element, T>, ascending: Bool = true) -> [Element] {
-        
         sorted(by: { (lhs, rhs) -> Bool in
             return ascending ? (lhs[keyPath: path] < rhs[keyPath: path]) : (lhs[keyPath: path] > rhs[keyPath: path])
         })
@@ -63,7 +60,6 @@ extension Array {
     /// - Returns: Self after sorting.
     @discardableResult
     mutating func sort<T: Comparable>(by path: KeyPath<Element, T?>, ascending: Bool = true) -> [Element] {
-        
         self = sorted(by: path, ascending: ascending)
         return self
     }
@@ -76,7 +72,6 @@ extension Array {
     /// - Returns: Self after sorting.
     @discardableResult
     mutating func sort<T: Comparable>(by path: KeyPath<Element, T>, ascending: Bool = true) -> [Element] {
-        
         self = sorted(by: path, ascending: ascending)
         return self
     }
@@ -96,7 +91,6 @@ extension Array where Element: Equatable {
     /// - Returns: Self after removing all instances of item.
     @discardableResult
     mutating func removeAll(_ item: Element) -> [Element] {
-        
         removeAll(where: { $0 == item })
         return self
     }
@@ -112,7 +106,6 @@ extension Array where Element: Equatable {
     /// - Returns: Self after removing all instances of all items in given array.
     @discardableResult
     mutating func removeAll(_ items: [Element]) -> [Element] {
-        
         guard !items.isEmpty else { return self }
         removeAll(where: { items.contains($0) })
         return self
@@ -127,7 +120,6 @@ extension Array where Element: Equatable {
     /// - Complexity: O(n), where n is the length of the sequence.
     @discardableResult
     public mutating func removeDuplicates() -> [Element] {
-        
         self = reduce(into: [Element]()) {
             if !$0.contains($1) {
                 $0.append($1)
@@ -143,7 +135,6 @@ extension Array where Element: Equatable {
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Returns: Array of unique elements.
     public func withoutDuplicates() -> [Element] {
-        
         reduce(into: [Element]()) {
             if !$0.contains($1) {
                 $0.append($1)

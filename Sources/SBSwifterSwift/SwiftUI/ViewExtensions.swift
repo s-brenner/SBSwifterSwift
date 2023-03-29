@@ -7,10 +7,7 @@ public extension View {
         .init(self)
     }
     
-    @ViewBuilder func `if`<Transform: View>(
-        _ condition: Bool,
-        transform: (Self) -> Transform
-    ) -> some View {
+    @ViewBuilder func `if`<Transform: View>(_ condition: Bool, transform: (Self) -> Transform) -> some View {
         if condition {
             transform(self)
         } else {

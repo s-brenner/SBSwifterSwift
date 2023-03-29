@@ -25,7 +25,7 @@ extension SBContactStore {
     public var currentHistoryToken: Data? { store.currentHistoryToken }
     
     @discardableResult
-    public func requestAccess(for entityType: CNEntityType) async throws -> Bool {
+    public func requestAccess(for entityType: CNEntityType = .contacts) async throws -> Bool {
         try await store.requestAccess(for: entityType)
     }
     

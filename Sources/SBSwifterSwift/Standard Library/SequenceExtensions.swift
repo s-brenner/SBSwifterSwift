@@ -22,6 +22,14 @@ extension Sequence {
         map { $0[keyPath: keyPath] }
     }
     
+    /// Returns an array containing the `non-nil`elements  of this sequence.
+    /// - Author: Scott Brenner | SBSwifterSwift
+    /// - Complexity: O(m + n), where n is the length of this sequence and m is the length of the result.
+    /// - Returns: An array containing the `non-nil`elements  of this sequence.
+    public func compact<T>() -> [T] where Element == Optional<T> {
+        compactMap { $0 }
+    }
+    
     /// Returns the elements of the sequence sorted according to any comparable property.
     /// - Author: Scott Brenner | SBSwifterSwift
     /// - Complexity: O(n log n), where n is the length of the sequence.
