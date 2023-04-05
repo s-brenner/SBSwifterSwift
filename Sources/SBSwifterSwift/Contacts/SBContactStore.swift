@@ -5,7 +5,7 @@ import Contacts
 /// - Author: Scott Brenner | SBSwifterSwift
 public struct SBContactStore {
     
-    private let store = CNContactStore()
+    public let store = CNContactStore()
     
     private let queue = OperationQueue.serialQueue(named: "SBContactStore_\(UUID().uuidString)")
     
