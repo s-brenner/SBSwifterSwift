@@ -3,7 +3,7 @@ import Contacts
 
 /// An asychronous version of CNContactStore.
 /// - Author: Scott Brenner | SBSwifterSwift
-public final class SBContactStore {
+public struct SBContactStore {
     
     private let store = CNContactStore()
     
@@ -29,9 +29,13 @@ extension SBContactStore {
         try await store.requestAccess(for: entityType)
     }
     
+    public static func authorizationStatus(for entityType: CNEntityType = .contacts) -> CNAuthorizationStatus {
+        CNContactStore.authorizationStatus(for: entityType)
+    }
+    
     public func execute(_ request: CNSaveRequest) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            queue.addOperation { [unowned self] in
+            queue.addOperation {
                 do {
                     try store.execute(request)
                     continuation.resume()
@@ -45,7 +49,7 @@ extension SBContactStore {
     
     public func groups(matching predicate: GroupPredicate? = nil) async throws -> [CNGroup] {
         try await withCheckedThrowingContinuation { continuation in
-            queue.addOperation { [unowned self] in
+            queue.addOperation {
                 do {
                     let groups = try store.groups(matching: predicate)
                     continuation.resume(returning: groups)
@@ -59,7 +63,7 @@ extension SBContactStore {
     
     public func unifiedContact(withIdentifier identifier: String, keysToFetch keys: Set<ContactKey>) async throws -> CNContact {
         try await withCheckedThrowingContinuation { continuation in
-            queue.addOperation { [unowned self] in
+            queue.addOperation {
                 do {
                     let contact = try store.unifiedContact(withIdentifier: identifier, keysToFetch: keys)
                     continuation.resume(returning: contact)
@@ -73,7 +77,7 @@ extension SBContactStore {
     
     public func unifiedContacts(matching predicate: ContactPredicate, keysToFetch keys: Set<ContactKey>) async throws -> [CNContact] {
         try await withCheckedThrowingContinuation { continuation in
-            queue.addOperation { [unowned self] in
+            queue.addOperation {
                 do {
                     let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: keys)
                     continuation.resume(returning: contacts)
